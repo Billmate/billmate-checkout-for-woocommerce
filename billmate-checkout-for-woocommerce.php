@@ -123,8 +123,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/class-bco-request.php';
 
 			// Request Helpers.
-			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/helpers/class-bco-helper-cart.php';
-			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/helpers/class-bco-helper-order.php';
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/helpers/class-bco-payment-data-helper.php';
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/helpers/class-bco-customer-helper.php';
 
