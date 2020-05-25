@@ -368,69 +368,6 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	}
 
 	/**
-	 * Test BCO_Order_Cart_Helper::get_total_rounding.
-	 *
-	 * @return void
-	 */
-	public function disabled_test_get_total_rounding() {
-		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 1071, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 566, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '0' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 2500, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 1200, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 600, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '0', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_rounding( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-	}
-
-	/**
 	 * Test BCO_Order_Cart_Helper::get_total_with_tax
 	 *
 	 * @return void
