@@ -109,6 +109,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		// 25% inc tax.
 		$this->setup_cart( '25' );
 		$cart_items = WC()->cart->get_cart();
+
 		foreach ( $cart_items as $cart_item ) {
 			$item_price_25_inc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
 		}
@@ -156,12 +157,6 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		}
 		WC()->cart->empty_cart();
 
-		// Clear data.
-		foreach ( $this->tax_rate_ids as $tax_rate_id ) {
-			WC_Tax::_delete_tax_rate( $tax_rate_id );
-		}
-		$this->tax_rate_ids = null;
-
 		// Assertions.
 		$this->assertEquals( 8000, $item_price_25_inc, 'get_article_price 25% inc tax' );
 		$this->assertEquals( 8929, $item_price_12_inc, 'get_article_price 12% inc tax' );
@@ -169,85 +164,6 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->assertEquals( 10000, $item_price_25_exc, 'get_article_price 25% exc tax' );
 		$this->assertEquals( 10000, $item_price_12_exc, 'get_article_price 12% exc tax' );
 		$this->assertEquals( 10000, $item_price_6_exc, 'get_article_price 6% exc tax' );
-	}
-
-
-	/**
-	 * Test BCO_Cart_Articles_Helper::get_article_price
-	 *
-	 * @return void
-	 */
-	public function test_get_discount() {
-		// Create tax rates.
-		$this->tax_rate_ids[] = $this->create_tax_rate( '25' );
-		$this->tax_rate_ids[] = $this->create_tax_rate( '12' );
-		$this->tax_rate_ids[] = $this->create_tax_rate( '6' );
-
-		// With tax.
-		update_option( 'woocommerce_prices_include_tax', 'yes' );
-		// 25% inc tax.
-		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product              = $this->simple_product;
-			$item_discount_25_inc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// 12% inc tax.
-		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product              = $this->simple_product;
-			$item_discount_12_inc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// 6% inc tax.
-		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product             = $this->simple_product;
-			$item_discount_6_inc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// Without tax.
-		update_option( 'woocommerce_prices_include_tax', 'no' );
-		// 25% exc tax.
-		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product              = $this->simple_product;
-			$item_discount_25_exc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// 12% exc tax.
-		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product              = $this->simple_product;
-			$item_discount_12_exc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// 6% exc tax.
-		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$product             = $this->simple_product;
-			$item_discount_6_exc = ( new BCO_Cart_Articles_Helper() )->get_discount( $cart_item, $product );
-		}
-		WC()->cart->empty_cart();
-
-		// Assertions.
-		$this->assertEquals( 10000, $item_discount_25_inc, 'get_discount inc 25% tax' );
-		$this->assertEquals( 10000, $item_discount_12_inc, 'get_discount inc 12% tax' );
-		$this->assertEquals( 10000, $item_discount_6_inc, 'get_discount inc 6% tax' );
-		$this->assertEquals( 10000, $item_discount_25_exc, 'get_discount exc 25% tax' );
-		$this->assertEquals( 10000, $item_discount_12_exc, 'get_discount exc 12% tax' );
-		$this->assertEquals( 10000, $item_discount_6_exc, 'get_discount exc 6% tax' );
 	}
 
 	/**
@@ -292,6 +208,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		foreach ( $this->tax_rate_ids as $tax_rate_id ) {
 			WC_Tax::_delete_tax_rate( $tax_rate_id );
 		}
+		$this->tax_rate_ids = null;
 	}
 
 
