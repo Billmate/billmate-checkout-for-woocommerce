@@ -15,6 +15,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BCO_Order_Articles_Helper {
 
 	/**
+	 * Gets the articles for the order.
+	 *
+	 * @param WC_Order $order The WooCommerce order.
+	 * @return array
+	 */
+	public static function get_articles( $order ) {
+		$articles = array();
+
+		foreach ( $order->get_items() as $item ) {
+			array_push( $articles, self::get_order_lines( $item ) );
+		}
+		foreach ( $order->get_fees() as $fee ) {
+			array_push( $articles, self::get_order_lines( $fee ) );
+		}
+
+		return $articles;
+	}
+
+	/**
+	 * Gets the formated order lines.
+	 *
+	 * @param WC_Order_Item_Product $order_item The WooCommerce order line item.
+	 * @return array
+	 */
+	public static function get_order_lines( $order_item ) {
+		$order_id = $order_item->get_order_id();
+		$order    = wc_get_order( $order_id );
+		return array(
+			'artnr'      => self::get_article_number( $order_item ),
+			'title'      => self::get_title( $order_item ),
+			'quantity'   => self::get_quantity( $order_item ),
+			'aprice'     => self::get_article_price( $order_item ),
+			'withouttax' => self::get_without_tax( $order_item ),
+			'taxrate'    => self::get_tax_rate( $order_item ),
+		);
+	}
+
+	/**
 	 * Get order item article number.
 	 *
 	 * Returns SKU or product ID.
@@ -30,7 +68,7 @@ class BCO_Order_Articles_Helper {
 			$article_number = $product->get_id();
 		}
 
-		return substr( (string) $article_number, 0, 64 ); // TODO: Check what the max character is here.
+		return substr( (string) $article_number, 0, 255 );
 	}
 
 	/**
@@ -39,7 +77,7 @@ class BCO_Order_Articles_Helper {
 	 * @param array $order_item order item.
 	 * @return string $item_title order item title.
 	 */
-	public function get_title( $order_item ) {
+	public static function get_title( $order_item ) {
 		$item_title = $order_item->get_name();
 
 		return strip_tags( $item_title ); //phpcs:ignore
@@ -51,7 +89,7 @@ class BCO_Order_Articles_Helper {
 	 * @param array $order_item order item.
 	 * @return int $item_quantity order item quantity.
 	 */
-	public function get_quantity( $order_item ) {
+	public static function get_quantity( $order_item ) {
 		return $order_item->get_quantity();
 	}
 
@@ -61,7 +99,7 @@ class BCO_Order_Articles_Helper {
 	 * @param array $order_item order item.
 	 * @return int $item_price Item price.
 	 */
-	public function get_article_price( $order_item ) {
+	public static function get_article_price( $order_item ) {
 		$item_subtotal = $order_item->get_total() * 100 / $order_item->get_quantity();
 		return round( $item_subtotal );
 	}
@@ -72,7 +110,7 @@ class BCO_Order_Articles_Helper {
 	 * @param array $order_item order item.
 	 * @return int $item_price Item price.
 	 */
-	public function get_without_tax( $order_item ) {
+	public static function get_without_tax( $order_item ) {
 		return round( $order_item->get_total() * 100 );
 	}
 
@@ -82,7 +120,7 @@ class BCO_Order_Articles_Helper {
 	 * @param array $order_item order item.
 	 * @return int $item_price Item price.
 	 */
-	public function get_tax_rate( $order_item ) {
+	public static function get_tax_rate( $order_item ) {
 		$tax_rate = ( $order_item->get_total_tax() > 0 ) ? $order_item->get_total_tax() / $order_item->get_total() * 100 : 0;
 		return round( $tax_rate );
 	}
