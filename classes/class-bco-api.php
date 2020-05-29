@@ -21,9 +21,9 @@ class BCO_API {
 	 *
 	 * @return mixed
 	 */
-	public function request_init_checkout() {
+	public function request_init_checkout( $order_id = '' ) {
 		$request  = new BCO_Request_Init_Checkout();
-		$response = $request->request();
+		$response = $request->request( $order_id );
 
 		return $this->check_for_api_error( $response );
 	}
