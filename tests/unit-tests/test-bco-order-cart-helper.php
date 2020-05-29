@@ -36,44 +36,32 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_handling_without_tax() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 8000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8929, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 8929, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 9434, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 9434, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_handling_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -85,58 +73,42 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_handling_tax_rate() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $item ) );
-		}
+		$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_handling_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -149,44 +121,38 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_shipping_without_tax() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping( 25 );
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8929, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping( 12 );
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 9434, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping( 6 );
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 4000, ( new BCO_Order_Cart_Helper() )->get_shipping_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -198,60 +164,41 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_shipping_tax_rate() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping( 25 );
+		$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping( 12 );
+		$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-
-		$this->create_order( '0' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping( 6 );
+		$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 25, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 12, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
+		$this->create_shipping();
+		$this->assertEquals( 6, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
-		$this->create_order( '0', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_shipping_tax_rate( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
 	}
 
 	// Total.
@@ -262,44 +209,32 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_total_without_tax() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 8000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8929, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 8929, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 9434, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 9434, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_without_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -311,58 +246,42 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_total_tax() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 2000, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 2000, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 1071, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 1071, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 566, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 566, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 2500, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 2500, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 1200, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 1200, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 600, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 600, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_tax( $item ) );
-		}
+		$this->assertEquals( 0, ( new BCO_Order_Cart_Helper() )->get_total_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -374,58 +293,42 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 */
 	public function test_get_total_with_tax() {
 		$this->create_order( '25' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0' );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '25', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 12500, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 12500, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '12', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 11200, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 11200, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '6', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10600, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10600, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 
 		$this->create_order( '0', false );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $item ) );
-		}
+		$this->assertEquals( 10000, ( new BCO_Order_Cart_Helper() )->get_total_with_tax( $this->order ) );
 		wp_delete_post( $this->order->get_id() );
 		$this->order = null;
 	}
@@ -502,6 +405,25 @@ class Test_BCO_Order_Cart_Helper extends AKrokedil_Unit_Test_Case {
 		$order->calculate_totals();
 		$order->save();
 		$this->order = $order;
+	}
+
+
+	/**
+	 * Create shipping.
+	 *
+	 * @param int $tax total tax amount.
+	 * @return void
+	 */
+	public function create_shipping( $tax = 0 ) {
+		$data                = array(
+			'total' => 40,
+		);
+		$order_item_shipping = ( new Krokedil_Order_Item_Shipping( $data ) )->get_order_items_shipping();
+		$order_item_shipping->set_props( array( 'shipping_tax' => $tax ) );
+
+		$this->order->add_item( $order_item_shipping );
+		$this->order->calculate_totals();
+		$this->order->save();
 	}
 
 	/**
