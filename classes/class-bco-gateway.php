@@ -44,6 +44,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 
 		// Actions.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'billmate_thank_you' ) );
 	}
 
 	/**
@@ -72,7 +73,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		// Return pay for order redirect.
 		return array(
 			'result'   => 'success',
-			'redirect' => $order->get_checkout_payment_url( true ),
+			'redirect' => $order->get_checkout_payment_url(),
 		);
 	}
 
@@ -85,6 +86,27 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$this->form_fields = include BILLMATE_CHECKOUT_PATH . '/includes/bco-form-fields.php';
 	}
 
+	/**
+	 * Shows the Billmate thankyou on the wc thankyou page.
+	 *
+	 * @param string $order_id The WooCommerce order id.
+	 * @return void
+	 */
+	public function billmate_thank_you( $order_id ) {
+		if ( $order_id ) {
+			$order = wc_get_order( $order_id );
+			if ( is_object( $order ) && $order->get_transaction_id() ) {
+				$bco_payment_number = WC()->session->get( 'bco_wc_payment_number' );
+				// Save payment type, card details & run $order->payment_complete() if all looks good.
+				if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+					bco_confirm_billmate_order( $order_id, $bco_payment_number );
+					$order->add_order_note( __( 'Order finalized in thankyou page.', 'billmate-checkout-for-woocommerce' ) );
+					WC()->cart->empty_cart();
+				}
+
+			}
+		}
+	}
 }
 
 /**

@@ -19,6 +19,7 @@ class BCO_API {
 	/**
 	 * Init Billmate Checkout.
 	 *
+	 * @param string $order_id The WooCommerce order id.
 	 * @return mixed
 	 */
 	public function request_init_checkout( $order_id = '' ) {
