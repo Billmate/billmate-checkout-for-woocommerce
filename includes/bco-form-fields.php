@@ -52,6 +52,17 @@ $settings = array(
 		'default'     => 'no',
 		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), wc_get_log_file_path( 'billmate_checkout' ) ), // phpcs:ignore
 	),
+	'checkout_flow'              => array(
+		'title'       => __( 'Checkout flow', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'select',
+		'options'     => array(
+			'checkout'      => __( 'Checkout', 'billmate-checkout-for-woocommerce' ),
+			'pay_for_order' => __( 'Pay for Order', 'billmate-checkout-for-woocommerce' ),
+		),
+		'description' => __( 'Select how Billmate should be integrated in WooCommerce. <strong>Checkout</strong> – the checkout is embedded in the WooCommerce checkout page and partially replaces the checkout form. <strong>Pay for Order</strong> – the customer is redirected to the WooCommerce "Pay for Order" page.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => 'pay_for_order',
+		'desc_tip'    => false,
+	),
 	// SE.
 	'credentials_se'             => array(
 		'title' => 'API Credentials Sweden',
@@ -64,57 +75,6 @@ $settings = array(
 		'desc_tip' => true,
 	),
 	'api_key_se'                 => array(
-		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	// NO.
-	'credentials_no'             => array(
-		'title' => 'API Credentials Norway',
-		'type'  => 'title',
-	),
-	'merchant_id_no'             => array(
-		'title'    => __( 'Client ID', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	'api_key_no'                 => array(
-		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	// DK.
-	'credentials_dk'             => array(
-		'title' => 'API Credentials Denmark',
-		'type'  => 'title',
-	),
-	'merchant_id_dk'             => array(
-		'title'    => __( 'Client ID', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	'api_key_dk'                 => array(
-		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	// FI.
-	'credentials_fi'             => array(
-		'title' => 'API Credentials Finland',
-		'type'  => 'title',
-	),
-	'merchant_id_fi'             => array(
-		'title'    => __( 'Client ID', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
-		'default'  => '',
-		'desc_tip' => true,
-	),
-	'api_key_fi'                 => array(
 		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
 		'type'     => 'text',
 		'default'  => '',
