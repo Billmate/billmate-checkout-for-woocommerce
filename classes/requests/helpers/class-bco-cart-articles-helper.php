@@ -29,7 +29,7 @@ class BCO_Cart_Articles_Helper {
 			$article_number = $product->get_id();
 		}
 
-		return substr( (string) $article_number, 0, 64 ); // TODO: Check what the max character is here.
+		return substr( (string) $article_number, 0, 255 );
 	}
 
 	/**
