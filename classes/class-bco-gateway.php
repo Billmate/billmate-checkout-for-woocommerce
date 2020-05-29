@@ -104,6 +104,8 @@ class BCO_Gateway extends WC_Payment_Gateway {
 					WC()->cart->empty_cart();
 				}
 
+				// Unset sessions.
+				bco_wc_unset_sessions();
 			}
 		}
 	}

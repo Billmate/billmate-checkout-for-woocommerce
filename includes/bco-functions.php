@@ -107,6 +107,17 @@ function bco_wc_show_another_gateway_button() {
 
 
 /**
+ * Unsets the sessions used by the plguin.
+ *
+ * @return void
+ */
+function bco_wc_unset_sessions() {
+	WC()->session->__unset( 'bco_wc_payment_number' );
+	WC()->session->__unset( 'bco_wc_order_id' );
+}
+
+
+/**
  * Prints error message as notices.
  *
  * @param WP_Error $wp_error A WordPress error object.
