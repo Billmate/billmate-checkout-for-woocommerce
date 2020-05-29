@@ -17,17 +17,18 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 	/**
 	 * Makes the request.
 	 *
+	 * @param string $order_id WooCommerce order id.
 	 * @return array
 	 */
-	public function request() {
-		$request_url  = $this->base_url . $this->test;
-		$request_args = apply_filters( 'bco_init_checkout_args', $this->get_request_args() );
+	public function request( $order_id ) {
+		$request_url  = $this->base_url;
+		$request_args = apply_filters( 'bco_init_checkout_args', $this->get_request_args( $order_id ) );
 
 		$response = wp_remote_request( $request_url, $request_args );
 		$code     = wp_remote_retrieve_response_code( $response );
 
 		// Log the request.
-		$log = BCO_Logger::format_log( '', 'POST', 'BCO init checkout', $request_args, json_decode( wp_remote_retrieve_body( $response ), true ), $code );
+		$log = BCO_Logger::format_log( $order_id, 'POST', 'BCO init checkout', $request_args, json_decode( wp_remote_retrieve_body( $response ), true ), $code );
 		BCO_Logger::log( $log );
 
 		$formated_response = $this->process_response( $response, $request_args, $request_url );
@@ -37,14 +38,16 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 	/**
 	 * Gets the request body.
 	 *
+	 * @param string $order_id WooCommerce order id.
 	 * @return array
 	 */
-	public function get_body() {
-		$data         = $this->get_data();
+	public function get_body( $order_id ) {
+		$data         = ( 'checkout' === $this->checkout_flow ) ? $this->get_request_cart_data() : $this->get_request_order_data( $order_id );
 		$request_body = array(
 			'credentials' => array(
 				'id'   => $this->id,
 				'hash' => hash_hmac( 'sha512', wp_json_encode( $data ), $this->secret ),
+				'test' => $this->test,
 			),
 			'data'        => $data,
 			'function'    => 'initCheckout',
@@ -55,22 +58,54 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 	/**
 	 * Gets the request args for the API call.
 	 *
+	 * @param string $order_id WooCommerce order id.
 	 * @return array
 	 */
-	public function get_request_args() {
+	public function get_request_args( $order_id ) {
 		return array(
 			'headers' => $this->get_headers(),
 			'method'  => 'POST',
-			'body'    => wp_json_encode( $this->get_body() ),
+			'body'    => wp_json_encode( $this->get_body( $order_id ) ),
 		);
 	}
 
 	/**
-	 * Request data
+	 * Request order data
 	 *
-	 * @return array $data data.
+	 * @param string $order_id WooCommerce order id.
+	 * @return array $data order data.
 	 */
-	public function get_data() {
+	public function get_request_order_data( $order_id ) {
+		$order = wc_get_order( $order_id );
+		$data  = array(
+			'CheckoutData' =>
+			array(
+				'terms' => get_permalink( wc_get_page_id( 'terms' ) ),
+			),
+			'PaymentData'  => BCO_Payment_Data_Helper::get_payment_data( $order ),
+			'Customer'     =>
+			array(
+				'Billing'  => BCO_Customer_Helper::get_customer_billing( $order ),
+				'Shipping' => BCO_Customer_Helper::get_customer_shipping( $order ),
+			),
+			'Articles'     => BCO_Order_Articles_Helper::get_articles( $order ),
+			'Cart'         =>
+			array(
+				'Handling' => BCO_Order_Cart_Helper::get_order_cart_handling( $order ),
+				'Shipping' => BCO_Order_Cart_Helper::get_order_cart_shipping( $order ),
+				'Total'    => BCO_Order_Cart_Helper::get_order_cart_total( $order ),
+			),
+		);
+		return $data;
+	}
+
+
+	/**
+	 * Request cart data
+	 *
+	 * @return array $data cart data.
+	 */
+	public function get_request_cart_data() {
 		$data = array(
 			'CheckoutData' =>
 			array(
