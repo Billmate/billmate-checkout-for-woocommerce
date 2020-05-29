@@ -179,6 +179,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$params = array(
 						'ajax_url'                   => admin_url( 'admin-ajax.php' ),
 						'select_another_method_text' => __( 'Select another payment method', 'billmate-checkout-for-woocommerce' ),
+						'checkout_success_url'       => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
+						'checkout_success_nonce'     => wp_create_nonce( 'bco_wc_checkout_success' ),
 					);
 
 					wp_localize_script(
