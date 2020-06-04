@@ -77,9 +77,17 @@ function bco_init_checkout() {
 			return;
 		}
 
-		update_post_meta( $order_id, '_transaction_id', $billmate_order['data']['orderid'] );
+		update_post_meta( $order_id, '_transaction_id', $billmate_order['data']['number'] );
 		WC()->session->set( 'bco_wc_payment_number', $billmate_order['data']['number'] );
 		WC()->session->set( 'bco_wc_order_id', $billmate_order['data']['orderid'] );
+
+		// Extract the hash from the Billmate checkout url.
+		$url   = $billmate_order['data']['url'];
+		$parts = explode( '/', $url );
+		$sum   = count( $parts );
+		$hash  = ( $parts[ $sum - 1 ] == 'test' ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
+		WC()->session->set( 'bco_wc_hash', $hash );
+
 		return $billmate_order;
 	}
 
@@ -114,6 +122,7 @@ function bco_wc_show_another_gateway_button() {
 function bco_wc_unset_sessions() {
 	WC()->session->__unset( 'bco_wc_payment_number' );
 	WC()->session->__unset( 'bco_wc_order_id' );
+	WC()->session->__unset( 'bco_wc_hash' );
 }
 
 
