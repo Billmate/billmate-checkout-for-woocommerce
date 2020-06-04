@@ -36,10 +36,15 @@ class BCO_Templates {
 	 * Plugin actions.
 	 */
 	public function __construct() {
-		// Override template if Billmate pay for order page.
-		add_filter( 'wc_get_template', array( $this, 'override_pay_template' ), 999, 2 );
-		// Override template if Billmate Checkout page.
-		add_filter( 'wc_get_template', array( $this, 'override_checkout_template' ), 999, 2 );
+		$bco_settings  = get_option( 'woocommerce_bco_settings' );
+		$checkout_flow = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+		if ( 'checkout' === $checkout_flow ) {
+			// Override template if Billmate Checkout page.
+			add_filter( 'wc_get_template', array( $this, 'override_checkout_template' ), 999, 2 );
+		} else {
+			// Override template if Billmate pay for order page.
+			add_filter( 'wc_get_template', array( $this, 'override_pay_template' ), 999, 2 );
+		}
 
 		// Template hooks.
 		add_action( 'bco_wc_after_wrapper', array( $this, 'add_wc_form' ), 10 );
@@ -58,45 +63,47 @@ class BCO_Templates {
 	 * @return string
 	 */
 	public function override_pay_template( $template, $template_name ) {
-		$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_STRING );
-		// Billmate Pay for Order.
-		if ( 'checkout/form-pay.php' === $template_name ) {
-			$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+		if ( is_checkout() ) {
+			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_STRING );
+			// Billmate Pay for Order.
+			if ( 'checkout/form-pay.php' === $template_name ) {
+				$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
 
-			if ( locate_template( 'woocommerce/billmate-pay.php' ) ) {
-				$billmate_pay_template = locate_template( 'woocommerce/billmate-pay.php' );
-			} else {
-				$billmate_pay_template = BILLMATE_CHECKOUT_PATH . '/templates/billmate-pay.php';
-			}
-
-			// Billmate pay for order page.
-			if ( array_key_exists( 'bco', $available_gateways ) ) {
-				// If chosen payment method exists.
-				if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
-					if ( empty( $confirm ) ) {
-						$template = $billmate_pay_template;
-					}
+				if ( locate_template( 'woocommerce/billmate-pay.php' ) ) {
+					$billmate_pay_template = locate_template( 'woocommerce/billmate-pay.php' );
+				} else {
+					$billmate_pay_template = BILLMATE_CHECKOUT_PATH . '/templates/billmate-pay.php';
 				}
 
-				// If chosen payment method does not exist and BCO is the first gateway.
-				if ( null === WC()->session->get( 'chosen_payment_method' ) || '' === WC()->session->get( 'chosen_payment_method' ) ) {
-					reset( $available_gateways );
-
-					if ( 'bco' === key( $available_gateways ) ) {
+				// Billmate pay for order page.
+				if ( array_key_exists( 'bco', $available_gateways ) ) {
+					// If chosen payment method exists.
+					if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
 						if ( empty( $confirm ) ) {
 							$template = $billmate_pay_template;
 						}
 					}
-				}
 
-				// If another gateway is saved in session, but has since become unavailable.
-				if ( WC()->session->get( 'chosen_payment_method' ) ) {
-					if ( ! array_key_exists( WC()->session->get( 'chosen_payment_method' ), $available_gateways ) ) {
+					// If chosen payment method does not exist and BCO is the first gateway.
+					if ( null === WC()->session->get( 'chosen_payment_method' ) || '' === WC()->session->get( 'chosen_payment_method' ) ) {
 						reset( $available_gateways );
 
 						if ( 'bco' === key( $available_gateways ) ) {
 							if ( empty( $confirm ) ) {
 								$template = $billmate_pay_template;
+							}
+						}
+					}
+
+					// If another gateway is saved in session, but has since become unavailable.
+					if ( WC()->session->get( 'chosen_payment_method' ) ) {
+						if ( ! array_key_exists( WC()->session->get( 'chosen_payment_method' ), $available_gateways ) ) {
+							reset( $available_gateways );
+
+							if ( 'bco' === key( $available_gateways ) ) {
+								if ( empty( $confirm ) ) {
+									$template = $billmate_pay_template;
+								}
 							}
 						}
 					}
