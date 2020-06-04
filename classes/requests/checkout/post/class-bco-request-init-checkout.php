@@ -42,7 +42,8 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 	 * @return array
 	 */
 	public function get_body( $order_id ) {
-		$data         = ( 'checkout' === $this->checkout_flow ) ? $this->get_request_cart_data() : $this->get_request_order_data( $order_id );
+		$data = ( 'checkout' === $this->checkout_flow ) ? $this->get_request_cart_data() : $this->get_request_order_data( $order_id );
+
 		$request_body = array(
 			'credentials' => array(
 				'id'   => $this->id,

@@ -74,7 +74,7 @@ jQuery(function($) {
                                 error: function() {
                                 },
                                 complete: function( data ) {
-                                    window.location.href = data.responseJSON.data.bco_wc_received_url;                                    
+                                    window.location.href = data.responseJSON.data.bco_wc_received_url;
                                 }
                             }
                         );

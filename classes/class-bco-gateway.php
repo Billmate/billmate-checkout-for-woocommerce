@@ -30,11 +30,13 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->enabled     = $this->get_option( 'enabled' );
-		$this->title       = $this->get_option( 'title' );
-		$this->description = $this->get_option( 'description' );
-		$this->debug       = $this->get_option( 'debug' );
-		$this->testmode    = 'yes' === $this->get_option( 'testmode' );
+		$this->settings      = $this->get_option( 'woocommerce_bco_settings' );
+		$this->enabled       = $this->get_option( 'enabled' );
+		$this->title         = $this->get_option( 'title' );
+		$this->description   = $this->get_option( 'description' );
+		$this->debug         = $this->get_option( 'debug' );
+		$this->testmode      = 'yes' === $this->get_option( 'testmode' );
+		$this->checkout_flow = ( isset( $this->settings['checkout_flow'] ) ) ? $this->settings['checkout_flow'] : 'checkout';
 
 		// Supports.
 		$this->supports = array(
@@ -73,7 +75,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		// Return pay for order redirect.
 		return array(
 			'result'   => 'success',
-			'redirect' => $order->get_checkout_payment_url(),
+			'redirect' => ( 'checkout' === $this->checkout_flow ) ? $order->get_return_url() : $order->get_checkout_payment_url(),
 		);
 	}
 
