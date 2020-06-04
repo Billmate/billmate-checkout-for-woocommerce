@@ -101,8 +101,9 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			add_action( 'bco_before_load_scripts', array( $this, 'bco_maybe_initialize_payment' ) );
 
 			// Set class variables.
-			$this->api    = new BCO_API();
-			$this->logger = new BCO_Logger();
+			$this->api              = new BCO_API();
+			$this->logger           = new BCO_Logger();
+			$this->order_management = new BCO_Order_Management();
 
 			do_action( 'bco_initiated' );
 		}
@@ -119,6 +120,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/class-bco-gateway.php';
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/class-bco-logger.php';
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/class-bco-templates.php';
+			include_once BILLMATE_CHECKOUT_PATH . '/classes/class-bco-order-management.php';
 
 			// Requests.
 			include_once BILLMATE_CHECKOUT_PATH . '/classes/requests/class-bco-request.php';
