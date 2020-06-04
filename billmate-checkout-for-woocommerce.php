@@ -144,8 +144,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 * @return void
 		 */
 		public function redirect_to_thankyou() {
-			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) ) {
-				$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : '';
+			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) ) { // phpcs:ignore
+				$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
 				$order    = wc_get_order( $order_id );
 
 				if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {

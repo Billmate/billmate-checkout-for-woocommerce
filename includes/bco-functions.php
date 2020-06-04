@@ -62,7 +62,7 @@ function bco_init_checkout() {
 		$url   = $billmate_order['data']['url'];
 		$parts = explode( '/', $url );
 		$sum   = count( $parts );
-		$hash  = ( $parts[ $sum - 1 ] == 'test' ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
+		$hash  = ( 'test' === $parts[ $sum - 1 ] ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
 		WC()->session->set( 'bco_wc_hash', $hash );
 
 		return $billmate_order;

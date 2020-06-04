@@ -97,7 +97,9 @@ class BCO_AJAX extends WC_AJAX {
 		$bco_payment_number = $bco_order['data']['PaymentData']['number'];
 		switch ( strtolower( $bco_order['data']['PaymentData']['status'] ) ) {
 			case 'pending':
-				$order->add_order_note( sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Payment number: %s', 'billmate-checkout-for-woocommerce' ), $bco_payment_number ) );
+				// Translators: Billmate pyment number.
+				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Payment number: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_payment_number ) );
+				$order->add_order_note( $note );
 				update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
 				self::$order_is_valid = true;
 				break;
