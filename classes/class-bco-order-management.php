@@ -119,7 +119,7 @@ class BCO_Order_Management {
 
 		// Activate order.
 		$billmate_order = BCO_WC()->api->request_activate_payment( $order_number );
-		error_log( 'billmate ordER ' . var_export( $billmate_order, true ) );
+
 		// Check if we were successful.
 		if ( is_wp_error( $billmate_order ) ) { // handle error.
 			// If error save error message.
