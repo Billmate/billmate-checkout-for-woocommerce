@@ -50,6 +50,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function __construct() {
 			// Initiate the plugin.
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
+			add_action( 'wp_head', array( $this, 'redirect_to_thankyou' ) );
 		}
 
 		/**
@@ -135,6 +136,40 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			// Includes.
 			include_once BILLMATE_CHECKOUT_PATH . '/includes/bco-functions.php';
 
+		}
+
+		/**
+		 * Redirects the customer to the proper thank you page.
+		 *
+		 * @return void
+		 */
+		public function redirect_to_thankyou() {
+			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) ) {
+				$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : '';
+				$order    = wc_get_order( $order_id );
+
+				if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+					// Get Checkout and set payment method title.
+					$bco_checkout = BCO_WC()->api->request_get_checkout();
+					bco_set_payment_method_title( $order_id, $bco_checkout );
+
+					// Complete payment if no error and status is Paid.
+					if ( ! isset( $bco_checkout['code'] ) && 'Paid' === $bco_checkout['data']['PaymentData']['order']['status'] ) {
+						$bco_payment_number = $bco_checkout['data']['PaymentData']['number'];
+						// Translators: Billmate pyment number.
+						$note = sprintf( __( 'Payment via Billmate Checkout. Payment number: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_payment_number ) );
+						$order->add_order_note( $note );
+						$order->payment_complete( $bco_payment_number );
+
+						update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
+						do_action( 'kco_wc_payment_complete', $order_id, $bco_checkout );
+
+						// Redirect and exit.
+						header( 'Location:' . $order->get_checkout_order_received_url() );
+						exit;
+					}
+				}
+			}
 		}
 
 		/**
