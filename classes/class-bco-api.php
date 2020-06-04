@@ -30,6 +30,31 @@ class BCO_API {
 	}
 
 	/**
+	 * Get Billmate Checkout.
+	 *
+	 * @return mixed
+	 */
+	public function request_get_checkout() {
+		$request  = new BCO_Request_Get_Checkout();
+		$response = $request->request();
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
+	 * Get Billmate Payment.
+	 *
+	 * @param string $bco_order_number The Billmate order number.
+	 * @return mixed
+	 */
+	public function request_get_payment( $bco_order_number = '' ) {
+		$request  = new BCO_Request_Get_Payment();
+		$response = $request->request( $bco_order_number );
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
 	 * Checks for WP Errors and returns either the response as array or a false.
 	 *
 	 * @param array $response The response from the request.
