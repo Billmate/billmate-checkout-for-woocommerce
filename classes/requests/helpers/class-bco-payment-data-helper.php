@@ -21,12 +21,20 @@ class BCO_Payment_Data_Helper {
 	 * @return array
 	 */
 	public static function get_payment_data( $order ) {
+		$order_id         = $order->get_id();
+		$confirmation_url = add_query_arg(
+			array(
+				'bco_confirm' => 'yes',
+				'wc_order_id' => $order_id,
+			),
+			$order->get_checkout_payment_url()
+		);
 		return array(
 			'currency'  => self::get_currency( $order ),
 			'language'  => self::get_language(),
 			'country'   => self::get_country( $order ),
-			'orderid'   => $order->get_id(),
-			'accepturl' => $order->get_checkout_order_received_url(),
+			'orderid'   => $order_id,
+			'accepturl' => $confirmation_url,
 			'cancelurl' => $order->get_cancel_order_url_raw(),
 		);
 	}
