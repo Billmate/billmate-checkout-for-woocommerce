@@ -55,6 +55,32 @@ class BCO_API {
 	}
 
 	/**
+	 * Activate Billmate Payment.
+	 *
+	 * @param string $bco_order_number The Billmate order number.
+	 * @return mixed
+	 */
+	public function request_activate_payment( $bco_order_number = '' ) {
+		$request  = new BCO_Request_Activate_Payment();
+		$response = $request->request( $bco_order_number );
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
+	 * Cancel Billmate Payment.
+	 *
+	 * @param string $bco_order_number The Billmate order number.
+	 * @return mixed
+	 */
+	public function request_cancel_payment( $bco_order_number = '' ) {
+		$request  = new BCO_Request_Cancel_Payment();
+		$response = $request->request( $bco_order_number );
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
 	 * Checks for WP Errors and returns either the response as array or a false.
 	 *
 	 * @param array $response The response from the request.
