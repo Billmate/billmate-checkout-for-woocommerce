@@ -58,20 +58,22 @@ class BCO_AJAX extends WC_AJAX {
 		$order_id = WC()->session->get( 'bco_wc_order_id' );
 		$order    = wc_get_order( $order_id );
 
-		if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
-			// Retrieve the Billmate order number from get_checkout request.
-			$bco_checkout = BCO_WC()->api->request_get_checkout();
+		if ( is_object( $order ) ) {
+			if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+				// Retrieve the Billmate order number from get_checkout request.
+				$bco_checkout = BCO_WC()->api->request_get_checkout();
 
-			if ( ! isset( $bco_checkout['code'] ) && isset( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
-				$bco_order_number = ( isset( $bco_checkout['data']['PaymentData']['order']['number'] ) ) ? $bco_checkout['data']['PaymentData']['order']['number'] : '';
+				if ( ! isset( $bco_checkout['code'] ) && isset( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
+					$bco_order_number = ( isset( $bco_checkout['data']['PaymentData']['order']['number'] ) ) ? $bco_checkout['data']['PaymentData']['order']['number'] : '';
 
-				// Make get_payment request if we have Billmate order number.
-				if ( '' !== $bco_order_number ) {
-					$bco_order = BCO_WC()->api->request_get_payment( $bco_order_number );
+					// Make get_payment request if we have Billmate order number.
+					if ( '' !== $bco_order_number ) {
+						$bco_order = BCO_WC()->api->request_get_payment( $bco_order_number );
+					}
+					// Set payment method title and confirm order.
+					bco_set_payment_method_title( $order_id, $bco_order );
+					self::bco_confirm_billmate_order( $order_id, $bco_checkout );
 				}
-				// Set payment method title and confirm order.
-				bco_set_payment_method_title( $order_id, $bco_order );
-				self::bco_confirm_billmate_order( $order_id, $bco_order );
 			}
 		}
 
@@ -89,18 +91,20 @@ class BCO_AJAX extends WC_AJAX {
 	 * Confirm Billmate order.
 	 *
 	 * @param string $order_id The WooCommerce order id.
-	 * @param array  $bco_order The Billmate order.
+	 * @param array  $bco_checkout The Billmate checkout.
 	 * @return void
 	 */
-	public static function bco_confirm_billmate_order( $order_id, $bco_order = array() ) {
+	public static function bco_confirm_billmate_order( $order_id, $bco_checkout = array() ) {
 		$order              = wc_get_order( $order_id );
-		$bco_payment_number = $bco_order['data']['PaymentData']['number'];
-		switch ( strtolower( $bco_order['data']['PaymentData']['status'] ) ) {
+		$bco_payment_number = $bco_checkout['data']['PaymentData']['number'];
+		$bco_order_number   = $bco_checkout['data']['PaymentData']['order']['number'];
+		switch ( strtolower( $bco_checkout['data']['PaymentData']['invoice']['status'] ) ) {
 			case 'pending':
 				// Translators: Billmate pyment number.
 				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Payment number: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_payment_number ) );
 				$order->add_order_note( $note );
 				update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
+				update_post_meta( $order_id, '_billmate_order_number', $bco_order_number );
 				self::$order_is_valid = true;
 				break;
 			case 'created':
@@ -110,7 +114,8 @@ class BCO_AJAX extends WC_AJAX {
 				$order->payment_complete( $bco_payment_number );
 
 				update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
-				do_action( 'bco_wc_payment_complete', $order_id, $bco_order );
+				update_post_meta( $order_id, '_billmate_order_number', $bco_order_number );
+				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
 				self::$order_is_valid = true;
 				break;
 			case 'paid':
@@ -120,7 +125,8 @@ class BCO_AJAX extends WC_AJAX {
 				$order->payment_complete( $bco_payment_number );
 
 				update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
-				do_action( 'bco_wc_payment_complete', $order_id, $bco_order );
+				update_post_meta( $order_id, '_billmate_order_number', $bco_order_number );
+				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
 				self::$order_is_valid = true;
 				break;
 			case 'cancelled':

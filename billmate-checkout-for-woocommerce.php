@@ -160,12 +160,14 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					// Complete payment if no error and status is Paid.
 					if ( ! isset( $bco_checkout['code'] ) && 'Paid' === $bco_checkout['data']['PaymentData']['order']['status'] ) {
 						$bco_payment_number = $bco_checkout['data']['PaymentData']['number'];
+						$bco_order_number   = $bco_checkout['data']['PaymentData']['order']['number'];
 						// Translators: Billmate pyment number.
 						$note = sprintf( __( 'Payment via Billmate Checkout. Payment number: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_payment_number ) );
 						$order->add_order_note( $note );
 						$order->payment_complete( $bco_payment_number );
 
 						update_post_meta( $order_id, '_billmate_payment_number', $bco_payment_number );
+						update_post_meta( $order_id, '_billmate_order_number', $bco_order_number );
 						do_action( 'kco_wc_payment_complete', $order_id, $bco_checkout );
 
 						// Redirect and exit.
