@@ -39,12 +39,6 @@ $settings = array(
 		'label'   => __( 'Enable Billmate Checkout testmode', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'no',
 	),
-	'order_management'           => array(
-		'title'   => __( 'Enable Order Management', 'billmate-checkout-for-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Enable Billmate order capture on WooCommerce order completion and Billmate order cancellation on WooCommerce order cancellation', 'billmate-checkout-for-woocommerce' ),
-		'default' => 'yes',
-	),
 	'debug'                      => array(
 		'title'       => __( 'Debug Log', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'checkbox',
