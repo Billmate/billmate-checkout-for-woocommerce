@@ -29,13 +29,15 @@ class BCO_Payment_Data_Helper {
 			),
 			$order->get_checkout_payment_url()
 		);
+		$push_url         = home_url( '/wc-api/BCO_WC_Push/' );
 		return array(
-			'currency'  => self::get_currency( $order ),
-			'language'  => self::get_language(),
-			'country'   => self::get_country( $order ),
-			'orderid'   => $order_id,
-			'accepturl' => $confirmation_url,
-			'cancelurl' => $order->get_cancel_order_url_raw(),
+			'currency'    => self::get_currency( $order ),
+			'language'    => self::get_language(),
+			'country'     => self::get_country( $order ),
+			'orderid'     => $order_id,
+			'accepturl'   => $confirmation_url,
+			'cancelurl'   => $order->get_cancel_order_url_raw(),
+			'callbackurl' => $push_url,
 		);
 	}
 
