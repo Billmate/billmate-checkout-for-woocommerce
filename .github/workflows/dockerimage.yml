@@ -2,6 +2,41 @@ name: Billmate PHPUnit and PHPCS
 on: [push]
 
 jobs:
+  WC_4-2-0:
+    name: Latest WP - 4.2.0 WC
+    strategy:
+      matrix:
+        wordpress: [latest]
+        woocommerce: [4.2.0]
+    runs-on: ubuntu-latest
+    container:
+      image: chriszarate/wordpress-phpunit:6.0.6
+      volumes:
+        - "testsuite:/tmp"
+    services:
+      mysql:
+        image: mariadb:10.2
+        env:
+          MYSQL_DATABASE: "wordpress_test"
+          MYSQL_ROOT_PASSWORD: "password"
+    steps:
+    - name: Settup repo
+      uses: actions/checkout@v2
+      with:
+        path: main
+    - name: Settup WooCommerce
+      uses: actions/checkout@v2
+      with:
+        repository: woocommerce/woocommerce
+        ref: ${{ matrix.woocommerce }}
+        path: woocommerce
+    - name: Install WP Testsuite
+      run: |
+        chmod +x main/tests/bin/install-wp-tests.sh
+        ./main/tests/bin/install-wp-tests.sh wordpress_test root password mysql ${{ matrix.wordpress }} true
+    - name: Run PHPUnit
+      run: |
+        phpunit -c main/phpunit.xml
   WC_4-1-0:
     name: Latest WP - 4.1.0 WC
     strategy:
