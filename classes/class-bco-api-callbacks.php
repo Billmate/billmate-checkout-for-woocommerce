@@ -46,21 +46,41 @@ class BCO_API_Callbacks {
 	 * Push callback function.
 	 */
 	public function push_cb() {
-		$post       = file_get_contents( 'php://input' );
-		$order_id   = $post['data']['orderid'];
-		$bco_status = strtolower( $post['data']['status'] );
-		$order      = wc_get_order( $order_id );
+		$post = file_get_contents( 'php://input' );
+		$data = json_decode( $post, true );
+
+		$order_id       = $data['data']['orderid'];
+		$transaction_id = $data['data']['number'];
+		$bco_status     = strtolower( $data['data']['status'] );
+		$order          = wc_get_order( $order_id );
 
 		if ( ! $order->has_status( array( 'processing', 'completed' ) ) ) {
-			if ( 'created' === $bco_status ) {
-				$order->payment_complete( $klarna_order_id );
-				// translators: Billmate order ID.
-				$note = sprintf( __( 'Payment via Billmate Checkout, order ID: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $order_id ) );
-				$order->add_order_note( $note );
-			} elseif ( 'pending' === $bco_status ) {
-				// translators: Billmate order ID.
-				$note = sprintf( __( 'Billmate order is under review, order ID: %s.', 'billmate-checkout-for-woocommerce' ), sanitize_key( $order_id ) );
-				$order->update_status( 'on-hold', $note );
+			switch ( $bco_status ) {
+				case 'pending':
+					// Translators: Billmate transaction id.
+					$note = sprintf( __( 'Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $transaction_id ) );
+					$order->add_order_note( $note );
+					update_post_meta( $order_id, '_billmate_transaction_id', $transaction_id );
+					$order->update_status( 'on-hold' );
+					break;
+				case 'created':
+					// Translators: Billmate transaction id.
+					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $transaction_id ) );
+					$order->add_order_note( $note );
+					$order->payment_complete( $transaction_id );
+					update_post_meta( $order_id, '_billmate_transaction_id', $transaction_id );
+					break;
+				case 'paid':
+					// Translators: Billmate transaction id.
+					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $transaction_id ) );
+					$order->add_order_note( $note );
+					$order->payment_complete( $transaction_id );
+					update_post_meta( $order_id, '_billmate_transaction_id', $transaction_id );
+					break;
+				case 'cancelled':
+					break;
+				case 'failed':
+					break;
 			}
 		}
 	}
