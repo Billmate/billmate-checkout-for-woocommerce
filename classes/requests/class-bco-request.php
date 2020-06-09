@@ -67,9 +67,9 @@ class BCO_Request {
 			return $response;
 		}
 
+		$data = 'URL: ' . $request_url . ' - ' . wp_json_encode( $request_args );
 		// Check the status code, if its not between 200 and 299 then its an error.
 		if ( wp_remote_retrieve_response_code( $response ) < 200 || wp_remote_retrieve_response_code( $response ) > 299 ) {
-			$data          = 'URL: ' . $request_url . ' - ' . wp_json_encode( $request_args );
 			$error_message = '';
 			// Get the error messages.
 			if ( null !== $response['response'] ) {
@@ -88,6 +88,14 @@ class BCO_Request {
 			}
 			return new WP_Error( wp_remote_retrieve_response_code( $response ), $error_message, $data );
 		}
-		return json_decode( wp_remote_retrieve_body( $response ), true );
+
+		// If the response body has code, its an error. Request itself went OK.
+		$response_body = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ( isset( $response_body['code'] ) ) {
+			$code          = $response_body['code'];
+			$error_message = $response_body['message'];
+			return new WP_Error( $code, $error_message, $data );
+		}
+		return $response_body;
 	}
 }
