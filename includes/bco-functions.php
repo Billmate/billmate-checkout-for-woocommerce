@@ -54,8 +54,6 @@ function bco_init_checkout() {
 			return;
 		}
 
-		update_post_meta( $order_id, '_transaction_id', $billmate_order['data']['number'] );
-		WC()->session->set( 'bco_wc_payment_number', $billmate_order['data']['number'] );
 		WC()->session->set( 'bco_wc_order_id', $billmate_order['data']['orderid'] );
 
 		// Extract the hash from the Billmate checkout url.
