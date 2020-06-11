@@ -2,7 +2,7 @@
 /**
  * Articles helper.
  *
- * @package Billmate_Checkout/Classes/Helpers
+ * @package Billmate_Checkout/Classes/Helpers/Cart
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

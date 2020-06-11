@@ -2,7 +2,7 @@
 /**
  * Payment data helper.
  *
- * @package Billmate_Checkout/Classes/Helpers
+ * @package Billmate_Checkout/Classes/Helpers/Order
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
