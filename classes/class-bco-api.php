@@ -44,38 +44,12 @@ class BCO_API {
 	/**
 	 * Get Billmate Payment.
 	 *
-	 * @param string $bco_order_number The Billmate order number.
+	 * @param string $bco_transaction_id The Billmate transaction id.
 	 * @return mixed
 	 */
-	public function request_get_payment( $bco_order_number = '' ) {
+	public function request_get_payment( $bco_transaction_id = '' ) {
 		$request  = new BCO_Request_Get_Payment();
-		$response = $request->request( $bco_order_number );
-
-		return $this->check_for_api_error( $response );
-	}
-
-	/**
-	 * Activate Billmate Payment.
-	 *
-	 * @param string $bco_order_number The Billmate order number.
-	 * @return mixed
-	 */
-	public function request_activate_payment( $bco_order_number = '' ) {
-		$request  = new BCO_Request_Activate_Payment();
-		$response = $request->request( $bco_order_number );
-
-		return $this->check_for_api_error( $response );
-	}
-
-	/**
-	 * Cancel Billmate Payment.
-	 *
-	 * @param string $bco_order_number The Billmate order number.
-	 * @return mixed
-	 */
-	public function request_cancel_payment( $bco_order_number = '' ) {
-		$request  = new BCO_Request_Cancel_Payment();
-		$response = $request->request( $bco_order_number );
+		$response = $request->request( $bco_transaction_id );
 
 		return $this->check_for_api_error( $response );
 	}
