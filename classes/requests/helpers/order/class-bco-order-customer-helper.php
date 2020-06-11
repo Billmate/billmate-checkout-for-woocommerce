@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Customer helper class.
  */
-class BCO_Customer_Helper {
+class BCO_Order_Customer_Helper {
 
 	/**
 	 * Get the customer billing key value.
