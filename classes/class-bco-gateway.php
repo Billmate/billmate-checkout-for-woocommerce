@@ -80,6 +80,18 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * This plugin doesn't handle order management, but it allows Billmate Order Management plugin to process refunds
+	 * and then return true or false.
+	 *
+	 * @param string $order_id The WooCommerce order ID.
+	 * @param float  $amount The amount to be refunded.
+	 * @param string $reason The reason given for the refund.
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		return apply_filters( 'wc_billmate_checkout_process_refund', false, $order_id, $amount, $reason );
+	}
+
+	/**
 	 * Initialise Gateway Settings Form Fields.
 	 *
 	 * @return void
