@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Payment data helper class.
  */
-class BCO_Payment_Data_Helper {
+class BCO_Order_Payment_Data_Helper {
 
 	/**
 	 * Get the payment data key value.

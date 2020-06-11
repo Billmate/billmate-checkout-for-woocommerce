@@ -1,39 +1,39 @@
 <?php // phpcs:ignore
 /**
  *
- * Test_BCO_Payment_Data_Helper class
+ * Test_BCO_Order_Payment_Data_Helper class
  *
  * @package category
  */
 /**
- * Test_BCO_Payment_Data_Helper class
+ * Test_BCO_Order_Payment_Data_Helper class
  */
-class Test_BCO_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
+class Test_BCO_Order_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	/**
-	 * Test BCO_Payment_Data_Helper::get_currency
+	 * Test BCO_Order_Payment_Data_Helper::get_currency
 	 *
 	 * @return void
 	 */
 	public function test_get_currency() {
-		$this->assertEquals( 'SEK', BCO_Payment_Data_Helper::get_currency( $this->order ) );
+		$this->assertEquals( 'SEK', BCO_Order_Payment_Data_Helper::get_currency( $this->order ) );
 	}
 
 	/**
-	 * Test BCO_Payment_Data_Helper::get_language
+	 * Test BCO_Order_Payment_Data_Helper::get_language
 	 *
 	 * @return void
 	 */
 	public function test_get_language() {
-		$this->assertEquals( 'sv', BCO_Payment_Data_Helper::get_language() );
+		$this->assertEquals( 'sv', BCO_Order_Payment_Data_Helper::get_language() );
 	}
 
 	/**
-	 * Test BCO_Payment_Data_Helper::get_country
+	 * Test BCO_Order_Payment_Data_Helper::get_country
 	 *
 	 * @return void
 	 */
 	public function test_get_country() {
-		$this->assertEquals( 'SE', BCO_Payment_Data_Helper::get_country( $this->order ) );
+		$this->assertEquals( 'SE', BCO_Order_Payment_Data_Helper::get_country( $this->order ) );
 	}
 
 	/**
