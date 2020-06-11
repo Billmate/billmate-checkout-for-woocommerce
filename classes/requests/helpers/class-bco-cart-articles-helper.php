@@ -38,7 +38,7 @@ class BCO_Cart_Articles_Helper {
 	 * @param array $cart_item Cart item.
 	 * @return string $item_title Cart item title.
 	 */
-	public function get_title( $cart_item ) {
+	public static function get_title( $cart_item ) {
 		$cart_item_data = $cart_item['data'];
 		$item_title     = $cart_item_data->get_name();
 
@@ -51,7 +51,7 @@ class BCO_Cart_Articles_Helper {
 	 * @param array $cart_item Cart item.
 	 * @return int $item_quantity Cart item quantity.
 	 */
-	public function get_quantity( $cart_item ) {
+	public static function get_quantity( $cart_item ) {
 		return round( $cart_item['quantity'] );
 	}
 
@@ -61,10 +61,31 @@ class BCO_Cart_Articles_Helper {
 	 * @param array $cart_item Cart item.
 	 * @return int $item_price Item price.
 	 */
-	public function get_article_price( $cart_item ) {
+	public static function get_article_price( $cart_item ) {
 		$item_subtotal = wc_get_price_excluding_tax( $cart_item['data'] );
-		$item_price    = number_format( $item_subtotal, wc_get_price_decimals(), '.', '' ) * 100;
-		return round( $item_price );
+		return round( $item_subtotal * 100 );
+	}
+
+	/**
+	 * Get cart row total articles price excluding tax.
+	 *
+	 * @param array $cart_item cart item.
+	 * @return int $item_price Item price excluding tax.
+	 */
+	public static function get_without_tax( $cart_item ) {
+		$items_subtotal = $cart_item['line_total'];
+		return round( $items_subtotal * 100 );
+	}
+
+	/**
+	 * Get cart item article tax rate.
+	 *
+	 * @param array $cart_item cart item.
+	 * @return int $item_tax_rate Item tax rate.
+	 */
+	public static function get_tax_rate( $cart_item ) {
+		$tax_rate = ( $cart_item['line_tax'] > 0 ) ? $cart_item['line_tax'] / $cart_item['line_total'] * 100 : 0;
+		return round( $tax_rate );
 	}
 
 }

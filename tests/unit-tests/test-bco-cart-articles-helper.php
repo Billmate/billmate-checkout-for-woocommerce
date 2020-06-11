@@ -38,7 +38,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		foreach ( $cart_items as $cart_item ) {
 			$product = $this->get_product( $cart_item );
 			$product->set_sku( 'SKU123' );
-			$article_number = ( new BCO_Cart_Articles_Helper() )->get_article_number( $product );
+			$article_number = BCO_Cart_Articles_Helper::get_article_number( $product );
 			$this->assertEquals( 'SKU123', $article_number );
 		}
 		WC()->cart->empty_cart();
@@ -55,7 +55,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
 			$product        = $this->get_product( $cart_item );
-			$article_number = ( new BCO_Cart_Articles_Helper() )->get_article_number( $product );
+			$article_number = BCO_Cart_Articles_Helper::get_article_number( $product );
 			$this->assertEquals( $product->get_id(), $article_number );
 		}
 		WC()->cart->empty_cart();
@@ -71,7 +71,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		WC()->cart->calculate_totals();
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$title = ( new BCO_Cart_Articles_Helper() )->get_title( $cart_item );
+			$title = BCO_Cart_Articles_Helper::get_title( $cart_item );
 			$this->assertEquals( 'Default product name', $title );
 		}
 		WC()->cart->empty_cart();
@@ -87,7 +87,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		WC()->cart->calculate_totals();
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$quantity = ( new BCO_Cart_Articles_Helper() )->get_quantity( $cart_item );
+			$quantity = BCO_Cart_Articles_Helper::get_quantity( $cart_item );
 			$this->assertEquals( 1, $quantity );
 		}
 		WC()->cart->empty_cart();
@@ -111,7 +111,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$cart_items = WC()->cart->get_cart();
 
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_25_inc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_25_inc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -119,7 +119,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->setup_cart( '12' );
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_12_inc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_12_inc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -127,7 +127,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->setup_cart( '6' );
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_6_inc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_6_inc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -137,7 +137,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->setup_cart( '25' );
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_25_exc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_25_exc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -145,7 +145,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->setup_cart( '12' );
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_12_exc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_12_exc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -153,7 +153,7 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->setup_cart( '6' );
 		$cart_items = WC()->cart->get_cart();
 		foreach ( $cart_items as $cart_item ) {
-			$item_price_6_exc = ( new BCO_Cart_Articles_Helper() )->get_article_price( $cart_item );
+			$item_price_6_exc = BCO_Cart_Articles_Helper::get_article_price( $cart_item );
 		}
 		WC()->cart->empty_cart();
 
@@ -164,6 +164,79 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->assertEquals( 10000, $item_price_25_exc, 'get_article_price 25% exc tax' );
 		$this->assertEquals( 10000, $item_price_12_exc, 'get_article_price 12% exc tax' );
 		$this->assertEquals( 10000, $item_price_6_exc, 'get_article_price 6% exc tax' );
+	}
+
+	/**
+	 * Test BCO_Cart_Articles_Helper::get_without_tax
+	 *
+	 * @return void
+	 */
+	public function test_get_without_tax() {
+		// Create tax rates.
+		$this->tax_rate_ids[] = $this->create_tax_rate( '25' );
+		$this->tax_rate_ids[] = $this->create_tax_rate( '12' );
+		$this->tax_rate_ids[] = $this->create_tax_rate( '6' );
+
+		// With tax.
+		update_option( 'woocommerce_prices_include_tax', 'yes' );
+		// 25% inc tax.
+		$this->setup_cart( '25' );
+		$cart_items = WC()->cart->get_cart();
+
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_25_inc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// 12% inc tax.
+		$this->setup_cart( '12' );
+		$cart_items = WC()->cart->get_cart();
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_12_inc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// 6% inc tax.
+		$this->setup_cart( '6' );
+		$cart_items = WC()->cart->get_cart();
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_6_inc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// Without tax.
+		update_option( 'woocommerce_prices_include_tax', 'no' );
+		// 25% exc tax.
+		$this->setup_cart( '25' );
+		$cart_items = WC()->cart->get_cart();
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_25_exc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// 12% exc tax.
+		$this->setup_cart( '12' );
+		$cart_items = WC()->cart->get_cart();
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_12_exc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// 6% exc tax.
+		$this->setup_cart( '6' );
+		$cart_items = WC()->cart->get_cart();
+		foreach ( $cart_items as $cart_item ) {
+			$item_price_6_exc = BCO_Cart_Articles_Helper::get_without_tax( $cart_item );
+		}
+		WC()->cart->empty_cart();
+
+		// Assertions.
+		$this->assertEquals( 8000, $item_price_25_inc, 'get_without_tax 25% inc tax' );
+		$this->assertEquals( 8929, $item_price_12_inc, 'get_without_tax 12% inc tax' );
+		$this->assertEquals( 9434, $item_price_6_inc, 'get_without_tax 6% inc tax' );
+		$this->assertEquals( 10000, $item_price_25_exc, 'get_without_tax 25% exc tax' );
+		$this->assertEquals( 10000, $item_price_12_exc, 'get_without_tax 12% exc tax' );
+		$this->assertEquals( 10000, $item_price_6_exc, 'get_without_tax 6% exc tax' );
 	}
 
 	/**
