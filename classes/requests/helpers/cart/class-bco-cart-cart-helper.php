@@ -57,7 +57,7 @@ class BCO_Cart_Cart_Helper {
 			$shipping_rates = WC_Tax::get_shipping_tax_rates();
 			$vat            = array_shift( $shipping_rates );
 			if ( isset( $vat['rate'] ) ) {
-				$shipping_tax_rate = round( $vat['rate'] * 100 );
+				$shipping_tax_rate = round( $vat['rate'] );
 			} else {
 				$shipping_tax_rate = 0;
 			}
@@ -71,31 +71,31 @@ class BCO_Cart_Cart_Helper {
 	/**
 	 * Get cart total excluding tax.
 	 *
-	 * @param array $cart_item Cart item.
 	 * @return int $total_without_tax order total excl tax.
 	 */
-	public static function get_total_without_tax( $cart_item ) {
-		return round( ( $cart_item->get_total() - $cart_item->get_total_tax() ) * 100 );
+	public static function get_total_without_tax() {
+		$total             = WC()->cart->total;
+		$tax_total         = WC()->cart->tax_total;
+		$total_without_tax = $total - $tax_total;
+		return round( $total_without_tax * 100 );
 	}
 
 	/**
 	 * Get cart total tax.
 	 *
-	 * @param array $cart_item Cart item.
 	 * @return int $total_tax order total tax.
 	 */
-	public static function get_total_tax( $cart_item ) {
-		return round( $cart_item->get_total_tax() * 100 );
+	public static function get_total_tax() {
+		return round( WC()->cart->tax_total * 100 );
 	}
 
 	/**
 	 * Get order total inclusive tax.
 	 *
-	 * @param array $cart_item Cart item.
 	 * @return int $total_with_tax order total incl tax.
 	 */
-	public static function get_total_with_tax( $cart_item ) {
-		return round( $cart_item->get_total() * 100 );
+	public static function get_total_with_tax() {
+		return round( WC()->cart->total * 100 );
 	}
 
 }
