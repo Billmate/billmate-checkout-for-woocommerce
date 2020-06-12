@@ -15,6 +15,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BCO_Cart_Articles_Helper {
 
 	/**
+	 * Gets the articles for the order.
+	 *
+	 * @return array
+	 */
+	public static function get_articles() {
+		$articles   = array();
+		$cart_items = WC()->cart->get_cart();
+
+		foreach ( $cart_items as $cart_item ) {
+			array_push( $articles, self::get_cart_lines( $cart_item ) );
+		}
+
+		return $articles;
+	}
+
+	/**
+	 * Gets the formatted cart lines.
+	 *
+	 * @param array $cart_item cart item.
+	 * @return array
+	 */
+	public static function get_cart_lines( $cart_item ) {
+		if ( $cart_item['variation_id'] ) {
+			$product = wc_get_product( $cart_item['variation_id'] );
+		} else {
+			$product = wc_get_product( $cart_item['product_id'] );
+		}
+		return array(
+			'artnr'      => self::get_article_number( $product ),
+			'title'      => self::get_title( $cart_item ),
+			'quantity'   => self::get_quantity( $cart_item ),
+			'aprice'     => self::get_article_price( $cart_item ),
+			'withouttax' => self::get_without_tax( $cart_item ),
+			'taxrate'    => self::get_tax_rate( $cart_item ),
+		);
+	}
+
+	/**
 	 * Get cart item article number.
 	 *
 	 * Returns SKU or product ID.
