@@ -40,53 +40,34 @@ class Test_BCO_Cart_Cart_Helper extends AKrokedil_Unit_Test_Case {
 		update_option( 'woocommerce_prices_include_tax', 'yes' );
 		// 25% inc tax.
 		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_25_inc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_25_inc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// 12% inc tax.
 		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_12_inc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_12_inc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// 6% inc tax.
 		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_6_inc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_6_inc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// Without tax.
 		update_option( 'woocommerce_prices_include_tax', 'no' );
 		// 25% exc tax.
 		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_25_exc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_25_exc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// 12% exc tax.
 		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_12_exc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_12_exc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// 6% exc tax.
 		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$item_price_6_exc = BCO_Cart_Cart_Helper::get_handling_without_tax( $cart_item );
-		}
+		$item_price_6_exc = BCO_Cart_Cart_Helper::get_handling_without_tax();
 		WC()->cart->empty_cart();
 
 		// Clear data.
@@ -119,53 +100,34 @@ class Test_BCO_Cart_Cart_Helper extends AKrokedil_Unit_Test_Case {
 		update_option( 'woocommerce_prices_include_tax', 'yes' );
 		// 25% inc tax.
 		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_25_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_25_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// 12% inc tax.
 		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_12_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_12_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// 6% inc tax.
 		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_6_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_6_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// Without tax.
 		update_option( 'woocommerce_prices_include_tax', 'no' );
 		// 25% exc tax.
 		$this->setup_cart( '25' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_25_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_25_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// 12% exc tax.
 		$this->setup_cart( '12' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_12_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_12_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// 6% exc tax.
 		$this->setup_cart( '6' );
-		$cart_items = WC()->cart->get_cart();
-		foreach ( $cart_items as $cart_item ) {
-			$handling_tax_rate_6_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate( $cart_item );
-		}
+		$handling_tax_rate_6_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 		WC()->cart->empty_cart();
 
 		// Clear data.
@@ -557,22 +519,6 @@ class Test_BCO_Cart_Cart_Helper extends AKrokedil_Unit_Test_Case {
 			'tax_rate_class'    => "${rate}percent",
 		);
 		return WC_Tax::_insert_tax_rate( $tax_data );
-	}
-
-	/**
-	 * Helper function to get product from cart item.
-	 *
-	 * @param array $cart_item The WooCommerce cart item.
-	 * @return WC_Product
-	 */
-	public function get_product( $cart_item ) {
-		if ( $cart_item['variation_id'] ) {
-			$product = wc_get_product( $cart_item['variation_id'] );
-		} else {
-			$product = wc_get_product( $cart_item['product_id'] );
-		}
-
-		return $product;
 	}
 
 	/**
