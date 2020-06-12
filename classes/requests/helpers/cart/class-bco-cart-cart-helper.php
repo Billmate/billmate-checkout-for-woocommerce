@@ -15,24 +15,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BCO_Cart_Cart_Helper {
 
 	/**
+	 * Get the cart handling key value.
+	 *
+	 * @return array
+	 */
+	public static function get_handling() {
+		return array(
+			'withouttax' => 0,
+			'taxrate'    => self::get_handling_tax_rate(),
+		);
+	}
+
+	/**
+	 * Get the cart shipping key value.
+	 *
+	 * @return array
+	 */
+	public static function get_shipping() {
+		return array(
+			'withouttax' => self::get_shipping_without_tax(),
+			'taxrate'    => self::get_shipping_tax_rate(),
+		);
+	}
+
+	/**
+	 * Get the cart total key value.
+	 *
+	 * @return array
+	 */
+	public static function get_total() {
+		return array(
+			'withouttax' => self::get_total_without_tax(),
+			'tax'        => self::get_total_tax(),
+			'rounding'   => 0,
+			'withtax'    => self::get_total_with_tax(),
+		);
+	}
+
+	/**
 	 * Get cart handling without tax.
 	 *
-	 * @param array $cart_item Cart item.
 	 * @return int $handling_without_tax handling excl tax.
 	 */
-	public static function get_handling_without_tax( $cart_item ) {
-		$items_subtotal = $cart_item['line_total'];
-		return round( $items_subtotal * 100 );
+	public static function get_handling_without_tax() {
+		return round( ( WC()->cart->total - WC()->cart->tax_total ) * 100 );
 	}
 
 	/**
 	 * Get cart handling tax rate.
 	 *
-	 * @param array $cart_item Cart item.
 	 * @return int $handling_tax_rate handling tax rate.
 	 */
-	public static function get_handling_tax_rate( $cart_item ) {
-		$tax_rate = ( $cart_item['line_tax'] > 0 ) ? $cart_item['line_tax'] / $cart_item['line_total'] * 100 : 0;
+	public static function get_handling_tax_rate() {
+		$tax_rate = ( WC()->cart->tax_total > 0 ) ? WC()->cart->tax_total / ( WC()->cart->total - WC()->cart->tax_total ) * 100 : 0;
 		return round( $tax_rate );
 	}
 
