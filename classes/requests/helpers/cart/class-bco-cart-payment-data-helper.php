@@ -15,6 +15,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BCO_Cart_Payment_Data_Helper {
 
 	/**
+	 * Get the payment data key value.
+	 *
+	 * @return array
+	 */
+	public static function get_payment_data() {
+		$confirmation_url = add_query_arg(
+			array(
+				'bco_confirm' => 'yes',
+				'wc_order_id' => 'null',
+			),
+			wc_get_checkout_url()
+		);
+		$push_url         = home_url( '/wc-api/BCO_WC_Push/' );
+		return array(
+			'currency'    => self::get_currency(),
+			'language'    => self::get_language(),
+			'country'     => self::get_country(),
+			'orderid'     => '',
+			'accepturl'   => $confirmation_url,
+			'cancelurl'   => wc_get_checkout_url(),
+			'callbackurl' => $push_url,
+		);
+	}
+
+	/**
 	 * Get currency helper function.
 	 *
 	 * @return string
