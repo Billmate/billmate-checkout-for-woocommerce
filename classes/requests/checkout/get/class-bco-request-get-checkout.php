@@ -17,11 +17,12 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Makes the request.
 	 *
+	 * @param string $bco_wc_hash The Billmate checkout hash.
 	 * @return array
 	 */
-	public function request() {
+	public function request( $bco_wc_hash = null ) {
 		$request_url  = $this->base_url;
-		$request_args = apply_filters( 'bco_get_checkout_args', $this->get_request_args() );
+		$request_args = apply_filters( 'bco_get_checkout_args', $this->get_request_args( $bco_wc_hash ) );
 
 		$response = wp_remote_request( $request_url, $request_args );
 		$code     = wp_remote_retrieve_response_code( $response );
@@ -37,10 +38,11 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Gets the request body.
 	 *
+	 * @param string $bco_wc_hash The Billmate checkout hash.
 	 * @return array
 	 */
-	public function get_body() {
-		$data         = $this->get_request_data();
+	public function get_body( $bco_wc_hash ) {
+		$data         = $this->get_request_data( $bco_wc_hash );
 		$request_body = array(
 			'credentials' => array(
 				'id'   => $this->id,
@@ -56,25 +58,27 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Gets the request args for the API call.
 	 *
+	 * @param string $bco_wc_hash The Billmate checkout hash.
 	 * @return array
 	 */
-	public function get_request_args() {
+	public function get_request_args( $bco_wc_hash ) {
 		return array(
 			'headers' => $this->get_headers(),
 			'method'  => 'POST',
-			'body'    => wp_json_encode( $this->get_body() ),
+			'body'    => wp_json_encode( $this->get_body( $bco_wc_hash ) ),
 		);
 	}
 
 	/**
 	 * Get needed data for the request.
 	 *
+	 * @param string $bco_wc_hash The Billmate checkout hash.
 	 * @return array
 	 */
-	public function get_request_data() {
+	public function get_request_data( $bco_wc_hash ) {
 		return array(
 			'PaymentData' => array(
-				'hash' => WC()->session->get( 'bco_wc_hash' ),
+				'hash' => $bco_wc_hash,
 			),
 		);
 	}
