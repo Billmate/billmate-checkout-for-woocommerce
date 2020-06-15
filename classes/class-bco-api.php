@@ -22,7 +22,7 @@ class BCO_API {
 	 * @param string $order_id The WooCommerce order id.
 	 * @return mixed
 	 */
-	public function request_init_checkout( $order_id = '' ) {
+	public function request_init_checkout( $order_id = null ) {
 		$request  = new BCO_Request_Init_Checkout();
 		$response = $request->request( $order_id );
 
@@ -32,11 +32,25 @@ class BCO_API {
 	/**
 	 * Get Billmate Checkout.
 	 *
+	 * @param string $bco_wc_hash The Billmate checkout hash.
 	 * @return mixed
 	 */
-	public function request_get_checkout() {
+	public function request_get_checkout( $bco_wc_hash = null ) {
 		$request  = new BCO_Request_Get_Checkout();
-		$response = $request->request();
+		$response = $request->request( $bco_wc_hash );
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
+	 * Update Billmate Checkout.
+	 *
+	 * @param string $bco_payment_number The Billmate payment number.
+	 * @return mixed
+	 */
+	public function request_update_checkout( $bco_payment_number ) {
+		$request  = new BCO_Request_Update_Checkout();
+		$response = $request->request( $bco_payment_number );
 
 		return $this->check_for_api_error( $response );
 	}
@@ -47,7 +61,7 @@ class BCO_API {
 	 * @param string $bco_transaction_id The Billmate transaction id.
 	 * @return mixed
 	 */
-	public function request_get_payment( $bco_transaction_id = '' ) {
+	public function request_get_payment( $bco_transaction_id = null ) {
 		$request  = new BCO_Request_Get_Payment();
 		$response = $request->request( $bco_transaction_id );
 
