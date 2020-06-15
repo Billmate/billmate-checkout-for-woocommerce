@@ -111,7 +111,8 @@ class BCO_Cart_Cart_Helper {
 	public static function get_total_without_tax() {
 		$total             = WC()->cart->total;
 		$tax_total         = WC()->cart->tax_total;
-		$total_without_tax = $total - $tax_total;
+		$shipping_tax      = ( WC()->cart->shipping_tax_total > 0 ) ? WC()->cart->shipping_tax_total : 0;
+		$total_without_tax = $total - $tax_total - $shipping_tax;
 		return round( $total_without_tax * 100 );
 	}
 
@@ -121,7 +122,8 @@ class BCO_Cart_Cart_Helper {
 	 * @return int $total_tax order total tax.
 	 */
 	public static function get_total_tax() {
-		return round( WC()->cart->tax_total * 100 );
+		$shipping_tax = ( WC()->cart->shipping_tax_total > 0 ) ? WC()->cart->shipping_tax_total : 0;
+		return round( ( WC()->cart->tax_total + $shipping_tax ) * 100 );
 	}
 
 	/**
