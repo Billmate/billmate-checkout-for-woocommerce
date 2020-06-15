@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bco_show_iframe() {
 	$billmate_order = bco_init_checkout();
 	do_action( 'bco_show_iframe', $billmate_order );
-	echo '<iframe name="checkout_iframe" id="checkout" src="' . $billmate_order['data']['url'] . '" sandbox="allow-same-origin allow-scripts allow-modals allow-popups allow-forms allow-top-navigation" style="width:100%;min-height:800px;border:none;" scrolling="no"></iframe>'; // phpcs:ignore
+	echo '<iframe name="checkout_iframe" id="checkout" src="' . WC()->session->get( 'bco_wc_checkout_url' ) . '" sandbox="allow-same-origin allow-scripts allow-modals allow-popups allow-forms allow-top-navigation" style="width:100%;min-height:800px;border:none;" scrolling="no"></iframe>'; // phpcs:ignore
 }
 
 
@@ -35,37 +35,66 @@ function bco_init_checkout() {
 		WC()->cart->calculate_fees();
 		WC()->cart->calculate_shipping();
 		WC()->cart->calculate_totals();
-		// Initialize payment.
-		$billmate_order = BCO_WC()->api->request_init_checkout();
-		if ( ! $billmate_order ) { // TODO: handle error.
-			return;
+		if ( WC()->session->get( 'bco_wc_hash' ) ) {
+			$billmate_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+			// Try to update the order, if it fails try to create new order.
+			$billmate_order = BCO_WC()->api->request_update_checkout( $billmate_checkout['data']['PaymentData']['number'] );
+			if ( ! $billmate_order ) {
+				// If update order failed try to create new order.
+				$billmate_order = BCO_WC()->api->request_init_checkout();
+				if ( ! $billmate_order ) {
+					// If failed then bail.
+					return;
+				}
+				WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+				set_checkout_hash( $billmate_order['data']['url'] );
+				return $billmate_order;
+			}
+			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+			set_checkout_hash( $billmate_order['data']['url'] );
+			return $billmate_order;
+		} else {
+			// Initialize payment.
+			$billmate_order = BCO_WC()->api->request_init_checkout();
+			if ( ! $billmate_order ) {
+				return;
+			}
+			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+			set_checkout_hash( $billmate_order['data']['url'] );
+
+			return $billmate_order;
 		}
-
-		WC()->session->set( 'bco_wc_payment_number', $billmate_order['data']['number'] );
-		WC()->session->set( 'bco_wc_order_id', $billmate_order['data']['orderid'] );
-		return $billmate_order;
-
 	} else { // If Checkout flow is Pay for Order then we have access to order id.
 		global $wp;
 		$order_id = $wp->query_vars['order-pay'];
 		// Initialize payment.
 		$billmate_order = BCO_WC()->api->request_init_checkout( $order_id );
-		if ( ! $billmate_order ) { // TODO: handle error.
+		if ( ! $billmate_order ) {
 			return;
 		}
 
 		WC()->session->set( 'bco_wc_order_id', $billmate_order['data']['orderid'] );
-
-		// Extract the hash from the Billmate checkout url.
-		$url   = $billmate_order['data']['url'];
-		$parts = explode( '/', $url );
-		$sum   = count( $parts );
-		$hash  = ( 'test' === $parts[ $sum - 1 ] ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
-		WC()->session->set( 'bco_wc_hash', $hash );
+		WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+		set_checkout_hash( $billmate_order['data']['url'] );
 
 		return $billmate_order;
 	}
 
+}
+
+/**
+ * Set checkout hash.
+ *
+ * @param string $url The checkout url.
+ * @return void
+ */
+function set_checkout_hash( $url ) {
+	// Extract the hash from the Billmate checkout url.
+	$parts = explode( '/', $url );
+	$sum   = count( $parts );
+	$hash  = ( 'test' === $parts[ $sum - 1 ] ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
+	// Set chekout hash as session variable.
+	WC()->session->set( 'bco_wc_hash', $hash );
 }
 
 /**
@@ -76,7 +105,7 @@ function bco_wc_show_another_gateway_button() {
 
 	if ( count( $available_gateways ) > 1 ) {
 		$settings                   = get_option( 'woocommerce_bco_settings' );
-		$select_another_method_text = isset( $settings['select_another_method_text'] ) && '' !== $settings['select_another_method_text'] ? $settings['select_another_method_text'] : __( 'Select another payment method', 'klarna-checkout-for-woocommerce' );
+		$select_another_method_text = isset( $settings['select_another_method_text'] ) && '' !== $settings['select_another_method_text'] ? $settings['select_another_method_text'] : __( 'Select another payment method', 'billmate-checkout-for-woocommerce' );
 
 		?>
 		<p class="billmate-checkout-select-other-wrapper">
@@ -144,7 +173,6 @@ function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
  * @return void
  */
 function bco_wc_unset_sessions() {
-	WC()->session->__unset( 'bco_wc_payment_number' );
 	WC()->session->__unset( 'bco_wc_order_id' );
 	WC()->session->__unset( 'bco_wc_hash' );
 }
