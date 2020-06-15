@@ -83,11 +83,11 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 			array(
 				'terms' => get_permalink( wc_get_page_id( 'terms' ) ),
 			),
-			'PaymentData'  => BCO_Payment_Data_Helper::get_payment_data( $order ),
+			'PaymentData'  => BCO_Order_Payment_Data_Helper::get_payment_data( $order ),
 			'Customer'     =>
 			array(
-				'Billing'  => BCO_Customer_Helper::get_customer_billing( $order ),
-				'Shipping' => BCO_Customer_Helper::get_customer_shipping( $order ),
+				'Billing'  => BCO_Order_Customer_Helper::get_customer_billing( $order ),
+				'Shipping' => BCO_Order_Customer_Helper::get_customer_shipping( $order ),
 			),
 			'Articles'     => BCO_Order_Articles_Helper::get_articles( $order ),
 			'Cart'         =>
