@@ -32,6 +32,7 @@ class BCO_AJAX extends WC_AJAX {
 	 */
 	public static function add_ajax_events() {
 		$ajax_events = array(
+			'bco_wc_update_checkout'  => true,
 			'bco_wc_checkout_success' => true,
 		);
 		foreach ( $ajax_events as $ajax_event => $nopriv ) {
@@ -42,6 +43,63 @@ class BCO_AJAX extends WC_AJAX {
 				add_action( 'wc_ajax_' . $ajax_event, array( __CLASS__, $ajax_event ) );
 			}
 		}
+	}
+
+	/**
+	 * Update checkout.
+	 *
+	 * @return void
+	 */
+	public static function bco_wc_update_checkout() {
+		wc_maybe_define_constant( 'WOOCOMMERCE_CHECKOUT', true );
+
+		if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
+
+			$bco_wc_hash = WC()->session->get( 'bco_wc_hash' );
+
+			// Set empty return array for errors.
+			$return = array();
+
+			// Check if we have a Billmate checkout hash.
+			if ( empty( $bco_wc_hash ) ) {
+				wc_add_notice( 'Billmate checkout hash is missing.', 'error' );
+				wp_send_json_error();
+				wp_die();
+			} else {
+				// Get the Billmate checkout.
+				$billmate_checkout = BCO_WC()->api->request_get_checkout( $bco_wc_hash );
+				// Check if we got a wp_error.
+				if ( ! $billmate_checkout ) {
+					wp_send_json_error();
+					wp_die();
+				}
+
+				// Calculate cart totals.
+				WC()->cart->calculate_fees();
+				WC()->cart->calculate_totals();
+
+				// Check if order needs payment.
+				if ( apply_filters( 'bco_check_if_needs_payment', true ) ) {
+					if ( ! WC()->cart->needs_payment() ) {
+						$return['redirect_url'] = wc_get_checkout_url();
+						wp_send_json_error( $return );
+						wp_die();
+					}
+				}
+
+				// Update order.
+				$billmate_order = BCO_WC()->api->request_update_checkout( $billmate_checkout['data']['PaymentData']['number'] );
+				// If the update failed - reload the checkout page and display the error.
+				if ( ! $billmate_order ) {
+					wp_send_json_error();
+					wp_die();
+				}
+			}
+		}
+		// Everything is okay if we get here. Send empty success and kill wp.
+		wp_send_json_success();
+		wp_die();
+
 	}
 
 	/**
