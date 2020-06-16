@@ -36,9 +36,9 @@ function bco_init_checkout() {
 		WC()->cart->calculate_shipping();
 		WC()->cart->calculate_totals();
 		if ( WC()->session->get( 'bco_wc_hash' ) ) {
-			$billmate_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+
 			// Try to update the order, if it fails try to create new order.
-			$billmate_order = BCO_WC()->api->request_update_checkout( $billmate_checkout['data']['PaymentData']['number'] );
+			$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ) );
 			if ( ! $billmate_order ) {
 				// If update order failed try to create new order.
 				$billmate_order = BCO_WC()->api->request_init_checkout();
@@ -46,6 +46,7 @@ function bco_init_checkout() {
 					// If failed then bail.
 					return;
 				}
+				WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
 				WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
 				set_checkout_hash( $billmate_order['data']['url'] );
 				return $billmate_order;
@@ -53,12 +54,14 @@ function bco_init_checkout() {
 			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
 			set_checkout_hash( $billmate_order['data']['url'] );
 			return $billmate_order;
+
 		} else {
 			// Initialize payment.
 			$billmate_order = BCO_WC()->api->request_init_checkout();
 			if ( ! $billmate_order ) {
 				return;
 			}
+			WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
 			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
 			set_checkout_hash( $billmate_order['data']['url'] );
 
@@ -175,6 +178,8 @@ function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
 function bco_wc_unset_sessions() {
 	WC()->session->__unset( 'bco_wc_order_id' );
 	WC()->session->__unset( 'bco_wc_hash' );
+	WC()->session->__unset( 'bco_wc_checkout_url' );
+	WC()->session->__unset( 'bco_wc_number' );
 }
 
 

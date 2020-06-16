@@ -66,13 +66,6 @@ class BCO_AJAX extends WC_AJAX {
 				wp_send_json_error();
 				wp_die();
 			} else {
-				// Get the Billmate checkout.
-				$billmate_checkout = BCO_WC()->api->request_get_checkout( $bco_wc_hash );
-				// Check if we got a wp_error.
-				if ( ! $billmate_checkout ) {
-					wp_send_json_error();
-					wp_die();
-				}
 
 				// Calculate cart totals.
 				WC()->cart->calculate_fees();
@@ -88,7 +81,7 @@ class BCO_AJAX extends WC_AJAX {
 				}
 
 				// Update order.
-				$billmate_order = BCO_WC()->api->request_update_checkout( $billmate_checkout['data']['PaymentData']['number'] );
+				$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ) );
 				// If the update failed - reload the checkout page and display the error.
 				if ( ! $billmate_order ) {
 					wp_send_json_error();
