@@ -57,6 +57,17 @@ $settings = array(
 		'default'     => 'pay_for_order',
 		'desc_tip'    => false,
 	),
+	'checkout_layout'            => array(
+		'title'       => __( 'Billmate checkout layout', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'select',
+		'options'     => array(
+			'one_column_checkout' => __( 'One column checkout', 'billmate-checkout-for-woocommerce' ),
+			'two_column_checkout' => __( 'Two column checkout', 'billmate-checkout-for-woocommerce' ),
+		),
+		'description' => __( 'Select the Billmate checkout layout.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => 'two_column_checkout',
+		'desc_tip'    => false,
+	),
 	// SE.
 	'credentials_se'             => array(
 		'title' => 'API Credentials Sweden',
