@@ -33,6 +33,7 @@ class BCO_AJAX extends WC_AJAX {
 	public static function add_ajax_events() {
 		$ajax_events = array(
 			'bco_wc_update_checkout'  => true,
+			'bco_wc_get_checkout'     => true,
 			'bco_wc_checkout_success' => true,
 		);
 		foreach ( $ajax_events as $ajax_event => $nopriv ) {
@@ -94,6 +95,33 @@ class BCO_AJAX extends WC_AJAX {
 		wp_die();
 
 	}
+
+	/**
+	 * Get checkout.
+	 *
+	 * @return void
+	 */
+	public static function bco_wc_get_checkout() {
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'bco_wc_get_checkout' ) ) { // Input var okay.
+			wp_send_json_error( 'bad_nonce' );
+			exit;
+		}
+
+		$billmate_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+		if ( ! $billmate_checkout ) {
+			wp_send_json_error( $billmate_checkout );
+			wp_die();
+		}
+		wp_send_json_success(
+			array(
+				'billing_address'  => ! empty( $billmate_checkout['data']['Customer']['Billing'] ) ? $billmate_checkout['data']['Customer']['Billing'] : null,
+				'shipping_address' => ! empty( $billmate_checkout['data']['Customer']['Shipping'] ) ? $billmate_checkout['data']['Customer']['Shipping'] : null,
+			)
+		);
+		wp_die();
+	}
+
 
 	/**
 	 * Checkout success.

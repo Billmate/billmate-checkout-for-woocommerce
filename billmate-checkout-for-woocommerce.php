@@ -255,6 +255,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 						'checkout_flow'                => $checkout_flow,
 						'update_checkout_url'          => WC_AJAX::get_endpoint( 'bco_wc_update_checkout' ),
 						'update_checkout_nonce'        => wp_create_nonce( 'bco_wc_update_checkout' ),
+						'get_checkout_url'             => WC_AJAX::get_endpoint( 'bco_wc_get_checkout' ),
+						'get_checkout_nonce'           => wp_create_nonce( 'bco_wc_get_checkout' ),
 						'checkout_success_url'         => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
 						'checkout_success_nonce'       => wp_create_nonce( 'bco_wc_checkout_success' ),
 					);

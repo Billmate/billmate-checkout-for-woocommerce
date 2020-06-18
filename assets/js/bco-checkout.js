@@ -172,6 +172,61 @@ jQuery(function($) {
 			});
 		},
 
+		getBillmateCheckout: function() {
+			$.ajax({
+				type: 'POST',
+				url: bco_wc_params.get_checkout_url,
+				data: {
+					nonce: bco_wc_params.get_checkout_nonce
+				},
+				dataType: 'json',
+				success: function(data) {
+				},
+				error: function(data) {
+					return false;
+				},
+				complete: function(data) {
+					bco_wc.setCustomerData( data.responseJSON.data );
+					// Check Terms checkbox, if it exists.
+					if ($("form.checkout #terms").length > 0) {
+						$("form.checkout #terms").prop("checked", true);
+					}
+					$('form.checkout').submit();
+					return true;
+				}
+			});
+		},
+
+		setCustomerData: function( data ) {
+			if ( data.billing_address !== null ) {
+				// Billing fields.
+				$( '#billing_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
+				$( '#billing_last_name' ).val( ( ( 'lastname' in data.billing_address ) ? data.billing_address.lastname : '' ) );
+				$( '#billing_company' ).val( ( ( 'company' in data.billing_address ) ? data.billing_address.company : '' ) );
+				$( '#billing_address_1' ).val( ( ( 'street' in data.billing_address ) ? data.billing_address.street : '' ) );
+				$( '#billing_address_2' ).val( ( ( 'street2' in data.billing_address ) ? data.billing_address.street2 : '' ) );
+				$( '#billing_city' ).val( ( ( 'city' in data.billing_address ) ? data.billing_address.city : '' ) );
+				$( '#billing_postcode' ).val( ( ( 'zip' in data.billing_address ) ? data.billing_address.zip : '' ) );
+				$( '#billing_phone' ).val( ( ( 'phone' in data.billing_address ) ? data.billing_address.phone : '' ) );
+				$( '#billing_email' ).val( ( ( 'email' in data.billing_address ) ? data.billing_address.email : '' ) );
+				$( '#billing_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
+			}
+			
+			if ( data.shipping_address !== null ) {
+				$( '#ship-to-different-address-checkbox' ).prop( 'checked', true);
+
+				// Shipping fields.
+				$( '#shipping_first_name' ).val( ( ( 'firstname' in data.shipping_address ) ? data.shipping_address.firstname : '' ) );
+				$( '#shipping_last_name' ).val( ( ( 'lastname' in data.shipping_address ) ? data.shipping_address.lastname : '' ) );
+				$( '#shipping_company' ).val( ( ( 'company' in data.shipping_address ) ? data.billing_address.company : '' ) );
+				$( '#shipping_address_1' ).val( ( ( 'street' in data.shipping_address ) ? data.shipping_address.street : '' ) );
+				$( '#shipping_address_2' ).val( ( ( 'street2' in data.shipping_address ) ? data.shipping_address.street2 : '' ) );
+				$( '#shipping_city' ).val( ( ( 'city' in data.shipping_address ) ? data.shipping_address.city : '' ) );
+				$( '#shipping_postcode' ).val( ( ( 'zip' in data.shipping_address ) ? data.shipping_address.zip : '' ) );
+				$( '#shipping_country' ).val( ( ( 'country' in data.shipping_address ) ? data.shipping_address.country.toUpperCase() : '' ) );
+			}
+		},
+
         /*
 		 * Document ready function. 
 		 * Runs on the $(document).ready event.
