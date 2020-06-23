@@ -136,28 +136,28 @@ function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
 
 	switch ( $bco_payment_method ) {
 		case '1':
-			$method_title = __( 'via Billmate Invoice', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Invoice', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '2':
-			$method_title = __( 'via Billmate Invoice', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Invoice', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '4':
-			$method_title = __( 'via Billmate Part Payment', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Part Payment', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '8':
-			$method_title = __( 'via Billmate Card Payment', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Card Payment', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '16':
-			$method_title = __( 'via Billmate Bank Payment', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Bank Payment', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '24':
-			$method_title = __( 'via Billmate Card/Bank Payment', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Card/Bank Payment', 'billmate-checkout-for-woocommerce' );
 			break;
 		case '32':
-			$method_title = __( 'via Billmate Cash Payment', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Cash Payment', 'billmate-checkout-for-woocommerce' );
 			break;
 		default:
-			$method_title = __( 'via Billmate Checkout', 'billmate-checkout-for-woocommerce' );
+			$method_title = __( 'Billmate Checkout', 'billmate-checkout-for-woocommerce' );
 	}
 	$order = wc_get_order( $order_id );
 	$order->set_payment_method_title( $method_title );
