@@ -25,6 +25,7 @@ class BCO_Order_Payment_Data_Helper {
 		$confirmation_url = add_query_arg(
 			array(
 				'bco_confirm' => 'yes',
+				'bco_flow'    => 'pay_for_order_redirect',
 				'wc_order_id' => $order_id,
 			),
 			$order->get_checkout_payment_url()

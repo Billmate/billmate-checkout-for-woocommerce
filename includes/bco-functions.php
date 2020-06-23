@@ -47,11 +47,11 @@ function bco_init_checkout() {
 					return;
 				}
 				WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
-				WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+				WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] . '?activateJsEvents=1' );
 				set_checkout_hash( $billmate_order['data']['url'] );
 				return $billmate_order;
 			}
-			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] . '?activateJsEvents=1' );
 			set_checkout_hash( $billmate_order['data']['url'] );
 			return $billmate_order;
 
@@ -62,7 +62,7 @@ function bco_init_checkout() {
 				return;
 			}
 			WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
-			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] . '?activateJsEvents=1' );
 			set_checkout_hash( $billmate_order['data']['url'] );
 
 			return $billmate_order;
