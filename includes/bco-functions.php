@@ -260,3 +260,56 @@ function bco_confirm_billmate_order( $order_id, $order ) {
 	}
 
 }
+
+
+/**
+ * Confirm Billmate redirect order.
+ *
+ * @param string   $order_id The WooCommerce order id.
+ * @param WC_Order $order The WooCommerce order.
+ * @param array    $data The content data from Billmate redirect.
+ * @return void
+ */
+function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
+	$bco_transaction_id = $data['number'];
+	update_post_meta( $order_id, '_transaction_id', $bco_transaction_id );
+
+	if ( is_object( $order ) && ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+		// Get Checkout and set payment method title.
+		$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+		bco_set_payment_method_title( $order_id, $bco_checkout );
+
+		switch ( strtolower( $data['status'] ) ) {
+			case 'pending':
+				// Translators: Billmate transaction id.
+				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				$order->add_order_note( $note );
+				$order->update_status( 'on-hold' );
+
+				update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
+				break;
+			case 'created':
+				// Translators: Billmate transaction id.
+				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				$order->add_order_note( $note );
+				$order->payment_complete( $bco_transaction_id );
+
+				update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
+				do_action( 'bco_wc_payment_complete', $order_id, $data );
+				break;
+			case 'paid':
+				// Translators: Billmate transaction id.
+				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				$order->add_order_note( $note );
+				$order->payment_complete( $bco_transaction_id );
+
+				update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
+				do_action( 'bco_wc_payment_complete', $order_id, $data );
+				break;
+			case 'cancelled':
+				break;
+			case 'failed':
+				break;
+		}
+	}
+}
