@@ -23,6 +23,7 @@ class BCO_Cart_Payment_Data_Helper {
 		$confirmation_url = add_query_arg(
 			array(
 				'bco_confirm' => 'yes',
+				'bco_flow'    => 'checkout_redirect',
 				'wc_order_id' => 'null',
 			),
 			wc_get_checkout_url()
@@ -32,7 +33,7 @@ class BCO_Cart_Payment_Data_Helper {
 			'currency'    => self::get_currency(),
 			'language'    => self::get_language(),
 			'country'     => self::get_country(),
-			'orderid'     => 12345,
+			'orderid'     => '0',
 			'accepturl'   => $confirmation_url,
 			'cancelurl'   => wc_get_checkout_url(),
 			'callbackurl' => $push_url,
