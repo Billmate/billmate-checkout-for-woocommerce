@@ -148,57 +148,40 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 * @return void
 		 */
 		public function redirect_to_thankyou() {
-			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) ) { // phpcs:ignore
+			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
 
-				$raw_data = file_get_contents( 'php://input' );
-				parse_str( urldecode( $raw_data ), $result );
-				$data = json_decode( $result['data'], true );
+				if ( 'pay_for_order_redirect' === $_GET['bco_flow'] ) {
+					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
+					$order    = wc_get_order( $order_id );
 
-				$bco_transaction_id = $data['number'];
-				$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
-				$order              = wc_get_order( $order_id );
-				update_post_meta( $order_id, '_transaction_id', $bco_transaction_id );
+					$raw_data = file_get_contents( 'php://input' );
+					parse_str( urldecode( $raw_data ), $result );
+					$data = json_decode( $result['data'], true );
 
-				if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
-					// Get Checkout and set payment method title.
-					$bco_checkout = BCO_WC()->api->request_get_checkout();
-					bco_set_payment_method_title( $order_id, $bco_checkout );
+					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
+					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
+					exit;
 
-					switch ( strtolower( $data['status'] ) ) {
-						case 'pending':
-							// Translators: Billmate transaction id.
-							$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
-							$order->add_order_note( $note );
-							$order->update_status( 'on-hold' );
+				} elseif ( 'checkout_redirect' === $_GET['bco_flow'] ) {
+					$order_id = WC()->session->get( 'bco_wc_order_id' );
+					$order    = wc_get_order( $order_id );
 
-							update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
-							header( 'Location:' . $order->get_checkout_order_received_url() );
-							break;
-						case 'created':
-							// Translators: Billmate transaction id.
-							$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
-							$order->add_order_note( $note );
-							$order->payment_complete( $bco_transaction_id );
+					$raw_data = file_get_contents( 'php://input' );
+					parse_str( urldecode( $raw_data ), $result );
+					$data = json_decode( $result['data'], true );
 
-							update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
-							do_action( 'bco_wc_payment_complete', $order_id, $data );
-							header( 'Location:' . $order->get_checkout_order_received_url() );
-							break;
-						case 'paid':
-							// Translators: Billmate transaction id.
-							$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
-							$order->add_order_note( $note );
-							$order->payment_complete( $bco_transaction_id );
+					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
+					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
+					exit;
 
-							update_post_meta( $order_id, '_billmate_transaction_id', $bco_transaction_id );
-							do_action( 'bco_wc_payment_complete', $order_id, $data );
-							header( 'Location:' . $order->get_checkout_order_received_url() );
-							break;
-						case 'cancelled':
-							break;
-						case 'failed':
-							break;
-					}
+				} elseif ( 'checkout' === $_GET['bco_flow'] ) {
+					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
+					$order    = wc_get_order( $order_id );
+					bco_confirm_billmate_order( $order_id, $order ); // Confirm order.
+					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
+					exit;
 				}
 			}
 		}
