@@ -31,12 +31,27 @@ jQuery(function($) {
         handleEvent: function(event) {
             if(event.origin != "") {
                 try {
-                    var json = JSON.parse(event.data);
+					var json = JSON.parse(event.data);
                 } catch (e) {
                     return;
                 }
     
                 switch (json.event) {
+					case 'purchase_initialized':
+						/**
+						 * When an end user clicks on the "Purchase button".
+						 */
+						console.log('billmate_purchase_initialized');
+						bco_wc.getBillmateCheckout();
+
+						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {
+							if ( true === bool ) {
+								// Success.
+								bco_wc.unlock();
+							}
+						});
+
+						break;
                     case 'address_selected':
     
                         /**
@@ -60,24 +75,31 @@ jQuery(function($) {
                          * Store decideds what to do with order and if redirect customer
                          */
                          $('#jsLog').append('checkout_success<br />');
-
-                          $.ajax(
-                            {
-                                url: bco_wc_params.checkout_success_url,
-                                type: 'POST',
-                                dataType: 'json',
-                                data: {
-                                    nonce: bco_wc_params.checkout_success_nonce
-                                },
-                                success: function() {
-                                },
-                                error: function() {
-                                },
-                                complete: function( data ) {
-                                    window.location.href = data.responseJSON.data.bco_wc_received_url;
-                                }
-                            }
-                        );
+							if ( 'checkout' === bco_wc_params.checkout_flow ) {
+								var redirectUrl = sessionStorage.getItem( 'billmateRedirectUrl' );
+								console.log(redirectUrl);
+								if( redirectUrl ) {
+								window.location.href = redirectUrl;
+								}
+							} else {
+								$.ajax(
+								  {
+									  url: bco_wc_params.checkout_success_url,
+									  type: 'POST',
+									  dataType: 'json',
+									  data: {
+										  nonce: bco_wc_params.checkout_success_nonce
+									  },
+									  success: function() {
+									  },
+									  error: function() {
+									  },
+									  complete: function( data ) {
+										  window.location.href = data.responseJSON.data.bco_wc_received_url;
+									  }
+								  }
+							  );
+							}
     
                         break;
                     case 'content_height':
@@ -227,6 +249,26 @@ jQuery(function($) {
 			}
 		},
 
+		hashChange: function() {
+			console.log('hashchange');
+			var currentHash = location.hash;
+            var splittedHash = currentHash.split("=");
+            console.log(splittedHash[0]);
+            console.log(splittedHash[1]);
+            if(splittedHash[0] === "#billmate-success"){
+				$( 'body' ).trigger( 'bco_order_validation', true );
+				var response = JSON.parse( atob( splittedHash[1] ) );
+                console.log('response.redirect_url');
+                console.log(response.redirect_url);
+				sessionStorage.setItem( 'billmateRedirectUrl', response.redirect_url );
+				$('form.checkout').removeClass( 'processing' ).unblock();
+            }
+		},
+
+		errorDetected: function() {
+			$( 'body' ).trigger( 'bco_order_validation', false );
+		},
+
         /*
 		 * Document ready function. 
 		 * Runs on the $(document).ready event.
@@ -315,13 +357,10 @@ jQuery(function($) {
 
                 // Change from BCO.
                 bco_wc.bodyEl.on('click', bco_wc.selectAnotherSelector, bco_wc.changeFromBCO);
-                
-                // Catch changes to order notes.
-				bco_wc.bodyEl.on('change', '#order_comments', bco_wc.updateOrderComment);
 
 				if ( 'checkout' === bco_wc_params.checkout_flow ) {
 					// Update Billmate payment.
-					bco_wc.bodyEl.on('updated_checkout', bco_wc.updateBillmateCheckout);
+					bco_wc.bodyEl.on('updated_checkout', bco_wc.updateBillmateCheckout); 					
 				}
                 
                 // Hashchange.
