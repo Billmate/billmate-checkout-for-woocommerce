@@ -54,7 +54,7 @@ class BCO_API_Callbacks {
 		$bco_status     = strtolower( $data['data']['status'] );
 		$order          = wc_get_order( $order_id );
 
-		if ( ! $order->has_status( array( 'processing', 'completed' ) ) ) {
+		if ( is_object( $order ) && ! $order->has_status( array( 'processing', 'completed' ) ) ) {
 			switch ( $bco_status ) {
 				case 'pending':
 					// Translators: Billmate transaction id.

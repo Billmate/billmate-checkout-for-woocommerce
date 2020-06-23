@@ -14,13 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class BCO_AJAX extends WC_AJAX {
 	/**
-	 * Order is valid flag.
-	 *
-	 * @var boolean
-	 */
-	public static $order_is_valid = false;
-
-	/**
 	 * Hook in ajax handlers.
 	 */
 	public static function init() {
@@ -137,80 +130,15 @@ class BCO_AJAX extends WC_AJAX {
 		$order_id = WC()->session->get( 'bco_wc_order_id' );
 		$order    = wc_get_order( $order_id );
 
-		if ( is_object( $order ) ) {
-			if ( ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
-				// Retrieve the Billmate order number from get_checkout request.
-				$bco_checkout = BCO_WC()->api->request_get_checkout();
+		$result = bco_confirm_billmate_order( $order_id, $order );
 
-				if ( ! isset( $bco_checkout['code'] ) && isset( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
-					$bco_order_number = ( isset( $bco_checkout['data']['PaymentData']['order']['number'] ) ) ? $bco_checkout['data']['PaymentData']['order']['number'] : '';
-					update_post_meta( $order_id, '_transaction_id', $bco_order_number );
-
-					// Make get_payment request if we have Billmate order number.
-					if ( '' !== $bco_order_number ) {
-						$bco_order = BCO_WC()->api->request_get_payment( $bco_order_number );
-					}
-					// Set payment method title and confirm order.
-					bco_set_payment_method_title( $order_id, $bco_order );
-					self::bco_confirm_billmate_order( $order_id, $bco_checkout );
-				}
-			}
-		}
-
-		if ( true === self::$order_is_valid ) {
+		if ( true === $result ) {
 			$data = array( 'bco_wc_received_url' => $order->get_checkout_order_received_url() );
 			wp_send_json_success( $data );
 			wp_die();
 		} else {
 			wp_send_json_error();
 			wp_die();
-		}
-	}
-
-	/**
-	 * Confirm Billmate order.
-	 *
-	 * @param string $order_id The WooCommerce order id.
-	 * @param array  $bco_checkout The Billmate checkout.
-	 * @return void
-	 */
-	public static function bco_confirm_billmate_order( $order_id, $bco_checkout = array() ) {
-		$order            = wc_get_order( $order_id );
-		$bco_order_number = $bco_checkout['data']['PaymentData']['order']['number'];
-		switch ( strtolower( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
-			case 'pending':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
-				$order->add_order_note( $note );
-				$order->update_status( 'on-hold' );
-
-				update_post_meta( $order_id, '_billmate_transaction_id', $bco_order_number );
-				self::$order_is_valid = true;
-				break;
-			case 'created':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_order_number );
-
-				update_post_meta( $order_id, '_billmate_transaction_id', $bco_order_number );
-				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
-				self::$order_is_valid = true;
-				break;
-			case 'paid':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_order_number );
-
-				update_post_meta( $order_id, '_billmate_transaction_id', $bco_order_number );
-				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
-				self::$order_is_valid = true;
-				break;
-			case 'cancelled':
-				break;
-			case 'failed':
-				break;
 		}
 	}
 }
