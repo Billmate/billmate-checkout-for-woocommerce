@@ -69,6 +69,19 @@ class BCO_API {
 	}
 
 	/**
+	 * Update Billmate Payment.
+	 *
+	 * @param string $order_id The WooCommerce order id.
+	 * @return mixed
+	 */
+	public function request_update_payment( $order_id = null ) {
+		$request  = new BCO_Request_Update_Payment();
+		$response = $request->request( $order_id );
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
 	 * Checks for WP Errors and returns either the response as array or a false.
 	 *
 	 * @param array $response The response from the request.
