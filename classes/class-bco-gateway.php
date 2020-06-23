@@ -71,11 +71,23 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
+		WC()->session->set( 'bco_wc_order_id', $order_id );
 
-		// Return pay for order redirect.
+		$confirmation_url = add_query_arg(
+			array(
+				'bco_confirm' => 'yes',
+				'bco_flow'    => 'checkout',
+				'wc_order_id' => $order_id,
+			),
+			wc_get_checkout_url()
+		);
+		$response         = array(
+			'redirect_url' => $confirmation_url,
+			'time'         => microtime(),
+		);
 		return array(
 			'result'   => 'success',
-			'redirect' => ( 'checkout' === $this->checkout_flow ) ? $order->get_return_url() : $order->get_checkout_payment_url(),
+			'redirect' => ( 'checkout' === $this->checkout_flow ) ? '#billmate-success=' . base64_encode( wp_json_encode( $response ) ) : $order->get_checkout_payment_url(),
 		);
 	}
 
