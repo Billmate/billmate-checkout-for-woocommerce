@@ -87,7 +87,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		);
 		return array(
 			'result'   => 'success',
-			'redirect' => ( 'checkout' === $this->checkout_flow ) ? '#billmate-success=' . base64_encode( wp_json_encode( $response ) ) : $order->get_checkout_payment_url(),
+			'redirect' => ( 'checkout' === $this->checkout_flow ) ? '#billmate-success=' . base64_encode( wp_json_encode( $response ) ) : $order->get_checkout_payment_url(), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions -- Base64 used to give a unique nondescript string.
 		);
 	}
 
