@@ -53,12 +53,95 @@ jQuery(function($) {
 
 						break;
                     case 'address_selected':
-    
+						var billingZip = '';
+						var billingCountry = '';
+						var shippingZip = '';
+						var shippingCountry = '';
+
+						// Check if Shipping address is set.
+						if ( typeof json.data.Customer.Shipping === 'object' && 'zip' in json.data.Customer.Shipping && '' !== json.data.Customer.Shipping.zip ) {
+							// Set shipping zip and country.
+							shippingZip = json.data.Customer.Shipping.zip;
+							shippingCountry = json.data.Customer.Shipping.country;
+							bco_wc.addressData.shippingAddress = json.data.Customer.Shipping;
+
+							// Set billing zip and country.
+							if ( typeof json.data.billingAddress === 'object' && 'zip' in json.data.billingAddress && '' !== json.data.billingAddress.zip ) { // Set billing zip and country from billingAddress object.
+								billingZip = json.data.billingAddress.zip;
+								billingCountry = json.data.billingAddress.country;
+								bco_wc.addressData.billingAddress = json.data.billingAddress;
+							} else if ( typeof json.data.Customer.Billing === 'object' && 'zip' in json.data.Customer.Billing && '' !== json.data.Customer.Billing.zip ) { // Set billing zip and country from Customer object.
+								billingZip = json.data.Customer.Billing.zip;
+								billingCountry = json.data.Customer.Billing.country;
+								bco_wc.addressData.billingAddress = json.data.Customer.Billing;
+							}
+							
+							if ( bco_wc.addressData.shippingZip === shippingZip ) {
+								return;
+							}
+							bco_wc.addressData.updateNeeded = 'yes';
+						} else {
+							// Set billing zip and country.
+							if ( typeof json.data.billingAddress === 'object' && 'zip' in json.data.billingAddress && '' !== json.data.billingAddress.zip ) { // Set billing zip and country from billingAddress object.
+								billingZip = json.data.billingAddress.zip;
+								billingCountry = json.data.billingAddress.country;
+								bco_wc.addressData.billingAddress = json.data.billingAddress;
+							} else if ( typeof json.data.Customer.Billing === 'object' && 'zip' in json.data.Customer.Billing && '' !== json.data.Customer.Billing.zip ) { // Set billing zip and country from Customer object.
+								billingZip = json.data.Customer.Billing.zip;
+								billingCountry = json.data.Customer.Billing.country;
+								bco_wc.addressData.billingAddress = json.data.Customer.Billing;
+							}
+
+							if ( bco_wc.addressData.billingZip === billingZip ) {
+								return;
+							}
+							bco_wc.addressData.updateNeeded = 'yes';
+						}
+		
+						bco_wc.addressData.billingZip = billingZip;
+						bco_wc.addressData.billingCountry = billingCountry;
+						bco_wc.addressData.shippingZip = shippingZip;
+						bco_wc.addressData.shippingCountry = shippingCountry;
+
+
                         /**
                          * Customer adress have been set or updated
                          */
-                         $('#jsLog').append('address_selected<br />');
-    
+						 $('#jsLog').append('address_selected<br />');
+
+						 if ( 'yes' === bco_wc.addressData.updateNeeded ) {
+							$( '.woocommerce-checkout-review-order-table' ).block({
+								message: null,
+								overlayCSS: {
+									background: '#fff',
+									opacity: 0.6
+									}
+							});
+							$.ajax(
+								{
+									url: bco_wc_params.iframe_shipping_address_change_url,
+									type: 'POST',
+									dataType: 'json',
+									data: {
+										address: bco_wc.addressData,
+										nonce: bco_wc_params.iframe_shipping_address_change_nonce
+									},
+									success: function( response ) {
+										bco_wc.setCustomerData(response.data);
+										// All good trigger update_checkout event.
+										$( 'body' ).trigger( 'update_checkout' );
+										
+									},
+									error: function() {
+										console.log( response );
+									},
+									complete: function() {
+										bco_wc.shippingUpdated = true;
+										$( '.woocommerce-checkout-review-order-table' ).unblock();
+									}
+								}
+							);
+						}
                         break;
                     case 'payment_method_selected':
 
@@ -125,9 +208,6 @@ jQuery(function($) {
                         break;
                     case 'checkout_loaded':
     
-                        /** Checkout done loading , unlock it just in case it is locked*/
-                        bco_wc.unlock();
-    
                         $('#jsLog').append('checkout_loaded<br />');
     
                         break;
@@ -140,6 +220,7 @@ jQuery(function($) {
 
         bodyEl: $('body'),
 		checkoutFormSelector: 'form.checkout',
+		shippingUpdated: false,
 
 		// Order notes.
 		orderNotesValue: '',
@@ -152,7 +233,15 @@ jQuery(function($) {
 		selectAnotherSelector: '#billmate-checkout-select-other',
 
 		// Address data.
-		addressData: [],
+		addressData: {
+			billingAddress: [],
+			billingZip: '',
+			billingCountry: '',
+			shippingAddress: [],
+			shippingZip: '',
+			shippingCountry: '',
+			updateNeeded: 'no'
+		},
 
 		// Extra checkout fields.
 		blocked: false,
@@ -182,7 +271,7 @@ jQuery(function($) {
 					console.log(data.responseJSON);
 					if (true === data.responseJSON.success) {
 						bco_wc.update();
-						$('.woocommerce-checkout-review-order-table').unblock();							
+						$('.woocommerce-checkout-review-order-table').unblock();
 					} else {
 						console.log('error');
 						if( '' !== data.responseJSON.data.redirect_url ) {
