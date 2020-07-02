@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * ACO_API class.
+ * BCO_API class.
  *
  * Class that has functions for the Billmate communication.
  */
@@ -48,7 +48,7 @@ class BCO_API {
 	 * @param string $bco_payment_number The Billmate payment number.
 	 * @return mixed
 	 */
-	public function request_update_checkout( $bco_payment_number ) {
+	public function request_update_checkout( $bco_payment_number = null ) {
 		$request  = new BCO_Request_Update_Checkout();
 		$response = $request->request( $bco_payment_number );
 

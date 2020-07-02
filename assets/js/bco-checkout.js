@@ -399,6 +399,37 @@ jQuery(function($) {
 				}
 			});
 		},
+
+		// When payment method is changed to BCO in regular WC Checkout page.
+		maybeChangeToBCO: function() {
+			if ( 'bco' === $(this).val() ) {
+
+				$(bco_wc.checkoutFormSelector).block({
+					message: null,
+					overlayCSS: {
+						background: '#fff',
+						opacity: 0.6
+					}
+				});
+
+				$('.woocommerce-info').remove();
+
+				$.ajax({
+					type: 'POST',
+					data: {
+						bco: true,
+						nonce: bco_wc_params.change_payment_method_nonce
+					},
+					dataType: 'json',
+					url: bco_wc_params.change_payment_method_url,
+					success: function (data) {},
+					error: function (data) {},
+					complete: function (data) {
+						window.location.href = data.responseJSON.data.redirect;
+					}
+				});
+			}
+		},
         
         /**
 		 * Moves all non standard fields to the extra checkout fields.

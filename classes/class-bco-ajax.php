@@ -29,6 +29,7 @@ class BCO_AJAX extends WC_AJAX {
 			'bco_wc_get_checkout'                   => true,
 			'bco_wc_iframe_shipping_address_change' => true,
 			'bco_wc_checkout_success'               => true,
+			'bco_wc_change_payment_method'          => true,
 		);
 		foreach ( $ajax_events as $ajax_event => $nopriv ) {
 			add_action( 'wp_ajax_woocommerce_' . $ajax_event, array( __CLASS__, $ajax_event ) );
@@ -38,6 +39,40 @@ class BCO_AJAX extends WC_AJAX {
 				add_action( 'wc_ajax_' . $ajax_event, array( __CLASS__, $ajax_event ) );
 			}
 		}
+	}
+
+	/**
+	 * Change payment method.
+	 *
+	 * @return void
+	 */
+	public static function bco_wc_change_payment_method() {
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'bco_wc_change_payment_method' ) ) {
+			wp_send_json_error( 'bad_nonce' );
+			exit;
+		}
+		$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+		$bco_payment_method = isset( $_POST['bco'] ) ? sanitize_key( $_POST['bco'] ) : '';
+		if ( 'false' === $bco_payment_method ) {
+			// Set chosen payment method to first gateway that is not ours for WooCommerce.
+			$first_gateway = reset( $available_gateways );
+			if ( 'bco' !== $first_gateway->id ) {
+				WC()->session->set( 'chosen_payment_method', $first_gateway->id );
+			} else {
+				$second_gateway = next( $available_gateways );
+				WC()->session->set( 'chosen_payment_method', $second_gateway->id );
+			}
+		} else {
+			WC()->session->set( 'chosen_payment_method', 'bco' );
+		}
+		WC()->payment_gateways()->set_current_gateway( $available_gateways );
+		$redirect = wc_get_checkout_url();
+		$data     = array(
+			'redirect' => $redirect,
+		);
+		wp_send_json_success( $data );
+		wp_die();
 	}
 
 	/**
@@ -76,7 +111,7 @@ class BCO_AJAX extends WC_AJAX {
 				}
 
 				// Update order.
-				$billmate_order = BCO_WC()->api->request_update_checkout( null, WC()->session->get( 'bco_wc_number' ) );
+				$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ) );
 				// If the update failed - reload the checkout page and display the error.
 				if ( ! $billmate_order ) {
 					wp_send_json_error();
@@ -178,7 +213,7 @@ class BCO_AJAX extends WC_AJAX {
 		WC()->cart->calculate_shipping();
 		WC()->cart->calculate_totals();
 
-		$billmate_order = BCO_WC()->api->request_update_checkout( null, $bco_payment_number );
+		$billmate_order = BCO_WC()->api->request_update_checkout( $bco_payment_number );
 
 		if ( false === $billmate_order ) {
 			wp_send_json_error();
