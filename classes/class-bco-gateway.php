@@ -79,7 +79,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 				'bco_flow'    => 'checkout',
 				'wc_order_id' => $order_id,
 			),
-			wc_get_checkout_url()
+			$order->get_checkout_order_received_url()
 		);
 		$response         = array(
 			'redirect_url' => $confirmation_url,

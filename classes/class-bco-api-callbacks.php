@@ -46,9 +46,8 @@ class BCO_API_Callbacks {
 	 * Push callback function.
 	 */
 	public function push_cb() {
-		$post = file_get_contents( 'php://input' );
-		$data = json_decode( $post, true );
-
+		$post           = file_get_contents( 'php://input' );
+		$data           = json_decode( $post, true );
 		$order_id       = $data['data']['orderid'];
 		$transaction_id = $data['data']['number'];
 		$bco_status     = strtolower( $data['data']['status'] );

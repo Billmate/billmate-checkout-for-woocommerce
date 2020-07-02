@@ -80,7 +80,7 @@ class BCO_Request_Update_Payment extends BCO_Request {
 		$data  = array(
 			'PaymentData' => array(
 				'number'   => get_post_meta( $order_id, '_billmate_transaction_id', true ),
-				'method'   => get_post_meta( $order_id, '_bco_payment_method_id', true ),
+				'method'   => get_post_meta( $order_id, '_billmate_payment_method_id', true ),
 				'country'  => BCO_Order_Payment_Data_Helper::get_country( $order ),
 				'language' => BCO_Order_Payment_Data_Helper::get_language(),
 				'orderid'  => $order_id,

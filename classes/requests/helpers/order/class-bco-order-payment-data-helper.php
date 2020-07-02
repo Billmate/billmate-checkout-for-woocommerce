@@ -28,7 +28,7 @@ class BCO_Order_Payment_Data_Helper {
 				'bco_flow'    => 'pay_for_order_redirect',
 				'wc_order_id' => $order_id,
 			),
-			$order->get_checkout_payment_url()
+			$order->get_checkout_order_received_url()
 		);
 		$push_url         = home_url( '/wc-api/BCO_WC_Push/' );
 		return array(

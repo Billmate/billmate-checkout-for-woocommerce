@@ -131,7 +131,7 @@ function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
 	$bco_payment_method = '';
 	if ( isset( $bco_order['data']['PaymentData']['method'] ) ) {
 		$bco_payment_method = $bco_order['data']['PaymentData']['method'];
-		update_post_meta( $order_id, '_bco_payment_method_id', $bco_payment_method );
+		update_post_meta( $order_id, '_billmate_payment_method_id', $bco_payment_method );
 	}
 
 	switch ( $bco_payment_method ) {
@@ -270,9 +270,6 @@ function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
 	update_post_meta( $order_id, '_transaction_id', $bco_transaction_id );
 
 	if ( is_object( $order ) && ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
-		// Get Checkout and set payment method title.
-		$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
-		bco_set_payment_method_title( $order_id, $bco_checkout );
 
 		switch ( strtolower( $data['status'] ) ) {
 			case 'pending':

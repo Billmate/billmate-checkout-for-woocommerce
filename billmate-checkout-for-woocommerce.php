@@ -50,7 +50,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function __construct() {
 			// Initiate the plugin.
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
-			add_action( 'wp_head', array( $this, 'redirect_to_thankyou' ) );
+			add_action( 'wp_head', array( $this, 'confirm_order' ) );
 		}
 
 		/**
@@ -144,11 +144,11 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		}
 
 		/**
-		 * Redirects the customer to the proper thank you page.
+		 * Confirm Billmate order.
 		 *
 		 * @return void
 		 */
-		public function redirect_to_thankyou() {
+		public function confirm_order() {
 			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
 				$bco_flow = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
 
@@ -160,9 +160,12 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					parse_str( urldecode( $raw_data ), $result );
 					$data = json_decode( $result['data'], true );
 
+					// Get Checkout and set payment method title.
+					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+					bco_set_payment_method_title( $order_id, $bco_checkout );
+
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
-					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
-					exit;
+					return;
 
 				} elseif ( 'checkout_redirect' === $bco_flow ) {
 					$order_id = WC()->session->get( 'bco_wc_order_id' );
@@ -172,6 +175,10 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					parse_str( urldecode( $raw_data ), $result );
 					$data = json_decode( $result['data'], true );
 
+					// Get Checkout and set payment method title.
+					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+					bco_set_payment_method_title( $order_id, $bco_checkout );
+
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
@@ -180,10 +187,10 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				} elseif ( 'checkout' === $bco_flow ) {
 					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
 					$order    = wc_get_order( $order_id );
+
 					bco_confirm_billmate_order( $order_id, $order ); // Confirm order.
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
-					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
-					exit;
+					return;
 				}
 			}
 		}
@@ -244,6 +251,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 						'update_checkout_nonce'        => wp_create_nonce( 'bco_wc_update_checkout' ),
 						'get_checkout_url'             => WC_AJAX::get_endpoint( 'bco_wc_get_checkout' ),
 						'get_checkout_nonce'           => wp_create_nonce( 'bco_wc_get_checkout' ),
+						'iframe_shipping_address_change_url' => WC_AJAX::get_endpoint( 'bco_wc_iframe_shipping_address_change' ),
+						'iframe_shipping_address_change_nonce' => wp_create_nonce( 'bco_wc_iframe_shipping_address_change' ),
 						'checkout_success_url'         => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
 						'checkout_success_nonce'       => wp_create_nonce( 'bco_wc_checkout_success' ),
 					);
