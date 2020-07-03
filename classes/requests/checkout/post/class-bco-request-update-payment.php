@@ -76,27 +76,11 @@ class BCO_Request_Update_Payment extends BCO_Request {
 	 * @return array
 	 */
 	public function get_request_data( $order_id ) {
-		$order = wc_get_order( $order_id );
-		$data  = array(
+		$data = array(
 			'PaymentData' => array(
-				'number'   => get_post_meta( $order_id, '_billmate_transaction_id', true ),
-				'method'   => get_post_meta( $order_id, '_billmate_payment_method_id', true ),
-				'country'  => BCO_Order_Payment_Data_Helper::get_country( $order ),
-				'language' => BCO_Order_Payment_Data_Helper::get_language(),
-				'orderid'  => $order_id,
-				'currency' => BCO_Order_Payment_Data_Helper::get_currency( $order ),
-			),
-			'Customer'    =>
-			array(
-				'Billing'  => BCO_Order_Customer_Helper::get_customer_billing( $order ),
-				'Shipping' => BCO_Order_Customer_Helper::get_customer_shipping( $order ),
-			),
-			'Articles'    => BCO_Order_Articles_Helper::get_articles( $order ),
-			'Cart'        =>
-			array(
-				'Handling' => BCO_Order_Cart_Helper::get_order_cart_handling( $order ),
-				'Shipping' => BCO_Order_Cart_Helper::get_order_cart_shipping( $order ),
-				'Total'    => BCO_Order_Cart_Helper::get_order_cart_total( $order ),
+				'number'  => get_post_meta( $order_id, '_billmate_transaction_id', true ),
+				'method'  => get_post_meta( $order_id, '_billmate_payment_method_id', true ),
+				'orderid' => $order_id,
 			),
 		);
 		return $data;
