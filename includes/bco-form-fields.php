@@ -54,7 +54,7 @@ $settings = array(
 			'pay_for_order' => __( 'Pay for Order', 'billmate-checkout-for-woocommerce' ),
 		),
 		'description' => __( 'Select how Billmate should be integrated in WooCommerce. <strong>Checkout</strong> – the checkout is embedded in the WooCommerce checkout page and partially replaces the checkout form. <strong>Pay for Order</strong> – the customer is redirected to the WooCommerce "Pay for Order" page.', 'billmate-checkout-for-woocommerce' ),
-		'default'     => 'pay_for_order',
+		'default'     => 'checkout',
 		'desc_tip'    => false,
 	),
 	'checkout_layout'            => array(
