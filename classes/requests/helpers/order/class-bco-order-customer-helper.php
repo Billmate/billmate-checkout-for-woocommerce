@@ -43,14 +43,14 @@ class BCO_Order_Customer_Helper {
 	 */
 	public static function get_customer_shipping( $order ) {
 		return array(
-			'firstname' => self::get_shipping_first_name( $order ),
-			'lastname'  => self::get_shipping_last_name( $order ),
-			'company'   => self::get_shipping_company( $order ),
-			'street'    => self::get_shipping_address_1( $order ),
-			'street2'   => self::get_shipping_address_2( $order ),
-			'zip'       => self::get_shipping_postcode( $order ),
-			'city'      => self::get_shipping_city( $order ),
-			'country'   => self::get_shipping_country( $order ),
+			'firstname' => ! empty( self::get_shipping_first_name( $order ) ) ? self::get_shipping_first_name( $order ) : self::get_billing_first_name( $order ),
+			'lastname'  => ! empty( self::get_shipping_last_name( $order ) ) ? self::get_shipping_last_name( $order ) : self::get_billing_last_name( $order ),
+			'company'   => ! empty( self::get_shipping_company( $order ) ) ? self::get_shipping_company( $order ) : self::get_billing_company( $order ),
+			'street'    => ! empty( self::get_shipping_address_1( $order ) ) ? self::get_shipping_address_1( $order ) : self::get_billing_address_1( $order ),
+			'street2'   => ! empty( self::get_shipping_address_2( $order ) ) ? self::get_shipping_address_2( $order ) : self::get_billing_address_2( $order ),
+			'zip'       => ! empty( self::get_shipping_postcode( $order ) ) ? self::get_shipping_postcode( $order ) : self::get_billing_postcode( $order ),
+			'city'      => ! empty( self::get_shipping_city( $order ) ) ? self::get_shipping_city( $order ) : self::get_billing_city( $order ),
+			'country'   => ! empty( self::get_shipping_country( $order ) ) ? self::get_shipping_country( $order ) : self::get_billing_country( $order ),
 		);
 	}
 
