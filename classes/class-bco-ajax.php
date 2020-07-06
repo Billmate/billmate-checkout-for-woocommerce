@@ -243,9 +243,11 @@ class BCO_AJAX extends WC_AJAX {
 		$order_id = WC()->session->get( 'bco_wc_order_id' );
 		$order    = wc_get_order( $order_id );
 
-		$result = bco_confirm_billmate_order( $order_id, $order );
+		$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+		update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
+		bco_confirm_billmate_order( $order_id, $order, $bco_checkout );
 
-		if ( true === $result ) {
+		if ( false !== $bco_checkout ) {
 			$data = array( 'bco_wc_received_url' => $order->get_checkout_order_received_url() );
 			wp_send_json_success( $data );
 			wp_die();

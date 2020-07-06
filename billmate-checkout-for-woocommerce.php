@@ -159,6 +159,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$raw_data = file_get_contents( 'php://input' );
 					parse_str( urldecode( $raw_data ), $result );
 					$data = json_decode( $result['data'], true );
+					update_post_meta( $order_id, '_billmate_transaction_id', $data['number'] );
 
 					// Get Checkout and set payment method title.
 					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
@@ -174,13 +175,14 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$raw_data = file_get_contents( 'php://input' );
 					parse_str( urldecode( $raw_data ), $result );
 					$data = json_decode( $result['data'], true );
+					update_post_meta( $order_id, '_billmate_transaction_id', $data['number'] );
 
 					// Get Checkout and set payment method title.
 					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
-					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
 					exit;
 
@@ -188,8 +190,13 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
 					$order    = wc_get_order( $order_id );
 
-					bco_confirm_billmate_order( $order_id, $order ); // Confirm order.
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+					if ( false !== $bco_checkout ) {
+						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
+						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
+					}
+
 					return;
 				}
 			}
