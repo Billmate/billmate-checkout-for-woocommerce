@@ -64,7 +64,7 @@ $settings = array(
 			'one_column_checkout' => __( 'One column checkout', 'billmate-checkout-for-woocommerce' ),
 			'two_column_checkout' => __( 'Two column checkout', 'billmate-checkout-for-woocommerce' ),
 		),
-		'description' => __( 'Select the Billmate checkout layout.', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Select the Billmate checkout layout. (Only applicable if "Checkout flow" setting is set to "Checkout")', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'two_column_checkout',
 		'desc_tip'    => false,
 	),
