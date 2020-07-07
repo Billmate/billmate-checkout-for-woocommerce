@@ -53,6 +53,9 @@ jQuery(function($) {
 
 						break;
                     case 'address_selected':
+						if ( 'checkout' !== bco_wc_params.checkout_flow ) {
+							return;
+						}
 						var billingZip = '';
 						var billingCountry = '';
 						var shippingZip = '';
