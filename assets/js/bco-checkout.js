@@ -52,8 +52,7 @@ jQuery(function($) {
 						if ( 'checkout' !== bco_wc_params.checkout_flow ) {
 							return;
 						}
-						var billingZip = '';
-						var billingCountry = '';
+						
 						var shippingZip = '';
 						var shippingCountry = '';
 
@@ -64,41 +63,23 @@ jQuery(function($) {
 							shippingCountry = json.data.Customer.Shipping.country;
 							bco_wc.addressData.shippingAddress = json.data.Customer.Shipping;
 
-							// Set billing zip and country.
-							if ( typeof json.data.billingAddress === 'object' && 'zip' in json.data.billingAddress && '' !== json.data.billingAddress.zip ) { // Set billing zip and country from billingAddress object.
-								billingZip = json.data.billingAddress.zip;
-								billingCountry = json.data.billingAddress.country;
-								bco_wc.addressData.billingAddress = json.data.billingAddress;
-							} else if ( typeof json.data.Customer.Billing === 'object' && 'zip' in json.data.Customer.Billing && '' !== json.data.Customer.Billing.zip ) { // Set billing zip and country from Customer object.
-								billingZip = json.data.Customer.Billing.zip;
-								billingCountry = json.data.Customer.Billing.country;
-								bco_wc.addressData.billingAddress = json.data.Customer.Billing;
-							}
-
+							billingAddress = bco_wc.setBillingAddress(json.data);
+							
 							if ( bco_wc.addressData.shippingZip === shippingZip ) {
 								return;
 							}
 							bco_wc.addressData.updateNeeded = 'yes';
 						} else {
-							// Set billing zip and country.
-							if ( typeof json.data.billingAddress === 'object' && 'zip' in json.data.billingAddress && '' !== json.data.billingAddress.zip ) { // Set billing zip and country from billingAddress object.
-								billingZip = json.data.billingAddress.zip;
-								billingCountry = json.data.billingAddress.country;
-								bco_wc.addressData.billingAddress = json.data.billingAddress;
-							} else if ( typeof json.data.Customer.Billing === 'object' && 'zip' in json.data.Customer.Billing && '' !== json.data.Customer.Billing.zip ) { // Set billing zip and country from Customer object.
-								billingZip = json.data.Customer.Billing.zip;
-								billingCountry = json.data.Customer.Billing.country;
-								bco_wc.addressData.billingAddress = json.data.Customer.Billing;
-							}
+							billingAddress = bco_wc.setBillingAddress(json.data);
 
-							if ( bco_wc.addressData.billingZip === billingZip ) {
+							if ( bco_wc.addressData.billingZip === billingAddress.billingZip ) {
 								return;
 							}
 							bco_wc.addressData.updateNeeded = 'yes';
 						}
 
-						bco_wc.addressData.billingZip = billingZip;
-						bco_wc.addressData.billingCountry = billingCountry;
+						bco_wc.addressData.billingZip = billingAddress.billingZip;
+						bco_wc.addressData.billingCountry = billingAddress.billingCountry;
 						bco_wc.addressData.shippingZip = shippingZip;
 						bco_wc.addressData.shippingCountry = shippingCountry;
 
@@ -234,6 +215,28 @@ jQuery(function($) {
 		blocked: false,
 		extraFieldsSelectorText: 'div#bco-extra-checkout-fields input[type="text"], div#bco-extra-checkout-fields input[type="password"], div#bco-extra-checkout-fields textarea, div#bco-extra-checkout-fields input[type="email"], div#bco-extra-checkout-fields input[type="tel"]',
 		extraFieldsSelectorNonText: 'div#bco-extra-checkout-fields select, div#bco-extra-checkout-fields input[type="radio"], div#bco-extra-checkout-fields input[type="checkbox"], div#bco-extra-checkout-fields input.checkout-date-picker, input#terms input[type="checkbox"]',
+
+		setBillingAddress: function(data) {
+			var billingZip = '';
+			var billingCountry = '';
+
+			// Set billing zip and country.
+			if ( typeof data.billingAddress === 'object' && 'zip' in data.billingAddress && '' !== data.billingAddress.zip ) { // Set billing zip and country from billingAddress object.
+				billingZip = data.billingAddress.zip;
+				billingCountry = data.billingAddress.country;
+				bco_wc.addressData.billingAddress = data.billingAddress;
+			} else if ( typeof data.Customer.Billing === 'object' && 'zip' in data.Customer.Billing && '' !== data.Customer.Billing.zip ) { // Set billing zip and country from Customer object.
+				billingZip = data.Customer.Billing.zip;
+				billingCountry = data.Customer.Billing.country;
+				bco_wc.addressData.billingAddress = data.Customer.Billing;
+			}
+
+			return {
+				billingZip:billingZip,
+				billingCountry:billingCountry
+			   }
+
+		},
 
 		updateBillmateCheckout: function() {
 			$('.woocommerce-checkout-review-order-table').block({
