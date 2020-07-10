@@ -234,44 +234,44 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function load_scripts() {
 			if ( is_checkout() ) {
 
-					// Checkout script.
-					wp_register_script(
-						'bco_wc',
-						BILLMATE_CHECKOUT_URL . '/assets/js/bco-checkout.js',
-						array( 'jquery' ),
-						BILLMATE_CHECKOUT_VERSION,
-						true
-					);
+				// Checkout script.
+				wp_register_script(
+					'bco_wc',
+					BILLMATE_CHECKOUT_URL . '/assets/js/bco-checkout.js',
+					array( 'jquery' ),
+					BILLMATE_CHECKOUT_VERSION,
+					true
+				);
 
-					$standard_woo_checkout_fields = array( 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_postcode', 'billing_city', 'billing_phone', 'billing_email', 'billing_state', 'billing_country', 'billing_company', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_postcode', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_company', 'terms', 'terms-field', 'account_username', 'account_password', '_wp_http_referer' );
-					$bco_settings                 = get_option( 'woocommerce_bco_settings' );
-					$checkout_flow                = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
-					$checkout_layout              = ( isset( $bco_settings['checkout_layout'] ) ) ? $bco_settings['checkout_layout'] : 'two_column_checkout';
+				$standard_woo_checkout_fields = array( 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_postcode', 'billing_city', 'billing_phone', 'billing_email', 'billing_state', 'billing_country', 'billing_company', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_postcode', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_company', 'terms', 'terms-field', 'account_username', 'account_password', '_wp_http_referer' );
+				$bco_settings                 = get_option( 'woocommerce_bco_settings' );
+				$checkout_flow                = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+				$checkout_layout              = ( isset( $bco_settings['checkout_layout'] ) ) ? $bco_settings['checkout_layout'] : 'two_column_checkout';
 
-					$params = array(
-						'ajax_url'                     => admin_url( 'admin-ajax.php' ),
-						'select_another_method_text'   => __( 'Select another payment method', 'billmate-checkout-for-woocommerce' ),
-						'standard_woo_checkout_fields' => $standard_woo_checkout_fields,
-						'checkout_flow'                => $checkout_flow,
-						'checkout_layout'              => $checkout_layout,
-						'update_checkout_url'          => WC_AJAX::get_endpoint( 'bco_wc_update_checkout' ),
-						'update_checkout_nonce'        => wp_create_nonce( 'bco_wc_update_checkout' ),
-						'change_payment_method_url'    => WC_AJAX::get_endpoint( 'bco_wc_change_payment_method' ),
-						'change_payment_method_nonce'  => wp_create_nonce( 'bco_wc_change_payment_method' ),
-						'get_checkout_url'             => WC_AJAX::get_endpoint( 'bco_wc_get_checkout' ),
-						'get_checkout_nonce'           => wp_create_nonce( 'bco_wc_get_checkout' ),
-						'iframe_shipping_address_change_url' => WC_AJAX::get_endpoint( 'bco_wc_iframe_shipping_address_change' ),
-						'iframe_shipping_address_change_nonce' => wp_create_nonce( 'bco_wc_iframe_shipping_address_change' ),
-						'checkout_success_url'         => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
-						'checkout_success_nonce'       => wp_create_nonce( 'bco_wc_checkout_success' ),
-					);
+				$params = array(
+					'ajax_url'                             => admin_url( 'admin-ajax.php' ),
+					'select_another_method_text'           => __( 'Select another payment method', 'billmate-checkout-for-woocommerce' ),
+					'standard_woo_checkout_fields'         => $standard_woo_checkout_fields,
+					'checkout_flow'                        => $checkout_flow,
+					'checkout_layout'                      => $checkout_layout,
+					'update_checkout_url'                  => WC_AJAX::get_endpoint( 'bco_wc_update_checkout' ),
+					'update_checkout_nonce'                => wp_create_nonce( 'bco_wc_update_checkout' ),
+					'change_payment_method_url'            => WC_AJAX::get_endpoint( 'bco_wc_change_payment_method' ),
+					'change_payment_method_nonce'          => wp_create_nonce( 'bco_wc_change_payment_method' ),
+					'get_checkout_url'                     => WC_AJAX::get_endpoint( 'bco_wc_get_checkout' ),
+					'get_checkout_nonce'                   => wp_create_nonce( 'bco_wc_get_checkout' ),
+					'iframe_shipping_address_change_url'   => WC_AJAX::get_endpoint( 'bco_wc_iframe_shipping_address_change' ),
+					'iframe_shipping_address_change_nonce' => wp_create_nonce( 'bco_wc_iframe_shipping_address_change' ),
+					'checkout_success_url'                 => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
+					'checkout_success_nonce'               => wp_create_nonce( 'bco_wc_checkout_success' ),
+				);
 
-					wp_localize_script(
-						'bco_wc',
-						'bco_wc_params',
-						$params
-					);
-					wp_enqueue_script( 'bco_wc' );
+				wp_localize_script(
+					'bco_wc',
+					'bco_wc_params',
+					$params
+				);
+				wp_enqueue_script( 'bco_wc' );
 
 				wp_register_style(
 					'bco',
