@@ -39,9 +39,9 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$this->checkout_flow = ( isset( $this->settings['checkout_flow'] ) ) ? $this->settings['checkout_flow'] : 'checkout';
 
 		// Supports.
-		$this->supports = array(
-			'products',
-			'refunds',
+		$this->supports = apply_filters(
+			'wc_bco_payments_supports',
+			array( 'products' )
 		);
 
 		// Actions.
