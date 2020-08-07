@@ -183,7 +183,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
-					header( 'Location:' . $order->get_checkout_order_received_url() ); // Redirect.
+					wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
 					exit;
 
 				} elseif ( 'checkout' === $bco_flow ) {
