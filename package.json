@@ -1,0 +1,43 @@
+{
+  "name": "billmate-checkout-for-woocommerce",
+  "version": "1.0.0",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
+    "@wordpress/browserslist-config": "^2.7.0",
+    "@wordpress/eslint-plugin": "^7.1.0",
+    "@wordpress/prettier-config": "^0.3.0",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "browserslist": "^4.13.0",
+    "core-js": "^3.6.5",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.6.0",
+    "eslint-loader": "^4.0.2",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.1.0",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-import": "^12.0.1",
+    "prettier": "npm:wp-prettier@^2.0.5",
+    "pump": "^3.0.0",
+    "terser-webpack-plugin": "^4.1.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.44.1",
+    "webpack-stream": "^5.2.1"
+  },
+  "scripts": {
+    "start": "npm install && gulp",
+    "watch": "gulp watch",
+    "build": "gulp"
+  },
+  "prettier": "@wordpress/prettier-config",
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ]
+}
