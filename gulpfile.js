@@ -37,7 +37,7 @@ function style( cb ) {
                     ),
                 ]
             ),
-            dest( 'build/css/', { sourcemaps: '.' } ),
+            dest( './assets/css/', { sourcemaps: '.' } ),
         ],
         cb
     );
@@ -58,7 +58,7 @@ function script( cb ) {
                 { config: require( './webpack.config.babel.js' ) },
                 webpack
             ),
-            dest( 'build/js/' ),
+            dest( './assets/js/' ),
         ],
         cb
     );
@@ -71,7 +71,7 @@ function script( cb ) {
 function watchfiles() {
     setDevEnv();
     watch( 'assets/sass/**/*.scss', style );
-    watch( 'assets/js/**/*.js', script );
+    watch( 'assets/js/bco-checkout.js', script );
 }
 
 function setDevEnv() {

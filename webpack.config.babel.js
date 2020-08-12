@@ -1,6 +1,6 @@
 const path      = require( 'path' );
 const webpack   = require( 'webpack' );
-const DIST_PATH = path.resolve( './build/js' );
+const DIST_PATH = path.resolve( './assets/js' );
 const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
