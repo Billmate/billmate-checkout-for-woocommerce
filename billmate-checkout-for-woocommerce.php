@@ -233,11 +233,12 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 */
 		public function load_scripts() {
 			if ( is_checkout() ) {
-
+				$src  = BILLMATE_CHECKOUT_URL;
+				$src .= ( true === SCRIPT_DEBUG ? '/assets/js/bco-checkout.js' : '/build/js/bco-checkout.min.js' );
 				// Checkout script.
 				wp_register_script(
-					'bco_wc',
-					BILLMATE_CHECKOUT_URL . '/assets/js/bco-checkout.js',
+					'bco-checkout',
+					$src,
 					array( 'jquery' ),
 					BILLMATE_CHECKOUT_VERSION,
 					true
@@ -267,11 +268,11 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				);
 
 				wp_localize_script(
-					'bco_wc',
+					'bco-checkout',
 					'bco_wc_params',
 					$params
 				);
-				wp_enqueue_script( 'bco_wc' );
+				wp_enqueue_script( 'bco-checkout' );
 
 				wp_register_style(
 					'bco',
