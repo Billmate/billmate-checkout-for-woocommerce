@@ -234,7 +234,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function load_scripts() {
 			if ( is_checkout() ) {
 				$src  = BILLMATE_CHECKOUT_URL;
-				$src .= ( true === SCRIPT_DEBUG ? '/assets/js/bco-checkout.js' : '/build/js/bco-checkout.min.js' );
+				$src .= ( true === SCRIPT_DEBUG ? '/assets/js/bco-checkout.js' : '/assets/js/bco-checkout.min.js' );
 				// Checkout script.
 				wp_register_script(
 					'bco-checkout',
