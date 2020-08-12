@@ -27,7 +27,6 @@
     "prettier": "npm:wp-prettier@^2.0.5",
     "pump": "^3.0.0",
     "terser-webpack-plugin": "^4.1.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.44.1",
     "webpack-stream": "^5.2.1"
   },
