@@ -66,6 +66,7 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 			'headers' => $this->get_headers(),
 			'method'  => 'POST',
 			'body'    => wp_json_encode( $this->get_body( $bco_wc_hash ) ),
+			'timeout' => apply_filters( 'bco_set_timeout', 10 ),
 		);
 	}
 
