@@ -7,3 +7,8 @@ Billmate Checkout payment gateway for WooCommerce
     - Install Node modules with this command : npm install
     - Build assets for development : npx gulp watch
     - Build assets for production : npx gulp
+## Documentation
+
+Installation instructions.
+
+https://docs.krokedil.com/article/361-billmate-checkout-introduction
