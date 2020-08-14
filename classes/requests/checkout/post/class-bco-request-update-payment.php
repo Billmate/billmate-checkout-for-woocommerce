@@ -45,9 +45,11 @@ class BCO_Request_Update_Payment extends BCO_Request {
 		$data         = $this->get_request_data( $order_id );
 		$request_body = array(
 			'credentials' => array(
-				'id'   => $this->id,
-				'hash' => hash_hmac( 'sha512', wp_json_encode( $data ), $this->secret ),
-				'test' => $this->test,
+				'id'      => $this->id,
+				'hash'    => hash_hmac( 'sha512', wp_json_encode( $data ), $this->secret ),
+				'test'    => $this->test,
+				'version' => $this->version,
+				'client'  => $this->client,
 			),
 			'data'        => $data,
 			'function'    => 'updatePayment',
