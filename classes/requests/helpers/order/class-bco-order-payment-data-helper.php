@@ -36,6 +36,7 @@ class BCO_Order_Payment_Data_Helper {
 			'language'    => self::get_language(),
 			'country'     => self::get_country( $order ),
 			'orderid'     => $order_id,
+			'logo'        => self::get_logo(),
 			'accepturl'   => $confirmation_url,
 			'cancelurl'   => $order->get_cancel_order_url_raw(),
 			'callbackurl' => $push_url,
@@ -76,5 +77,16 @@ class BCO_Order_Payment_Data_Helper {
 	 */
 	public static function get_country( $order ) {
 		return $order->get_billing_country();
+	}
+
+	/**
+	 * Get logo helper function.
+	 *
+	 * @return string
+	 */
+	public static function get_logo() {
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		$logo              = ( isset( $billmate_settings['logo'] ) ) ? $billmate_settings['logo'] : '';
+		return $logo;
 	}
 }
