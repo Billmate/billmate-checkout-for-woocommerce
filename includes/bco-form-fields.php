@@ -47,14 +47,25 @@ $settings = array(
 		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), wc_get_log_file_path( 'billmate_checkout' ) ), // phpcs:ignore
 	),
 	'checkout_layout'            => array(
-		'title'       => __( 'Billmate checkout layout', 'billmate-checkout-for-woocommerce' ),
+		'title'       => __( 'Checkout layout', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'select',
 		'options'     => array(
 			'one_column_checkout' => __( 'One column checkout', 'billmate-checkout-for-woocommerce' ),
 			'two_column_checkout' => __( 'Two column checkout', 'billmate-checkout-for-woocommerce' ),
 		),
-		'description' => __( 'Select the Billmate checkout layout. (Only applicable if "Checkout flow" setting is set to "Checkout")', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Select the Billmate Checkout layout.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'two_column_checkout',
+		'desc_tip'    => false,
+	),
+	'company_view'               => array(
+		'title'       => __( 'Checkout mode', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'select',
+		'options'     => array(
+			'false' => __( 'Consumer', 'billmate-checkout-for-woocommerce' ),
+			'true'  => __( 'Business', 'billmate-checkout-for-woocommerce' ),
+		),
+		'description' => __( 'Select if you want the checkout to default to B2C or B2B mode.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => 'false',
 		'desc_tip'    => false,
 	),
 	'logo'                       => array(
