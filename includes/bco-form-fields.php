@@ -57,6 +57,13 @@ $settings = array(
 		'default'     => 'two_column_checkout',
 		'desc_tip'    => false,
 	),
+	'logo'                       => array(
+		'title'       => __( 'Logo', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'text',
+		'description' => __( 'Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => '',
+		'desc_tip'    => true,
+	),
 	// SE.
 	'credentials_se'             => array(
 		'title' => 'API Credentials Sweden',

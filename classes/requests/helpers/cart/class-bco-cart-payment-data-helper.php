@@ -34,6 +34,7 @@ class BCO_Cart_Payment_Data_Helper {
 			'language'    => self::get_language(),
 			'country'     => self::get_country(),
 			'orderid'     => '0',
+			'logo'        => self::get_logo(),
 			'accepturl'   => $confirmation_url,
 			'cancelurl'   => wc_get_checkout_url(),
 			'callbackurl' => $push_url,
@@ -80,5 +81,16 @@ class BCO_Cart_Payment_Data_Helper {
 		$country       = $base_location['country'];
 
 		return $country;
+	}
+
+	/**
+	 * Get logo helper function.
+	 *
+	 * @return string
+	 */
+	public static function get_logo() {
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		$logo              = ( isset( $billmate_settings['logo'] ) ) ? $billmate_settings['logo'] : '';
+		return $logo;
 	}
 }
