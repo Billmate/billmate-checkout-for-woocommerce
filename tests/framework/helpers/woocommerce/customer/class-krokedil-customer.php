@@ -1,6 +1,6 @@
 <?php // phpcs:ignore
 /**
- * Helper order class
+ * Helper customer class
  */
 
 /**
@@ -17,9 +17,11 @@
 class Krokedil_Customer implements IKrokedil_Customer {
 
 	/**
+	 * Customer data
+	 *
 	 * @var array
 	 */
-	protected $data = [
+	protected $data = array(
 		'id'                  => 1,
 		'date_modified'       => null,
 		'billing_country'     => 'US',
@@ -40,14 +42,14 @@ class Krokedil_Customer implements IKrokedil_Customer {
 		'password'            => 'testpass',
 		'email'               => 'customer@local.com',
 
-	];
+	);
 
 	/**
 	 * Krokedil_Customer constructor.
 	 *
 	 * @param array $data data.
 	 */
-	public function __construct( array $data = [] ) {
+	public function __construct( array $data = array() ) {
 		$this->data = wp_parse_args( $data, $this->data );
 	}
 
@@ -109,7 +111,7 @@ class Krokedil_Customer implements IKrokedil_Customer {
 	/**
 	 * Set the the current customer's billing details in the session.
 	 *
-	 * @param $customer_details
+	 * @param array $customer_details customers information.
 	 */
 	public static function set_customer_details( $customer_details ) {
 		WC()->session->set( 'customer', array_map( 'strval', $customer_details ) );
@@ -118,7 +120,7 @@ class Krokedil_Customer implements IKrokedil_Customer {
 	/**
 	 * Set the user's chosen shipping method.
 	 *
-	 * @param $chosen_shipping_methods
+	 * @param array $chosen_shipping_methods shipping methods.
 	 */
 	public static function set_chosen_shipping_methods( $chosen_shipping_methods ) {
 		WC()->session->set( 'chosen_shipping_methods', $chosen_shipping_methods );
@@ -127,7 +129,7 @@ class Krokedil_Customer implements IKrokedil_Customer {
 	/**
 	 * Set the "Tax Based On" WooCommerce option.
 	 *
-	 * @param string $default_shipping_method Shipping Method slug
+	 * @param string $default_shipping_method Shipping Method slug.
 	 */
 	public static function set_tax_based_on( $default_shipping_method ) {
 		update_option( 'woocommerce_tax_based_on', $default_shipping_method );

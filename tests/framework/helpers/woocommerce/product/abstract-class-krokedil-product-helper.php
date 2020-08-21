@@ -17,7 +17,7 @@ abstract class AKrokedil_WC_Product implements IKrokedil_WC_Product {
 	 *
 	 * @var array
 	 */
-	protected $data = [
+	protected $data = array(
 		'name'               => 'Default product name',
 		'slug'               => '',
 		'date_created'       => null,
@@ -46,36 +46,36 @@ abstract class AKrokedil_WC_Product implements IKrokedil_WC_Product {
 		'length'             => '',
 		'width'              => '',
 		'height'             => '',
-		'upsell_ids'         => [],
-		'cross_sell_ids'     => [],
+		'upsell_ids'         => array(),
+		'cross_sell_ids'     => array(),
 		'parent_id'          => 0,
 		'reviews_allowed'    => true,
 		'purchase_note'      => '',
-		'attributes'         => [],
-		'default_attributes' => [],
+		'attributes'         => array(),
+		'default_attributes' => array(),
 		'menu_order'         => 0,
 		'post_password'      => '',
 		'virtual'            => false,
 		'downloadable'       => false,
-		'category_ids'       => [],
-		'tag_ids'            => [],
+		'category_ids'       => array(),
+		'tag_ids'            => array(),
 		'shipping_class_id'  => 0,
-		'downloads'          => [],
+		'downloads'          => array(),
 		'image_id'           => '',
-		'gallery_image_ids'  => [],
+		'gallery_image_ids'  => array(),
 		'download_limit'     => -1,
 		'download_expiry'    => -1,
-		'rating_counts'      => [],
+		'rating_counts'      => array(),
 		'average_rating'     => 0,
 		'review_count'       => 0,
-	];
+	);
 
 	/**
 	 * AKrokedil_WC_Product_Helper constructor.
 	 *
 	 * @param array $data data.
 	 */
-	public function __construct( array $data = [] ) {
+	public function __construct( array $data = array() ) {
 		$this->data = wp_parse_args( $data, $this->data );
 	}
 

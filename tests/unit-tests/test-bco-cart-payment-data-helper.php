@@ -42,8 +42,16 @@ class Test_BCO_Cart_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function create() {
-		global $locale;
-		$locale = 'sv_SE';
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		add_filter(
+			'locale',
+			static function ( $locale ) {
+				$locale = 'sv_SE';
+
+				return $locale;
+			},
+			10
+		);
 		update_option( 'woocommerce_currency', 'SEK' );
 		WC()->customer->set_billing_country( 'SE' );
 	}
@@ -54,7 +62,6 @@ class Test_BCO_Cart_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function update() {
-		return;
 	}
 
 	/**
@@ -63,7 +70,6 @@ class Test_BCO_Cart_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function view() {
-		return;
 	}
 
 

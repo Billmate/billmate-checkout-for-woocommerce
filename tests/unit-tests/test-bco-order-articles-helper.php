@@ -146,17 +146,6 @@ class Test_BCO_Order_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		$this->order = null;
 	}
 
-	/*
-	 public function test_get_discount() {
-		$this->create_order( '25' );
-		$this->create_coupon( 'testcode123', 10, 25 );
-		foreach ( $this->order->get_items() as $item ) {
-			$this->assertEquals( 8000, ( new BCO_Order_Articles_Helper() )->get_discount( $item ) );
-		}
-		wp_delete_post( $this->order->get_id() );
-		$this->order = null;
-	} */
-
 	/**
 	 * Test BCO_Order_Articles_Helper::get_without_tax
 	 *
@@ -291,7 +280,6 @@ class Test_BCO_Order_Articles_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function update() {
-		return;
 	}
 
 	/**
@@ -300,7 +288,6 @@ class Test_BCO_Order_Articles_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function view() {
-		return;
 	}
 
 
@@ -369,19 +356,5 @@ class Test_BCO_Order_Articles_Helper extends AKrokedil_Unit_Test_Case {
 		return WC_Tax::_insert_tax_rate( $tax_data );
 	}
 
-	/*
-	 public function create_coupon( $code = array(), $discount = 0, $discount_tax = 0 ) {
-		$item = new WC_Order_Item_Coupon();
-		$item->set_props(
-			array(
-				'code'         => $code,
-				'discount'     => $discount,
-				'discount_tax' => $discount_tax,
-				'order_id'     => $this->order->get_id(),
-			)
-		);
-		$item->save();
-		$this->order->add_item( $item );
-	} */
 }
 

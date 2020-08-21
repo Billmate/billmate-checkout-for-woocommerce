@@ -42,9 +42,16 @@ class Test_BCO_Order_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function create() {
-		global $locale;
-		$locale = 'sv_SE';
-		$order  = ( new Krokedil_Order() )->create();
+		add_filter(
+			'locale',
+			static function ( $locale ) {
+				$locale = 'sv_SE';
+
+				return $locale;
+			},
+			10
+		);
+		$order = ( new Krokedil_Order() )->create();
 		$order->set_currency( 'SEK' );
 		$order->set_billing_country( 'SE' );
 		$order->save();
@@ -57,7 +64,6 @@ class Test_BCO_Order_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function update() {
-		return;
 	}
 
 	/**
@@ -66,7 +72,6 @@ class Test_BCO_Order_Payment_Data_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function view() {
-		return;
 	}
 
 

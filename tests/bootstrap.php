@@ -66,7 +66,7 @@ class Krokedil_Unit_Tests_Bootstrap {
 	 *
 	 * @var array
 	 */
-	protected $config = [];
+	protected $config = array();
 
 	/**
 	 *
