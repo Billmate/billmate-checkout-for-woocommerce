@@ -1,6 +1,6 @@
 <?php // phpcs:ignore
 /**
- * Helper product class
+ * Helper shipping rate class
  */
 
 /**
@@ -44,7 +44,7 @@ class Krokedil_Shipping_Rate {
 	 * @param array $data data.
 	 * @param array $shipping_taxes taxes.
 	 */
-	public function __construct( array $data = [], array $shipping_taxes = [] ) {
+	public function __construct( array $data = array(), array $shipping_taxes = array() ) {
 		$this->data = wp_parse_args( $data, $this->data );
 		$this->set_shipping_taxes( $shipping_taxes );
 		$this->set_shipping_rate();

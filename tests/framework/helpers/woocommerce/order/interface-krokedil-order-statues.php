@@ -16,7 +16,7 @@ interface Krokedil_Order_Status {
 	/**
 	 * List of order statuses
 	 */
-	const STATUSES = [
+	const STATUSES = array(
 		self::PENDING,
 		self::ON_HOLD,
 		self::FAILED,
@@ -24,7 +24,7 @@ interface Krokedil_Order_Status {
 		self::CANCELLED,
 		self::COMPLETED,
 		self::REFUNDED,
-	];
+	);
 
 	const PENDING    = 'Pending';
 	const ON_HOLD    = 'On-Hold';

@@ -21,7 +21,7 @@ class Krokedil_Order_Item_Product implements IKrokedil_Order_Item_Product {
 	 *
 	 * @var array $data
 	 */
-	protected $data = [
+	protected $data = array(
 		'product_id'   => 0,
 		'variation_id' => 0,
 		'quantity'     => 1,
@@ -30,18 +30,18 @@ class Krokedil_Order_Item_Product implements IKrokedil_Order_Item_Product {
 		'subtotal_tax' => 0,
 		'total'        => 0,
 		'total_tax'    => 0,
-		'taxes'        => [
-			'subtotal' => [],
-			'total'    => [],
-		],
-	];
+		'taxes'        => array(
+			'subtotal' => array(),
+			'total'    => array(),
+		),
+	);
 
 	/**
 	 * Krokedil_Order_item_Product constructor.
 	 *
 	 * @param array $data order data.
 	 */
-	public function __construct( $data = [] ) {
+	public function __construct( $data = array() ) {
 		$this->data = wp_parse_args( $data, $this->data );
 	}
 
