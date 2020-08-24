@@ -133,12 +133,20 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		return false;
 	}
 
+	/**
+	 * Saves Billmate specific data stored in WC()->session to Woo order when created.
+	 *
+	 * @param string $order_id The WooCommerce order ID.
+	 * @param array  $posted_data The WooCommerce checkout form posted data.
+	 * @param object $order WooCommerce order.
+	 *
+	 * @return void
+	 */
 	public function save_billmate_temp_order_id_to_order( $order_id, $posted_data, $order ) {
 		if ( 'bco' === $order->get_payment_method() ) {
 			update_post_meta( $order_id, '_billmate_temp_order_id', WC()->session->get( 'bco_wc_temp_order_id' ) );
 			update_post_meta( $order_id, '_billmate_hash', WC()->session->get( 'bco_wc_hash' ) );
 		}
-
 	}
 
 	/**
