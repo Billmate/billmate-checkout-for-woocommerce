@@ -33,7 +33,7 @@ class BCO_Cart_Payment_Data_Helper {
 			'currency'    => self::get_currency(),
 			'language'    => self::get_language(),
 			'country'     => self::get_country(),
-			'orderid'     => '0',
+			'orderid'     => WC()->session->get( 'bco_wc_temp_order_id' ),
 			'accepturl'   => $confirmation_url,
 			'cancelurl'   => wc_get_checkout_url(),
 			'callbackurl' => $push_url,

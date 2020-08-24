@@ -150,7 +150,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 */
 		public function confirm_order() {
 			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
-				$bco_flow = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
+				$bco_flow     = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
+				$bco_checkout = BCO_WC()->api->request_get_checkout( get_post_meta( $order_id, '_billmate_hash', true ) );
 
 				if ( 'pay_for_order_redirect' === $bco_flow ) {
 					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
@@ -162,23 +163,42 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					update_post_meta( $order_id, '_billmate_transaction_id', $data['number'] );
 
 					// Get Checkout and set payment method title.
-					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					return;
 
 				} elseif ( 'checkout_redirect' === $bco_flow ) {
-					$order_id = WC()->session->get( 'bco_wc_order_id' );
-					$order    = wc_get_order( $order_id );
 
 					$raw_data = file_get_contents( 'php://input' );
 					parse_str( urldecode( $raw_data ), $result );
 					$data = json_decode( $result['data'], true );
+
+					$query_args = array(
+						'fields'      => 'ids',
+						'post_type'   => wc_get_order_types(),
+						'post_status' => array_keys( wc_get_order_statuses() ),
+						'meta_key'    => '_billmate_temp_order_id', // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
+						'meta_value'  => $data['orderid'], // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
+						'date_query'  => array(
+							array(
+								'after' => '2 day ago',
+							),
+						),
+					);
+
+					$orders = get_posts( $query_args );
+
+					if ( $orders ) {
+						$order_id = $orders[0];
+					} else {
+						$order_id = '';
+					}
+
+					$order = wc_get_order( $order_id );
 					update_post_meta( $order_id, '_billmate_transaction_id', $data['number'] );
 
-					// Get Checkout and set payment method title.
-					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
+					// Set payment method title.
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
@@ -190,7 +210,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$order_id = isset( $_GET['wc_order_id'] ) ? sanitize_text_field( wp_unslash( $_GET['wc_order_id'] ) ) : ''; // phpcs:ignore
 					$order    = wc_get_order( $order_id );
 
-					$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
 					if ( false !== $bco_checkout ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
 						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.

@@ -41,6 +41,7 @@ function bco_init_checkout() {
 			$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ) );
 			if ( ! $billmate_order ) {
 				// If update order failed try to create new order.
+				WC()->session->set( 'bco_wc_temp_order_id', md5( uniqid( wp_rand(), true ) ) );
 				$billmate_order = BCO_WC()->api->request_init_checkout();
 				if ( ! $billmate_order ) {
 					// If failed then bail.
@@ -57,6 +58,7 @@ function bco_init_checkout() {
 
 		} else {
 			// Initialize payment.
+			WC()->session->set( 'bco_wc_temp_order_id', md5( uniqid( wp_rand(), true ) ) );
 			$billmate_order = BCO_WC()->api->request_init_checkout();
 			if ( ! $billmate_order ) {
 				return;
@@ -175,6 +177,7 @@ function bco_wc_unset_sessions() {
 	WC()->session->__unset( 'bco_wc_hash' );
 	WC()->session->__unset( 'bco_wc_checkout_url' );
 	WC()->session->__unset( 'bco_wc_number' );
+	WC()->session->__unset( 'bco_wc_temp_order_id' );
 }
 
 
