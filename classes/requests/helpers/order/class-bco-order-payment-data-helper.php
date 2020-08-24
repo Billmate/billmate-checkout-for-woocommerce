@@ -59,14 +59,8 @@ class BCO_Order_Payment_Data_Helper {
 	 * @return string
 	 */
 	public static function get_language() {
-		$iso_code = explode( '_', get_locale() );
-		if ( in_array( $iso_code[0], array( 'sv', 'da', 'no', 'en' ), true ) ) {
-			$lang = $iso_code[0];
-		} else {
-			$lang = 'en';
-		}
-
-		return $lang;
+		// Swedish is the only supported language at the moment.
+		return 'sv';
 	}
 
 	/**
