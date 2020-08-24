@@ -330,7 +330,6 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function update() {
-		return;
 	}
 
 	/**
@@ -339,7 +338,6 @@ class Test_BCO_Cart_Articles_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function view() {
-		return;
 	}
 
 

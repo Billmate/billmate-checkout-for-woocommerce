@@ -1,6 +1,9 @@
 <?php
 /**
+ * Helper class for shipping.
  *
+ * @package Framework\Helpers\WooCommerce\Shipping
+ * @author Krokedil
  */
 
 /**
@@ -9,7 +12,7 @@
 class Krokedil_WC_Shipping {
 
 	/**
-	 *
+	 * Creates flat rate.
 	 */
 	public static function create_simple_flat_rate() {
 		$flat_rate_settings = array(

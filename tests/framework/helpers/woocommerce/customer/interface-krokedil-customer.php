@@ -1,7 +1,13 @@
 <?php //phpcs:ignore
 
 /**
+ * Interface
  *
+ * @package Krokedil/tests
+ */
+
+/**
+ * Interface.
  */
 interface IKrokedil_Customer extends IKrokedil_WC {
 

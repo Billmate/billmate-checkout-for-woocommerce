@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Helper class with constants
+ *
+ * @package Framework\Helpers\WooCommerce\Core
+ * @author Krokedil
+ */
 
 /**
  * IKrokedilConstants represents unique place for constants
@@ -17,11 +22,11 @@ interface IKrokedilConstants {
 	const CONTRIBUTOR     = 'contributor';
 	const SUBSCRIBER      = 'subscriber';
 	const SHOP_MANAGER    = 'shop_manager';
-	// const SALESMAN        = 'salesman';
-	const CUSTOMER = 'customer';
+	const SALESMAN        = 'salesman';
+	const CUSTOMER        = 'customer';
 
 
-	const DEFAULT_WP_ROLES = [
+	const DEFAULT_WP_ROLES = array(
 		self::SUPER_ADMIN,
 		self::ADMINISTRATOR,
 		self::EDITOR,
@@ -29,9 +34,9 @@ interface IKrokedilConstants {
 		self::CONTRIBUTOR,
 		self::SUBSCRIBER,
 		self::SHOP_MANAGER,
-		// self::SALESMAN,
+		self::SALESMAN,
 		self::CUSTOMER,
-	];
+	);
 
 	const PRODUCT_SIMPLE   = 'simple';
 	const PRODUCT_EXTERNAL = 'external';

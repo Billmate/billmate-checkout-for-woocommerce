@@ -144,8 +144,6 @@ install_db() {
 			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp"
 		fi
 	fi
-	# create database
-	mysqladmin create $DB_NAME --user="$DB_USER" $EXTRA
 }
 
 install_wp

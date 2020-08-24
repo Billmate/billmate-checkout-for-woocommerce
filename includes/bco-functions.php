@@ -188,7 +188,7 @@ function bco_wc_unset_sessions() {
  * @return void
  */
 function bco_extract_error_message( $wp_error ) {
-	wc_print_notice( $wp_error->get_error_message(), 'error' );
+	wc_print_notice( utf8_decode( $wp_error->get_error_message() ), 'error' );
 }
 
 

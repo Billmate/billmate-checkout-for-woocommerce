@@ -84,7 +84,8 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 		$data  = array(
 			'CheckoutData' =>
 			array(
-				'terms' => get_permalink( wc_get_page_id( 'terms' ) ),
+				'terms'       => get_permalink( wc_get_page_id( 'terms' ) ),
+				'companyView' => $this->company_view,
 			),
 			'PaymentData'  => BCO_Order_Payment_Data_Helper::get_payment_data( $order ),
 			'Customer'     =>
@@ -113,7 +114,8 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 		$data = array(
 			'CheckoutData' =>
 			array(
-				'terms' => get_permalink( wc_get_page_id( 'terms' ) ),
+				'terms'       => get_permalink( wc_get_page_id( 'terms' ) ),
+				'companyView' => $this->company_view,
 			),
 			'PaymentData'  => BCO_Cart_Payment_Data_Helper::get_payment_data(),
 			'Articles'     => BCO_Cart_Articles_Helper::get_articles(),

@@ -1,6 +1,6 @@
 <?php // phpcs:ignore
 /**
- * Helper product class
+ * Helper order item shipping class
  */
 
 /**
@@ -15,7 +15,7 @@ class Krokedil_Order_Item_Shipping {
 	 *
 	 * @var array $data data.
 	 */
-	protected $data = [
+	protected $data = array(
 		'method_title' => '',
 		'method_id'    => '',
 		'instance_id'  => '',
@@ -24,7 +24,7 @@ class Krokedil_Order_Item_Shipping {
 		'taxes'        => array(
 			'total' => array(),
 		),
-	];
+	);
 
 	/**
 	 * Item shipping.
@@ -38,7 +38,7 @@ class Krokedil_Order_Item_Shipping {
 	 *
 	 * @param array $data data.
 	 */
-	public function __construct( array $data = [] ) {
+	public function __construct( array $data = array() ) {
 		$this->data                = wp_parse_args( $data, $this->data );
 		$this->order_item_shipping = new WC_Order_Item_Shipping();
 		$this->order_item_shipping->set_props( $this->data );

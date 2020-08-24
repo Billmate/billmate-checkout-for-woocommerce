@@ -163,8 +163,8 @@ class Test_BCO_Order_Customer_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function create() {
-		$data  = [
-			'billing'  => [
+		$data  = array(
+			'billing'  => array(
 				'first_name' => 'Billingfirstname',
 				'last_name'  => 'Billinglastname',
 				'company'    => 'Billingcompany',
@@ -175,8 +175,8 @@ class Test_BCO_Order_Customer_Helper extends AKrokedil_Unit_Test_Case {
 				'country'    => 'SE',
 				'phone'      => '0701234567',
 				'email'      => 'test@krokedil.com',
-			],
-			'shipping' => [
+			),
+			'shipping' => array(
 				'first_name' => 'Shippingfirstname',
 				'last_name'  => 'Shippinglastname',
 				'company'    => 'Shippingcompany',
@@ -185,8 +185,8 @@ class Test_BCO_Order_Customer_Helper extends AKrokedil_Unit_Test_Case {
 				'postcode'   => '54321',
 				'city'       => 'Shippingcity',
 				'country'    => 'SE',
-			],
-		];
+			),
+		);
 		$order = ( new Krokedil_Order() )->create();
 		foreach ( $data as $address => $array ) {
 			$order->set_address( $array, $address );
@@ -200,7 +200,6 @@ class Test_BCO_Order_Customer_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function update() {
-		return;
 	}
 
 	/**
@@ -209,7 +208,6 @@ class Test_BCO_Order_Customer_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function view() {
-		return;
 	}
 
 

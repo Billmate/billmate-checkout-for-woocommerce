@@ -21,7 +21,7 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	 *
 	 * @var array $data order data.
 	 */
-	protected $data = [
+	protected $data = array(
 		'status'        => null,
 		'customer_id'   => null,
 		'customer_note' => null,
@@ -40,7 +40,7 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 		'country'       => 'RS',
 		'emial'         => 'mail@mail.com',
 		'phone'         => '555-32123',
-	];
+	);
 
 	/**
 	 * Totals
@@ -48,14 +48,14 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	 * @var array key value pair
 	 */
 
-	protected $totals = [
+	protected $totals = array(
 		'shipping_total' => 10,
 		'discount_total' => 0,
 		'discount_tax'   => 0,
 		'cart_tax'       => 0,
 		'shipping_tax'   => 0,
 		'total'          => 50,
-	];
+	);
 
 	/**
 	 * Product.
@@ -90,7 +90,7 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	 *
 	 * @var array $items items
 	 */
-	protected $items = [];
+	protected $items = array();
 
 	/**
 	 * Krokedil_Order constructor.
@@ -101,7 +101,7 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	 * @param array       $data data.
 	 * @param null        $rate rate.
 	 */
-	public function __construct( $product = null, $customer = null, array $items = [], $data = [], $rate = null ) {
+	public function __construct( $product = null, $customer = null, array $items = array(), $data = array(), $rate = null ) {
 		$this->set_product( $product );
 		$this->set_customer( $customer );
 		$this->set_data( $data );
@@ -135,11 +135,11 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	private function set_product( $product ) {
 		if ( null === $product || ! ( $product instanceof WC_Product ) ) {
 			$this->product = ( new Krokedil_Simple_Product(
-				[
+				array(
 					'name'          => 'Simple product name',
 					'regular_price' => 10,
 					'sale_price'    => 9,
-				]
+				)
 			) )->create();
 			return;
 		}
@@ -187,12 +187,12 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 	private function set_product_items( array $product_items ) {
 		if ( empty( $product_items ) ) {
 			$this->product_items[] = ( new Krokedil_Order_Item_Product(
-				[
+				array(
 					'product'  => $this->product,
 					'quantity' => 4,
 					'subtotal' => wc_get_price_excluding_tax( $this->product, array( 'qty' => 4 ) ),
 					'total'    => wc_get_price_excluding_tax( $this->product, array( 'qty' => 4 ) ),
-				]
+				)
 			) )->create();
 		} else {
 			foreach ( $product_items as $item ) {
@@ -259,6 +259,7 @@ class Krokedil_Order implements IKrokedil_WC_Order, Krokedil_Order_Status {
 			$order->{"set_$key"}( $value );
 		}
 		$order->save();
-		return $order;
+		$this->data['order_id'] = $order->get_id();
+		return wc_get_order( $order->get_id() );
 	}
 }

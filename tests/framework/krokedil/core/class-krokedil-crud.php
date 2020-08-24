@@ -32,7 +32,7 @@ interface IKrokedil_CRUD {
 	public function view();
 
 	/**
-	 *
+	 * Delete behaviour.
 	 *
 	 * @return void
 	 */
