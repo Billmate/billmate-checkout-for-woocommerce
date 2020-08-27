@@ -158,27 +158,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$order_id = $wc_order_id;
 					$order    = wc_get_order( $order_id );
 				} else {
-					$query_args = array(
-						'fields'      => 'ids',
-						'post_type'   => wc_get_order_types(),
-						'post_status' => array_keys( wc_get_order_statuses() ),
-						'meta_key'    => '_billmate_temp_order_id', // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
-						'meta_value'  => sanitize_text_field( wp_unslash( $data['orderid'] ) ), // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
-						'date_query'  => array(
-							array(
-								'after' => '2 day ago',
-							),
-						),
-					);
-
-					$orders = get_posts( $query_args );
-
-					if ( $orders ) {
-						$order_id = $orders[0];
-					} else {
-						$order_id = '';
-					}
-					$order = wc_get_order( $order_id );
+					$order_id = bco_get_order_id_by_temp_order_id( $data['orderid'] );
+					$order    = wc_get_order( $order_id );
 				}
 
 				// If the order is already completed, return.
