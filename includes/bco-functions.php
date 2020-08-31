@@ -304,7 +304,7 @@ function bco_get_order_id_by_temp_order_id( $billmate_temp_order_id ) {
 		'post_type'   => wc_get_order_types(),
 		'post_status' => array_keys( wc_get_order_statuses() ),
 		'meta_key'    => '_billmate_temp_order_id', // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
-		'meta_value'  => sanitize_text_field( wp_unslash( $data['orderid'] ) ), // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
+		'meta_value'  => sanitize_text_field( wp_unslash( $billmate_temp_order_id ) ), // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
 		'date_query'  => array(
 			array(
 				'after' => '2 day ago',
