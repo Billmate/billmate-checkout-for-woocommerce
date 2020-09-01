@@ -4,7 +4,8 @@ on:
     branches:
       - master
   pull_request:
-      types: [closed]
+    branches:
+      - master
 jobs:
   Test-Plugin:
     name: Test plugin with wc-${{ matrix.woocommerce }} and wp-${{ matrix.wordpress }}
