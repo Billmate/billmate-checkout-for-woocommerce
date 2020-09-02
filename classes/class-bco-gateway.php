@@ -46,7 +46,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 
 		// Actions.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'billmate_thank_you' ) );
+		add_action( 'woocommerce_thankyou', array( $this, 'billmate_thank_you' ) );
 		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_billmate_temp_order_id_to_order' ), 10, 3 );
 
 		// Load scripts.
@@ -206,16 +206,8 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function billmate_thank_you( $order_id ) {
-		if ( $order_id ) {
-			$order = wc_get_order( $order_id );
-			$order->add_order_note( __( 'Order finalized in thankyou page.', 'billmate-checkout-for-woocommerce' ) );
-
-			// Clear cart.
-			WC()->cart->empty_cart();
-
-			// Unset sessions.
-			bco_wc_unset_sessions();
-		}
+		// Unset sessions.
+		bco_wc_unset_sessions();
 	}
 }
 
