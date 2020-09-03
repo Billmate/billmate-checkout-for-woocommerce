@@ -68,6 +68,12 @@ $settings = array(
 		'default'     => 'false',
 		'desc_tip'    => false,
 	),
+	'show_order_notes'           => array(
+		'title'   => __( 'Show order notes', 'billmate-checkout-for-woocommerce' ),
+		'type'    => 'checkbox',
+		'label'   => __( 'Show Order notes field in checkout.', 'billmate-checkout-for-woocommerce' ),
+		'default' => 'yes',
+	),
 	'logo'                       => array(
 		'title'       => __( 'Logo', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
