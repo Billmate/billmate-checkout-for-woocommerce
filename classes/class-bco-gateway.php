@@ -191,7 +191,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 */
 	public function maybe_change_paymant_method_title( $title, $id ) {
 		global $pagenow;
-		if ( ( $pagenow == 'post.php' ) && ( 'shop_order' ) === get_post_type() && 'bco' === $id && isset( $_GET['post'] ) ) {
+		if ( 'post.php' === $pagenow && 'shop_order' === get_post_type() && 'bco' === $id && isset( $_GET['post'] ) ) { // phpcs:ignore
 			$order_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_STRING );
 			if ( ! empty( get_post_meta( $order_id, '_billmate_payment_method_name', true ) ) ) {
 				$title .= ' ' . get_post_meta( $order_id, '_billmate_payment_method_name', true );
