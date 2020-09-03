@@ -130,38 +130,22 @@ function bco_wc_show_another_gateway_button() {
  * @return void
  */
 function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
-	$bco_payment_method = '';
+	$bco_payment_method      = '';
+	$bco_payment_method_name = '';
 	if ( isset( $bco_order['data']['PaymentData']['method'] ) ) {
 		$bco_payment_method = $bco_order['data']['PaymentData']['method'];
 		update_post_meta( $order_id, '_billmate_payment_method_id', $bco_payment_method );
 	}
 
-	switch ( $bco_payment_method ) {
-		case '1':
-			$method_title = __( 'Billmate Invoice', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '2':
-			$method_title = __( 'Billmate Invoice', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '4':
-			$method_title = __( 'Billmate Part Payment', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '8':
-			$method_title = __( 'Billmate Card Payment', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '16':
-			$method_title = __( 'Billmate Bank Payment', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '24':
-			$method_title = __( 'Billmate Card/Bank Payment', 'billmate-checkout-for-woocommerce' );
-			break;
-		case '32':
-			$method_title = __( 'Billmate Cash Payment', 'billmate-checkout-for-woocommerce' );
-			break;
-		default:
-			$method_title = __( 'Billmate Checkout', 'billmate-checkout-for-woocommerce' );
+	if ( isset( $bco_order['data']['PaymentData']['method_name'] ) ) {
+		$bco_payment_method_name = $bco_order['data']['PaymentData']['method_name'];
+		update_post_meta( $order_id, '_billmate_payment_method_name', $bco_payment_method_name );
 	}
-	$order = wc_get_order( $order_id );
+
+	$bco_settings   = get_option( 'woocommerce_bco_settings' );
+	$settings_title = ( isset( $bco_settings['title'] ) ) ? $bco_settings['title'] : '';
+	$method_title   = $settings_title . ' ' . $bco_payment_method_name;
+	$order          = wc_get_order( $order_id );
 	$order->set_payment_method_title( $method_title );
 	$order->save();
 }
