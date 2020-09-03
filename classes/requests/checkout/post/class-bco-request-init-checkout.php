@@ -101,6 +101,9 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 				'Total'    => BCO_Order_Cart_Helper::get_order_cart_total( $order ),
 			),
 		);
+		if ( ! empty( wc_privacy_policy_page_id() ) ) {
+			$data['CheckoutData']['privacyPolicy'] = get_permalink( wc_privacy_policy_page_id() );
+		}
 		return $data;
 	}
 
@@ -126,6 +129,9 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 				'Total'    => BCO_Cart_Cart_Helper::get_total(),
 			),
 		);
+		if ( ! empty( wc_privacy_policy_page_id() ) ) {
+			$data['CheckoutData']['privacyPolicy'] = get_permalink( wc_privacy_policy_page_id() );
+		}
 		return $data;
 	}
 }
