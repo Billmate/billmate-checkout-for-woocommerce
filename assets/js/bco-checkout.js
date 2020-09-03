@@ -341,6 +341,7 @@ jQuery(function($) {
 				console.log('response.redirect_url');
 				console.log(response.redirect_url);
 				sessionStorage.setItem( 'billmateRedirectUrl', response.redirect_url );
+				$( 'body' ).append( $( '<div class="billmate-success-modal"><div class="billmate-success-modal-content">' + bco_wc_params.success_text + '</div></div>' ) );
 				$('form.checkout').removeClass( 'processing' ).unblock();
 			}
 		},
