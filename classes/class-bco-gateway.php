@@ -49,6 +49,9 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		add_action( 'woocommerce_thankyou', array( $this, 'billmate_thank_you' ) );
 		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_billmate_temp_order_id_to_order' ), 10, 3 );
 
+		// Filters.
+		add_action( 'woocommerce_gateway_title', array( $this, 'maybe_change_paymant_method_title' ), 10, 2 );
+
 		// Load scripts.
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_scripts' ) );
 	}
@@ -176,6 +179,25 @@ class BCO_Gateway extends WC_Payment_Gateway {
 			'result'   => 'success',
 			'redirect' => ( 'checkout' === $this->checkout_flow ) ? '#billmate-success=' . base64_encode( wp_json_encode( $response ) ) : $order->get_checkout_payment_url(), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions -- Base64 used to give a unique nondescript string.
 		);
+	}
+
+	/**
+	 * Adds the selected payment method to the Payment method title on the single edit order page.
+	 *
+	 * @param string $title The payment gateway title.
+	 * @param string $id The payment gateway id.
+	 *
+	 * @return string The Payment gateway title to display.
+	 */
+	public function maybe_change_paymant_method_title( $title, $id ) {
+		global $pagenow;
+		if ( 'post.php' === $pagenow && 'shop_order' === get_post_type() && 'bco' === $id && isset( $_GET['post'] ) ) { // phpcs:ignore
+			$order_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_STRING );
+			if ( ! empty( get_post_meta( $order_id, '_billmate_payment_method_name', true ) ) ) {
+				$title .= ' ' . get_post_meta( $order_id, '_billmate_payment_method_name', true );
+			}
+		}
+		return $title;
 	}
 
 	/**
