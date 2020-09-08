@@ -153,13 +153,15 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				$raw_data = file_get_contents( 'php://input' );
 				parse_str( urldecode( $raw_data ), $result );
 				$data = json_decode( $result['data'], true );
-
+				error_log( '$data ' . var_export( $data, true ) );
 				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && ! 'null' === $wc_order_id ) {
 					$order_id = $wc_order_id;
 					$order    = wc_get_order( $order_id );
 				} else {
+
 					$order_id = bco_get_order_id_by_temp_order_id( $data['orderid'] );
-					$order    = wc_get_order( $order_id );
+					error_log( '$order_id ' . var_export( $order_id, true ) );
+					$order = wc_get_order( $order_id );
 				}
 
 				// If the order is already completed, return.
@@ -198,7 +200,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					if ( false !== $bco_checkout ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
-						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
+						// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
 						bco_wc_unset_sessions(); // Unset Billmate session data.
 					}

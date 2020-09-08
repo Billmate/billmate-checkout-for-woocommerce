@@ -48,9 +48,9 @@ class BCO_API {
 	 * @param string $bco_payment_number The Billmate payment number.
 	 * @return mixed
 	 */
-	public function request_update_checkout( $bco_payment_number = null ) {
+	public function request_update_checkout( $bco_payment_number = null, $order_id = null ) {
 		$request  = new BCO_Request_Update_Checkout();
-		$response = $request->request( $bco_payment_number );
+		$response = $request->request( $bco_payment_number, $order_id );
 
 		return $this->check_for_api_error( $response );
 	}
