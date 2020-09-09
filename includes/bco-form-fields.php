@@ -88,7 +88,7 @@ $settings = array(
 	),
 	'api_key_se'                 => array(
 		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
-		'type'     => 'text',
+		'type'     => 'password',
 		'default'  => '',
 		'desc_tip' => true,
 	),
