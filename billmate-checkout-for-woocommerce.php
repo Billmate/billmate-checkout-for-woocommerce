@@ -193,6 +193,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					// Set payment method title.
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
+					bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
+
 					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					bco_wc_unset_sessions(); // Unset Billmate session data.
@@ -205,6 +207,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
 						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
+						bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 						bco_wc_unset_sessions(); // Unset Billmate session data.
 					}
 

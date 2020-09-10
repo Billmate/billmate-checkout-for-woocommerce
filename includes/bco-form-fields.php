@@ -81,6 +81,21 @@ $settings = array(
 		'default'     => '',
 		'desc_tip'    => true,
 	),
+	'invoice_fee'                => array(
+		'title'       => __( 'Invoice fee', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'text',
+		'description' => __( 'Add Invoice fee excluding tax. Leave blank to deactivate this feature.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => '',
+		'desc_tip'    => true,
+	),
+	'invoice_fee_tax'            => array(
+		'title'       => __( 'Tax class for invoice fee', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'select',
+		'options'     => wc_get_product_tax_class_options(),
+		'description' => __( 'Select the tax class that should be used for the invoice fee.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => 'false',
+		'desc_tip'    => false,
+	),
 	// SE.
 	'credentials_se'             => array(
 		'title' => 'API Credentials Sweden',
