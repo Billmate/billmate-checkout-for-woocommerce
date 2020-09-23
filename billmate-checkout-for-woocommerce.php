@@ -154,18 +154,16 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
 				$bco_flow    = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
 				$wc_order_id = filter_input( INPUT_GET, 'wc_order_id', FILTER_SANITIZE_STRING );
-
-				$raw_data = file_get_contents( 'php://input' );
+				$raw_data    = file_get_contents( 'php://input' );
 				parse_str( urldecode( $raw_data ), $result );
 				$data = json_decode( $result['data'], true );
 
-				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && ! 'null' === $wc_order_id ) {
+				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 					$order_id = $wc_order_id;
-					$order    = wc_get_order( $order_id );
 				} else {
-					$order_id = bco_get_order_id_by_temp_order_id( $data['orderid'] );
-					$order    = wc_get_order( $order_id );
+					$order_id = $data['orderid'];
 				}
+				$order = wc_get_order( $order_id );
 
 				// If the order is already completed, return.
 				if ( ! empty( $order->get_date_paid() ) ) {
@@ -193,7 +191,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					// Set payment method title.
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					bco_wc_unset_sessions(); // Unset Billmate session data.
 					wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
@@ -203,7 +200,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					if ( false !== $bco_checkout ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
-						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
 						bco_wc_unset_sessions(); // Unset Billmate session data.
 					}
