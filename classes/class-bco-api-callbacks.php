@@ -103,7 +103,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->update_status( 'on-hold' );
 					break;
 				case 'created':
@@ -111,7 +110,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'paid':
@@ -119,7 +117,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'cancelled':

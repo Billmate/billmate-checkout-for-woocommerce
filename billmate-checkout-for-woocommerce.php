@@ -191,7 +191,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					// Set payment method title.
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
-					// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					bco_wc_unset_sessions(); // Unset Billmate session data.
 					wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
@@ -201,7 +200,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					if ( false !== $bco_checkout ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
-						// BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
 						bco_wc_unset_sessions(); // Unset Billmate session data.
 					}
