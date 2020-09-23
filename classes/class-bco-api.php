@@ -46,6 +46,7 @@ class BCO_API {
 	 * Update Billmate Checkout.
 	 *
 	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $order_id The WooCommerce order ID.
 	 * @return mixed
 	 */
 	public function request_update_checkout( $bco_payment_number = null, $order_id = null ) {

@@ -18,6 +18,7 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 	 * Makes the request.
 	 *
 	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $order_id The WooCommerce order ID.
 	 * @return array
 	 */
 	public function request( $bco_payment_number = null, $order_id = null ) {
@@ -39,6 +40,7 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 	 * Gets the request body.
 	 *
 	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $order_id The WooCommerce order ID.
 	 * @return array
 	 */
 	public function get_body( $bco_payment_number, $order_id = null ) {
@@ -61,6 +63,7 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 	 * Gets the request args for the API call.
 	 *
 	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $order_id The WooCommerce order ID.
 	 * @return array
 	 */
 	public function get_request_args( $bco_payment_number, $order_id = null ) {
@@ -76,6 +79,7 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 	 * Request cart data
 	 *
 	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $order_id The WooCommerce order ID.
 	 * @return array $data cart data.
 	 */
 	public function get_request_cart_data( $bco_payment_number, $order_id = null ) {
