@@ -36,8 +36,11 @@ class BCO_Templates {
 	 * Plugin actions.
 	 */
 	public function __construct() {
-		$bco_settings  = get_option( 'woocommerce_bco_settings' );
-		$checkout_flow = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+		$bco_settings           = get_option( 'woocommerce_bco_settings' );
+		$this->enabled          = ( isset( $bco_settings['enabled'] ) ) ? $bco_settings['enabled'] : '';
+		$this->show_order_notes = ( isset( $bco_settings['show_order_notes'] ) ) ? $bco_settings['show_order_notes'] : 'yes';
+		$checkout_flow          = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+
 		if ( 'checkout' === $checkout_flow ) {
 			// Override template if Billmate Checkout page.
 			add_filter( 'wc_get_template', array( $this, 'override_checkout_template' ), 999, 2 );
@@ -52,6 +55,9 @@ class BCO_Templates {
 		add_action( 'bco_wc_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 		add_action( 'bco_wc_before_checkout_form', 'woocommerce_checkout_coupon_form', 20 );
 		add_action( 'bco_wc_after_order_review', 'bco_wc_show_another_gateway_button', 20 );
+
+		// Hook to check if we should hide the Order notes field in checkout.
+		add_action( 'template_redirect', array( $this, 'maybe_hide_order_notes_field' ), 1000 );
 	}
 
 	/**
@@ -208,6 +214,29 @@ class BCO_Templates {
 		</div>
 		<?php
 		do_action( 'bco_wc_after_extra_fields' );
+	}
+
+	/**
+	 * Maybe hide the Customer order notes field in checkout.
+	 *
+	 * @return void
+	 */
+	public function maybe_hide_order_notes_field() {
+
+		if ( is_checkout() && 'yes' === $this->enabled && 'yes' !== $this->show_order_notes && method_exists( WC()->session, 'get' ) ) {
+			$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+
+			if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
+				// If Billmate Checkout is the selected payment gateway.
+				add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
+			} elseif ( null === WC()->session->get( 'chosen_payment_method' ) || '' === WC()->session->get( 'chosen_payment_method' ) ) {
+				// If no payment gatewy have been selected but Billmate Checkout is the default one.
+				reset( $available_gateways );
+				if ( 'bco' === key( $available_gateways ) ) {
+					add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
+				}
+			}
+		}
 	}
 }
 
