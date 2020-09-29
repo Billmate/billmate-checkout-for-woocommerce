@@ -165,6 +165,12 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				}
 				$order = wc_get_order( $order_id );
 
+				// If we don't find the order, log it and return.
+				if ( ! is_object( $order ) ) {
+					BCO_Logger::log( 'Confirm order step failed. Could not find order. Returned data from Billmate: ' . wp_json_encode( $data ) );
+					return;
+				}
+
 				// If the order is already completed, return.
 				if ( ! empty( $order->get_date_paid() ) ) {
 					return;
