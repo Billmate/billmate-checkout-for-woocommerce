@@ -51,58 +51,21 @@ class Test_BCO_Cart_Cart_Helper extends AKrokedil_Unit_Test_Case {
 	 * @return void
 	 */
 	public function test_get_handling_tax_rate() {
-		// Create tax rates.
-		$this->tax_rate_ids[] = $this->create_tax_rate( '25' );
-		$this->tax_rate_ids[] = $this->create_tax_rate( '12' );
-		$this->tax_rate_ids[] = $this->create_tax_rate( '6' );
+		$bco_settings = get_option( 'woocommerce_bco_settings' );
+		$no_tax_rate  = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 
-		// With tax.
-		update_option( 'woocommerce_prices_include_tax', 'yes' );
-		// 25% inc tax.
-		$this->setup_cart( '25' );
-		$handling_tax_rate_25_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
+		$this->tax_rate_ids[]            = $this->create_tax_rate( '25' );
+		$bco_settings['invoice_fee']     = '29';
+		$bco_settings['invoice_fee_tax'] = '25percent';
+		update_option( 'woocommerce_bco_settings', $bco_settings );
+		$with_tax_rate = BCO_Cart_Cart_Helper::get_handling_without_tax();
 
-		// 12% inc tax.
-		$this->setup_cart( '12' );
-		$handling_tax_rate_12_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
+		unset( $bco_settings['invoice_fee'] );
+		unset( $bco_settings['invoice_fee_tax'] );
+		update_option( 'woocommerce_bco_settings', $bco_settings );
 
-		// 6% inc tax.
-		$this->setup_cart( '6' );
-		$handling_tax_rate_6_inc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
-
-		// Without tax.
-		update_option( 'woocommerce_prices_include_tax', 'no' );
-		// 25% exc tax.
-		$this->setup_cart( '25' );
-		$handling_tax_rate_25_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
-
-		// 12% exc tax.
-		$this->setup_cart( '12' );
-		$handling_tax_rate_12_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
-
-		// 6% exc tax.
-		$this->setup_cart( '6' );
-		$handling_tax_rate_6_exc = BCO_Cart_Cart_Helper::get_handling_tax_rate();
-		WC()->cart->empty_cart();
-
-		// Clear data.
-		foreach ( $this->tax_rate_ids as $tax_rate_id ) {
-			WC_Tax::_delete_tax_rate( $tax_rate_id );
-		}
-		$this->tax_rate_ids = null;
-
-		// Assertions.
-		$this->assertEquals( 25, $handling_tax_rate_25_inc, 'get_handling_tax_rate 25% inc tax' );
-		$this->assertEquals( 12, $handling_tax_rate_12_inc, 'get_handling_tax_rate 12% inc tax' );
-		$this->assertEquals( 6, $handling_tax_rate_6_inc, 'get_handling_tax_rate 6% inc tax' );
-		$this->assertEquals( 25, $handling_tax_rate_25_exc, 'get_handling_tax_rate 25% exc tax' );
-		$this->assertEquals( 12, $handling_tax_rate_12_exc, 'get_handling_tax_rate 12% exc tax' );
-		$this->assertEquals( 6, $handling_tax_rate_6_exc, 'get_handling_tax_rate 6% exc tax' );
+		$this->assertEquals( 0, $no_tax_rate, 'get_handling_tax_rate no tax rate' );
+		$this->assertEquals( 25, $with_tax_rate, 'get_handling_tax_rate with tax rate' );
 	}
 
 	/**
