@@ -337,3 +337,32 @@ function bco_get_order_id_by_transaction_id( $transaction_id ) {
 
 	return $order_id;
 }
+
+/**
+ * Adds the invoice fee to WC order if this is a invoice payment and invoice fee is set in plugin settings.
+ *
+ * @param object $order WooCommerce order.
+ * @return void.
+ */
+function bco_maybe_add_invoice_fee( $order ) {
+	// Add invoice fee to order.
+	$order_id = $order->get_id();
+	if ( '1' === get_post_meta( $order_id, '_billmate_payment_method_id', true ) ) {
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+
+			$fee = new WC_Order_Item_Fee();
+
+			$fee_args = array(
+				'name'      => __( 'Invoice fee', 'billmate-checkout-for-woocommerce' ),
+				'total'     => $billmate_settings['invoice_fee'],
+				'tax_class' => $billmate_settings['invoice_fee_tax'],
+			);
+
+			$fee->set_props( $fee_args );
+			$order->add_item( $fee );
+			$order->calculate_totals();
+			$order->save();
+		}
+	}
+}

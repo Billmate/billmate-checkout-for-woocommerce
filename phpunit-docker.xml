@@ -8,7 +8,7 @@
 	convertWarningsToExceptions="true"
 	>
 	<php>
-		<env name="docker" value="false"/>
+		<env name="docker" value="true"/>
 	</php>
 	<testsuites>
 		<testsuite name="krokedil-test">

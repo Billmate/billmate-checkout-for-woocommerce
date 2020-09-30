@@ -21,7 +21,7 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_handling() {
 		return array(
-			'withouttax' => 0,
+			'withouttax' => self::get_handling_without_tax(),
 			'taxrate'    => self::get_handling_tax_rate(),
 		);
 	}
@@ -45,10 +45,10 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_total() {
 		return array(
-			'withouttax' => self::get_total_without_tax(),
-			'tax'        => self::get_total_tax(),
+			'withouttax' => self::get_total_without_tax() + self::get_handling_without_tax(),
+			'tax'        => self::get_total_tax() + self::get_handling_tax(),
 			'rounding'   => 0,
-			'withtax'    => self::get_total_with_tax(),
+			'withtax'    => self::get_total_with_tax() + self::get_handling_without_tax() + self::get_handling_tax(),
 		);
 	}
 
@@ -58,7 +58,13 @@ class BCO_Cart_Cart_Helper {
 	 * @return int $handling_without_tax handling excl tax.
 	 */
 	public static function get_handling_without_tax() {
-		return round( ( WC()->cart->total - WC()->cart->tax_total ) * 100 );
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+			$handling_without_tax = round( $billmate_settings['invoice_fee'] * 100 );
+		} else {
+			$handling_without_tax = 0;
+		}
+		return $handling_without_tax;
 	}
 
 	/**
@@ -67,8 +73,46 @@ class BCO_Cart_Cart_Helper {
 	 * @return int $handling_tax_rate handling tax rate.
 	 */
 	public static function get_handling_tax_rate() {
-		$tax_rate = ( WC()->cart->tax_total > 0 ) ? WC()->cart->tax_total / ( WC()->cart->total - WC()->cart->tax_total ) * 100 : 0;
-		return round( $tax_rate );
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+			$handling_tax_rate = 0;
+			$invoice_fee_tax   = $billmate_settings['invoice_fee_tax'];
+			$tax_rates         = WC_Tax::get_rates_for_tax_class( $invoice_fee_tax );
+			foreach ( $tax_rates as $tax_rate ) {
+				if ( 'SE' === $tax_rate->tax_rate_country ) {
+					// If we find a SE tax rate, use that tax rate and break.
+					$handling_tax_rate = round( $tax_rate->tax_rate );
+					break;
+				} elseif ( '' === $tax_rate->tax_rate_country || '*' === $tax_rate->tax_rate_country ) {
+					// If we find a generic tax_rate, set that for now but do not break incase we find a swedish specific tax rate.
+					$handling_tax_rate = round( $tax_rate->tax_rate );
+				}
+			}
+		} else {
+			$handling_tax_rate = 0;
+		}
+
+		return round( $handling_tax_rate );
+	}
+
+	/**
+	 * Get tax amount for invoice fee.
+	 *
+	 * @return int $handling_tax handling excl tax.
+	 */
+	public static function get_handling_tax() {
+		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+			if ( 0 === self::get_handling_tax_rate() ) {
+				$handling_tax = 0;
+			} else {
+				$handling_tax = ( $billmate_settings['invoice_fee'] * ( ( self::get_handling_tax_rate() / 100 ) + 1 ) ) - $billmate_settings['invoice_fee'];
+				$handling_tax = round( $handling_tax * 100 );
+			}
+		} else {
+			$handling_tax = 0;
+		}
+		return $handling_tax;
 	}
 
 	/**

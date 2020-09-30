@@ -89,6 +89,7 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 			array(
 				'Total'    => BCO_Cart_Cart_Helper::get_total(),
 				'Shipping' => BCO_Cart_Cart_Helper::get_shipping(),
+				'Handling' => BCO_Cart_Cart_Helper::get_handling(),
 			),
 			'PaymentData' => array(
 				'number' => $bco_payment_number,
