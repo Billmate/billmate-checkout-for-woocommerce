@@ -341,6 +341,13 @@ jQuery(function($) {
 				console.log('response.redirect_url');
 				console.log(response.redirect_url);
 				sessionStorage.setItem( 'billmateRedirectUrl', response.redirect_url );
+				$('#bco-wrapper').block({
+					message: null,
+					overlayCSS: {
+						background: '#fff',
+						opacity: 0.6
+					}
+				});
 				$('form.checkout').removeClass( 'processing' ).unblock();
 			}
 		},

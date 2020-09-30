@@ -92,6 +92,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$params = array(
 			'ajax_url'                             => admin_url( 'admin-ajax.php' ),
 			'select_another_method_text'           => __( 'Select another payment method', 'billmate-checkout-for-woocommerce' ),
+			'success_text'                         => __( 'Please wait while we process your order.', 'billmate-checkout-for-woocommerce' ),
 			'standard_woo_checkout_fields'         => $standard_woo_checkout_fields,
 			'checkout_flow'                        => $checkout_flow,
 			'checkout_layout'                      => $checkout_layout,
@@ -162,6 +163,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 		WC()->session->set( 'bco_wc_order_id', $order_id );
+		$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ), $order_id );
 
 		$confirmation_url = add_query_arg(
 			array(

@@ -54,7 +54,7 @@ class BCO_API_Callbacks {
 
 		// If the callback is triggered by a new purchase, the returned orderid field is the temporary order id.
 		// If the callback is triggered by a change in the Billmate Online portal, the returned orderid field is the WC order number. Then we try to get the WC order based on the Billmate invoice number.
-		if ( substr( $data['data']['orderid'], 0, 4 ) === 'TMP:' ) {
+		if ( substr( $data['data']['orderid'], 0, 3 ) === 'tmp' ) {
 			$order_id = bco_get_order_id_by_temp_order_id( sanitize_text_field( $data['data']['orderid'] ) );
 		} else {
 			$order_id = bco_get_order_id_by_transaction_id( sanitize_text_field( $data['data']['number'] ) );
@@ -103,7 +103,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->update_status( 'on-hold' );
 					break;
 				case 'created':
@@ -111,7 +110,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'paid':
@@ -119,7 +117,6 @@ class BCO_API_Callbacks {
 					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'cancelled':

@@ -3,7 +3,7 @@
  * Plugin Name:     Billmate Checkout for WooCommerce
  * Plugin URI:      http://krokedil.com/
  * Description:     Provides an Billmate Checkout gateway for WooCommerce.
- * Version:         1.0.0
+ * Version:         0.9.0
  * Author:          Krokedil
  * Author URI:      http://krokedil.com/
  * Developer:       Krokedil
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.0.0' );
+define( 'BILLMATE_CHECKOUT_VERSION', '0.9.0' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
@@ -154,17 +154,25 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
 				$bco_flow    = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
 				$wc_order_id = filter_input( INPUT_GET, 'wc_order_id', FILTER_SANITIZE_STRING );
-
-				$raw_data = file_get_contents( 'php://input' );
+				$raw_data    = file_get_contents( 'php://input' );
 				parse_str( urldecode( $raw_data ), $result );
 				$data = json_decode( $result['data'], true );
 
-				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && ! 'null' === $wc_order_id ) {
+				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 					$order_id = $wc_order_id;
-					$order    = wc_get_order( $order_id );
 				} else {
-					$order_id = bco_get_order_id_by_temp_order_id( $data['orderid'] );
-					$order    = wc_get_order( $order_id );
+					if ( substr( $data['orderid'], 0, 3 ) === 'tmp' ) {
+						$order_id = bco_get_order_id_by_temp_order_id( sanitize_text_field( $data['orderid'] ) );
+					} else {
+						$order_id = $data['orderid'];
+					}
+				}
+				$order = wc_get_order( $order_id );
+
+				// If we don't find the order, log it and return.
+				if ( ! is_object( $order ) ) {
+					BCO_Logger::log( 'Confirm order step failed. Could not find order. Returned data from Billmate: ' . wp_json_encode( $data ) );
+					return;
 				}
 
 				// If the order is already completed, return.
@@ -195,7 +203,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 
-					BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 					bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 					bco_wc_unset_sessions(); // Unset Billmate session data.
 					wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
@@ -205,7 +212,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 					if ( false !== $bco_checkout ) {
 						update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
-						BCO_WC()->api->request_update_payment( $order_id ); // Update order id in Billmate.
 						bco_confirm_billmate_order( $order_id, $order, $bco_checkout ); // Confirm order.
 						bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 						bco_wc_unset_sessions(); // Unset Billmate session data.
