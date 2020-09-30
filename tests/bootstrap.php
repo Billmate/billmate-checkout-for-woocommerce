@@ -81,6 +81,8 @@ class Krokedil_Unit_Tests_Bootstrap {
 			throw new Exception( 'Configuration file is missing!' );
 		}
 
+		$this->set_args();
+
 		// init plugin paths.
 		$this->set_paths();
 
@@ -129,8 +131,11 @@ class Krokedil_Unit_Tests_Bootstrap {
 	public function load_plugin() {
 		if ( ! empty( $this->dependencies ) ) {
 			foreach ( $this->dependencies as $dir => $plugin_file ) {
-				echo $this->plugins_dir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $plugin_file;
-				require_once $this->plugins_dir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $plugin_file;
+				if ( $this->docker ) {
+					require_once $this->plugin_dir . DIRECTORY_SEPARATOR . '.wp' . DIRECTORY_SEPARATOR . 'wp-content' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $plugin_file;
+				} else {
+					require_once $this->plugins_dir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $plugin_file;
+				}
 			}
 		}
 		require_once $this->plugin_dir . DIRECTORY_SEPARATOR . $this->config['name'];
@@ -204,6 +209,15 @@ class Krokedil_Unit_Tests_Bootstrap {
 		}
 
 		echo esc_html( 'Installing WooCommerce...' . PHP_EOL );
+	}
+
+		/**
+		 * Sets the args for the test run.
+		 *
+		 * @return void
+		 */
+	public function set_args() {
+		$this->docker = $_ENV['docker'];
 	}
 }
 
