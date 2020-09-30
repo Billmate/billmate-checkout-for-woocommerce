@@ -58,7 +58,7 @@ class Test_BCO_Cart_Cart_Helper extends AKrokedil_Unit_Test_Case {
 		$bco_settings['invoice_fee']     = '29';
 		$bco_settings['invoice_fee_tax'] = '25percent';
 		update_option( 'woocommerce_bco_settings', $bco_settings );
-		$with_tax_rate = BCO_Cart_Cart_Helper::get_handling_without_tax();
+		$with_tax_rate = BCO_Cart_Cart_Helper::get_handling_tax_rate();
 
 		unset( $bco_settings['invoice_fee'] );
 		unset( $bco_settings['invoice_fee_tax'] );
