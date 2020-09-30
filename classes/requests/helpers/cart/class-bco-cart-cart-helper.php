@@ -74,7 +74,14 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_handling_tax_rate() {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
-		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+
+		if ( method_exists( WC()->cart, 'get_customer' ) && true === WC()->cart->get_customer()->get_is_vat_exempt() ) {
+			$is_vat_exempt = true;
+		} else {
+			$is_vat_exempt = false;
+		}
+
+		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) && ! $is_vat_exempt ) {
 			$handling_tax_rate = 0;
 			$invoice_fee_tax   = $billmate_settings['invoice_fee_tax'];
 			$tax_rates         = WC_Tax::get_rates_for_tax_class( $invoice_fee_tax );
