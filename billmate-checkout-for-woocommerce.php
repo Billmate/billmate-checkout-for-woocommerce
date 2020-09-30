@@ -156,7 +156,13 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				$wc_order_id = filter_input( INPUT_GET, 'wc_order_id', FILTER_SANITIZE_STRING );
 				$raw_data    = file_get_contents( 'php://input' );
 				parse_str( urldecode( $raw_data ), $result );
-				$data = json_decode( $result['data'], true );
+
+				// Make sure we have data param in body.
+				if ( isset( $result['data'] ) ) {
+					$data = json_decode( $result['data'], true );
+				} else {
+					$data = array();
+				}
 
 				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 					$order_id = $wc_order_id;
