@@ -78,11 +78,14 @@ class BCO_Cart_Cart_Helper {
 			$handling_tax_rate = 0;
 			$invoice_fee_tax   = $billmate_settings['invoice_fee_tax'];
 			$tax_rates         = WC_Tax::get_rates_for_tax_class( $invoice_fee_tax );
-
 			foreach ( $tax_rates as $tax_rate ) {
 				if ( 'SE' === $tax_rate->tax_rate_country ) {
+					// If we find a SE tax rate, use that tax rate and break.
 					$handling_tax_rate = round( $tax_rate->tax_rate );
 					break;
+				} elseif ( '' === $tax_rate->tax_rate_country || '*' === $tax_rate->tax_rate_country ) {
+					// If we find a generic tax_rate, set that for now but do not break incase we find a swedish specific tax rate.
+					$handling_tax_rate = round( $tax_rate->tax_rate );
 				}
 			}
 		} else {
