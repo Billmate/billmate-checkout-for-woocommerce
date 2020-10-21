@@ -28,7 +28,8 @@
     "pump": "^3.0.0",
     "terser-webpack-plugin": "^4.1.0",
     "webpack": "^4.44.1",
-    "webpack-stream": "^5.2.1"
+    "webpack-stream": "^5.2.1",
+    "yargs-parser": ">=13.1.2"
   },
   "scripts": {
     "start": "npm install && gulp",
