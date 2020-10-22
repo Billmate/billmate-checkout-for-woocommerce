@@ -25,6 +25,16 @@ jQuery(function($) {
 			checkout_iframe.postMessage('unlock', '*');
 		},
 
+		purchase_complete: function() {
+			/**
+			 * Post back a reply to the purchase_initialized JS callback. 
+			 * WooCommerce order was successfully created, now let Billmate complete the purchase.
+			 * The name of iframe that contain Billmate Checkout have the name checkout_iframe
+			 */
+			console.log('purchase_complete');
+			checkout_iframe.postMessage('purchase_complete', '*');
+		},
+
 		handleEvent: function(event) {
 			if(event.origin != "") {
 				try {
@@ -44,7 +54,7 @@ jQuery(function($) {
 						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {
 							if ( true === bool ) {
 								// Success.
-								bco_wc.unlock();
+								bco_wc.purchase_complete();
 							}
 						});
 						break;
