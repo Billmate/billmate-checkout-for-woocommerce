@@ -164,6 +164,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 		WC()->session->set( 'bco_wc_order_id', $order_id );
 		$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ), $order_id );
+		update_post_meta( $order_id, '_billmate_saved_woo_order_no', $order->get_order_number() );
 
 		$confirmation_url = add_query_arg(
 			array(

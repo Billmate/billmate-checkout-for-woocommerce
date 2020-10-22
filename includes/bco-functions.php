@@ -339,6 +339,37 @@ function bco_get_order_id_by_transaction_id( $transaction_id ) {
 }
 
 /**
+ * Finds an Order ID based on a transaction ID (the Billmate invoice number).
+ *
+ * @param string $billmate_orderid Billmate orderid _billmate_saved_woo_order_no in WC order ($order->get_order_number).
+ * @return int The ID of an order, or 0 if the order could not be found.
+ */
+function bco_get_order_id_by_billmate_saved_woo_order_no( $billmate_orderid ) {
+	$query_args = array(
+		'fields'      => 'ids',
+		'post_type'   => wc_get_order_types(),
+		'post_status' => array_keys( wc_get_order_statuses() ),
+		'meta_key'    => '_billmate_saved_woo_order_no', // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
+		'meta_value'  => sanitize_text_field( wp_unslash( $billmate_orderid ) ), // phpcs:ignore WordPress.DB.SlowDBQuery -- Slow DB Query is ok here, we need to limit to our meta key.
+		'date_query'  => array(
+			array(
+				'after' => '2 day ago',
+			),
+		),
+	);
+
+	$orders = get_posts( $query_args );
+
+	if ( $orders ) {
+		$order_id = $orders[0];
+	} else {
+		$order_id = 0;
+	}
+
+	return $order_id;
+}
+
+/**
  * Adds the invoice fee to WC order if this is a invoice payment and invoice fee is set in plugin settings.
  *
  * @param object $order WooCommerce order.
