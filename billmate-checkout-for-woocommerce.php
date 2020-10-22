@@ -170,7 +170,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					if ( substr( $data['orderid'], 0, 3 ) === 'tmp' ) {
 						$order_id = bco_get_order_id_by_temp_order_id( sanitize_text_field( $data['orderid'] ) );
 					} else {
-						$order_id = $data['orderid'];
+						$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
 					}
 				}
 				$order = wc_get_order( $order_id );

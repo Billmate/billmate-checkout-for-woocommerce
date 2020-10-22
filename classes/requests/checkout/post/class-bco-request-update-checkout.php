@@ -96,7 +96,8 @@ class BCO_Request_Update_Checkout extends BCO_Request {
 			),
 		);
 		if ( ! empty( $order_id ) ) {
-			$data['PaymentData']['orderid'] = $order_id;
+			$order                          = wc_get_order( $order_id );
+			$data['PaymentData']['orderid'] = $order->get_order_number();
 		}
 		return $data;
 	}
