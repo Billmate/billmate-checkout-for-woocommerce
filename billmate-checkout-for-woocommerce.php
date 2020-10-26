@@ -173,6 +173,8 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 						$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
 					}
 				}
+				BCO_Logger::log( 'Confirm order triggered. WC order ID: ' . wp_json_encode( $order_id ) );
+
 				$order = wc_get_order( $order_id );
 
 				// If we don't find the order, log it and return.
