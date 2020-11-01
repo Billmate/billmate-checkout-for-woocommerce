@@ -49,6 +49,7 @@ class BCO_Cart_Articles_Helper {
 			'aprice'     => self::get_article_price( $cart_item ),
 			'withouttax' => self::get_without_tax( $cart_item ),
 			'taxrate'    => self::get_tax_rate( $cart_item ),
+			'discount'   => self::get_discount( $cart_item ),
 		);
 	}
 
@@ -128,6 +129,24 @@ class BCO_Cart_Articles_Helper {
 			$tax_rate = ( 0 !== $cart_item['line_tax'] ) ? $cart_item['line_tax'] / $cart_item['line_total'] * 100 : 0;
 		}
 		return round( $tax_rate );
+	}
+
+	/**
+	 * Get cart item discount
+	 *
+	 * @param array $cart_item Cart item.
+	 * @return int $discount Discount in %.
+	 */
+	public static function get_discount( $cart_item ) {
+		$article_price = wc_get_price_excluding_tax( $cart_item['data'] );
+		$line_total    = $cart_item['line_total'];
+
+		if ( ( $article_price * $cart_item['quantity'] ) !== $line_total ) {
+			return round( ( 1 - ( $line_total / ( $article_price * $cart_item['quantity'] ) ) ) * 100 );
+		} else {
+			return 0;
+		}
+		return round( $item_subtotal * 100 );
 	}
 
 }
