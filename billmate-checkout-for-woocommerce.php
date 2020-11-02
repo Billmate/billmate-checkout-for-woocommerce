@@ -164,6 +164,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 					$data = array();
 				}
 				error_log( '$data ' . var_export( $data, true ) );
+				error_log( '$result ' . var_export( $result, true ) );
 				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 					$order_id = $wc_order_id;
 				} else {
