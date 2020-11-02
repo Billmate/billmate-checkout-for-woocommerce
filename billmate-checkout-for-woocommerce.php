@@ -163,7 +163,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 				} else {
 					$data = array();
 				}
-
+				error_log( '$data ' . var_export( $data, true ) );
 				if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 					$order_id = $wc_order_id;
 				} else {
@@ -173,6 +173,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 						$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
 					}
 				}
+				error_log( '$order_id ' . var_export( $order_id, true ) );
 				BCO_Logger::log( 'Confirm order triggered. WC order ID: ' . wp_json_encode( $order_id ) );
 
 				$order = wc_get_order( $order_id );
