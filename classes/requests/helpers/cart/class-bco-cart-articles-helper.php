@@ -126,7 +126,7 @@ class BCO_Cart_Articles_Helper {
 		if ( $cart_item['line_tax'] < 0 ) {
 			$tax_rate = abs( $cart_item['line_tax'] ) / abs( $cart_item['line_total'] ) * 100;
 		} else {
-			$tax_rate = ( 0 !== $cart_item['line_tax'] ) ? $cart_item['line_tax'] / $cart_item['line_total'] * 100 : 0;
+			$tax_rate = ( 0.00 !== round( $cart_item['line_tax'], 2 ) ) ? $cart_item['line_tax'] / $cart_item['line_total'] * 100 : 0;
 		}
 		return round( $tax_rate );
 	}
