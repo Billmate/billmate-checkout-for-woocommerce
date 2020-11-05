@@ -271,7 +271,7 @@ jQuery(function($) {
 					console.log(data.responseJSON);
 					if (true === data.responseJSON.success) {
 						bco_wc.update();
-						bco_wc.unlock();
+						// bco_wc.unlock();
 						$('.woocommerce-checkout-review-order-table').unblock();
 					} else {
 						console.log('error');
@@ -492,7 +492,7 @@ jQuery(function($) {
 					// Update Billmate payment.
 					bco_wc.bodyEl.on('updated_checkout', bco_wc.updateBillmateCheckout);
 					// Lock Billmate on update_checkout.
-					bco_wc.bodyEl.on('update_checkout', bco_wc.lock);
+					// bco_wc.bodyEl.on('update_checkout', bco_wc.lock);
 				}
 
 				// Hashchange.
