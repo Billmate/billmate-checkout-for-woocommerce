@@ -81,6 +81,8 @@ jQuery(function($) {
 							bco_wc.addressData.updateNeeded = 'yes';
 						} else {
 							billingAddress = bco_wc.setBillingAddress(json.data);
+							shippingZip = json.data.Customer.Billing.zip;
+							shippingCountry = json.data.Customer.Billing.country;
 
 							if ( bco_wc.addressData.billingZip === billingAddress.billingZip ) {
 								return;
@@ -336,6 +338,9 @@ jQuery(function($) {
 				$( '#shipping_city' ).val( ( ( 'city' in data.shipping_address ) ? data.shipping_address.city : '' ) );
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.shipping_address ) ? data.shipping_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.shipping_address ) ? data.shipping_address.country.toUpperCase() : '' ) );
+			} else {
+				$( '#shipping_postcode' ).val( ( ( 'zip' in data.billing_address ) ? data.billing_address.zip : '' ) );
+				$( '#shipping_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
 			}
 		},
 
