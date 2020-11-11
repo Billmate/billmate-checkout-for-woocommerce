@@ -339,6 +339,13 @@ jQuery(function($) {
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.shipping_address ) ? data.shipping_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.shipping_address ) ? data.shipping_address.country.toUpperCase() : '' ) );
 			} else {
+
+				$( '#shipping_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
+				$( '#shipping_last_name' ).val( ( ( 'lastname' in data.billing_address ) ? data.billing_address.lastname : '' ) );
+				$( '#shipping_company' ).val( ( ( 'company' in data.billing_address ) ? data.billing_address.company : '' ) );
+				$( '#shipping_address_1' ).val( ( ( 'street' in data.billing_address ) ? data.billing_address.street : '' ) );
+				$( '#shipping_address_2' ).val( ( ( 'street2' in data.billing_address ) ? data.billing_address.street2 : '' ) );
+				$( '#shipping_city' ).val( ( ( 'city' in data.billing_address ) ? data.billing_address.city : '' ) );
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.billing_address ) ? data.billing_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
 			}
