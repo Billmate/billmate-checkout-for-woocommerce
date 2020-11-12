@@ -22,9 +22,14 @@ class BCO_Cart_Articles_Helper {
 	public static function get_articles() {
 		$articles   = array();
 		$cart_items = WC()->cart->get_cart();
+		$cart_fees  = WC()->cart->get_fees();
 
 		foreach ( $cart_items as $cart_item ) {
 			array_push( $articles, self::get_cart_lines( $cart_item ) );
+		}
+
+		foreach ( $cart_fees as $fee ) {
+			array_push( $articles, self::get_fee_lines( $fee ) );
 		}
 
 		return $articles;
@@ -50,6 +55,29 @@ class BCO_Cart_Articles_Helper {
 			'withouttax' => self::get_without_tax( $cart_item ),
 			'taxrate'    => self::get_tax_rate( $cart_item ),
 			'discount'   => self::get_discount( $cart_item ),
+		);
+	}
+
+	/**
+	 * Gets the formatted cart lines for fees.
+	 *
+	 * @param array $fee cart item fee.
+	 * @return array
+	 */
+	public static function get_fee_lines( $fee ) {
+		if ( $cart_item['variation_id'] ) {
+			$product = wc_get_product( $cart_item['variation_id'] );
+		} else {
+			$product = wc_get_product( $cart_item['product_id'] );
+		}
+		return array(
+			'artnr'      => $fee->id,
+			'title'      => $fee->name,
+			'quantity'   => 1,
+			'aprice'     => round( $fee->amount * 100 ),
+			'withouttax' => round( $fee->amount * 100 ),
+			'taxrate'    => self::get_fee_tax_rate( $fee ),
+			'discount'   => 0,
 		);
 	}
 
@@ -147,6 +175,25 @@ class BCO_Cart_Articles_Helper {
 			return 0;
 		}
 		return round( $item_subtotal * 100 );
+	}
+
+	/**
+	 * Get cart item fee tax rate.
+	 *
+	 * @param array $fee cart item fee.
+	 * @return int $tax_rate fee tax rate.
+	 */
+	public static function get_fee_tax_rate( $fee ) {
+		$_tax      = new WC_Tax();
+		$tmp_rates = $_tax->get_rates( $fee->tax_class );
+		$vat       = array_shift( $tmp_rates );
+
+		if ( isset( $vat['rate'] ) ) {
+			$fee_tax_rate = round( $vat['rate'], 2 );
+		} else {
+			$fee_tax_rate = 0;
+		}
+		return $fee_tax_rate;
 	}
 
 }

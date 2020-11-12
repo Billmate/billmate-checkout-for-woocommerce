@@ -35,7 +35,7 @@ class BCO_Order_Payment_Data_Helper {
 			'currency'    => self::get_currency( $order ),
 			'language'    => self::get_language(),
 			'country'     => self::get_country( $order ),
-			'orderid'     => $order_id,
+			'orderid'     => $order->get_order_number(),
 			'logo'        => self::get_logo(),
 			'accepturl'   => $confirmation_url,
 			'cancelurl'   => $order->get_cancel_order_url_raw(),
