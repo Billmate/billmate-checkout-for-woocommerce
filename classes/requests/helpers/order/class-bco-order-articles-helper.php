@@ -61,11 +61,15 @@ class BCO_Order_Articles_Helper {
 	 * @return string $article_number Order item article number.
 	 */
 	public static function get_article_number( $order_item ) {
-		$product = $order_item->get_product();
-		if ( $product->get_sku() ) {
-			$article_number = $product->get_sku();
+		if ( 'fee' === $order_item->get_type() ) {
+			$article_number = $order_item->get_id();
 		} else {
-			$article_number = $product->get_id();
+			$product = $order_item->get_product();
+			if ( $product->get_sku() ) {
+				$article_number = $product->get_sku();
+			} else {
+				$article_number = $product->get_id();
+			}
 		}
 
 		return substr( (string) $article_number, 0, 255 );
