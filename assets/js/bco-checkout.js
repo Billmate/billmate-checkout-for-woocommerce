@@ -34,6 +34,13 @@ jQuery(function($) {
 			console.log('purchase_complete');
 			checkout_iframe.postMessage('purchase_complete', '*');
 		},
+		hide_overlay: function() {
+			/**
+			 * Enable Woocommerce order review when overlay is closed in BCO.
+			 */
+			console.log('hide_overlay');
+			$('#bco-wrapper').removeClass( 'processing' ).unblock();
+		},
 
 		handleEvent: function(event) {
 			if(event.origin != "") {
@@ -191,6 +198,12 @@ jQuery(function($) {
 						break;
 					case 'checkout_loaded':
 						$('#jsLog').append('checkout_loaded<br />');
+						break;
+					case 'hide_overlay':
+						/**
+						 * Overlay is closed.
+						 */
+						bco_wc.hide_overlay();
 						break;
 					default:
 					break;
