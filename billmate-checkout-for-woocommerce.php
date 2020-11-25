@@ -50,7 +50,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function __construct() {
 			// Initiate the plugin.
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
-			add_action( 'init', array( $this, 'confirm_order' ) );
+			add_action( 'template_redirect', array( $this, 'confirm_order' ) );
 		}
 
 		/**
