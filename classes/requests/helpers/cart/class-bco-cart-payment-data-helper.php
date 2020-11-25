@@ -26,7 +26,7 @@ class BCO_Cart_Payment_Data_Helper {
 				'bco_flow'    => 'checkout_redirect',
 				'wc_order_id' => 'null',
 			),
-			home_url()
+			trailingslashit( home_url() )
 		);
 		$push_url         = home_url( '/wc-api/BCO_WC_Push/' );
 		return array(
