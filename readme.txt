@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 5.5.3
 Requires PHP: 5.6
 WC requires at least: 4.0.0
-WC tested up to: 4.7.0
+WC tested up to: 4.7.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,4 +33,8 @@ For help setting up and configuring Billmate Checkout for WooCommerce please ref
 * A SSL Certificate is required.
 
 == Changelog ==
+= 2020.11.25    - version 0.5.0 =
+* Fix           - Add trailingslashit to home_url in accepturl. Avoid issues when WP is installed in sub folder.
+* Fix           - Change confirm order listener from init to template_redirect. Could cause emails not being sent properly.
+
 = 2020.11.11    - version 0.2.0 =
