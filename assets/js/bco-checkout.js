@@ -56,6 +56,7 @@ jQuery(function($) {
 						 * When an end user clicks on the "Purchase button".
 						 */
 						console.log('billmate_purchase_initialized');
+						bco_wc.logToFile( 'purchase_initialized from Billmate triggered' );
 						bco_wc.getBillmateCheckout();
 
 						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {
@@ -371,6 +372,7 @@ jQuery(function($) {
 			console.log(splittedHash[0]);
 			console.log(splittedHash[1]);
 			if(splittedHash[0] === "#billmate-success"){
+				bco_wc.logToFile( 'billmate-success hashtag detected in URL.' );
 				$( 'body' ).trigger( 'bco_order_validation', true );
 				var response = JSON.parse( atob( splittedHash[1] ) );
 				console.log('response.redirect_url');
@@ -503,6 +505,19 @@ jQuery(function($) {
 			return false;
 		},
 
+		logToFile: function( message ) {
+			$.ajax(
+				{
+					url: bco_wc_params.log_to_file_url,
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						message: message,
+						nonce: bco_wc_params.log_to_file_nonce
+					}
+				}
+			);
+		},
 
 		init: function() {
 			window.addEventListener("message", bco_wc.handleEvent);

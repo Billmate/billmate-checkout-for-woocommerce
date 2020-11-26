@@ -106,6 +106,8 @@ class BCO_Gateway extends WC_Payment_Gateway {
 			'iframe_shipping_address_change_nonce' => wp_create_nonce( 'bco_wc_iframe_shipping_address_change' ),
 			'checkout_success_url'                 => WC_AJAX::get_endpoint( 'bco_wc_checkout_success' ),
 			'checkout_success_nonce'               => wp_create_nonce( 'bco_wc_checkout_success' ),
+			'log_to_file_url'                      => WC_AJAX::get_endpoint( 'bco_wc_log_js' ),
+			'log_to_file_nonce'                    => wp_create_nonce( 'bco_wc_log_js' ),
 		);
 
 		wp_localize_script(
