@@ -52,11 +52,10 @@ class BCO_API_Callbacks {
 		$transaction_id = sanitize_key( $data['data']['number'] );
 		$bco_status     = strtolower( sanitize_key( $data['data']['status'] ) );
 
-		// If the callback is triggered by a new purchase, the returned orderid field is the temporary order id.
-		// If the callback is triggered by a change in the Billmate Online portal, the returned orderid field is the WC order number. Then we try to get the WC order based on the Billmate invoice number.
-		if ( substr( $data['data']['orderid'], 0, 3 ) === 'tmp' ) {
-			$order_id = bco_get_order_id_by_temp_order_id( sanitize_text_field( $data['data']['orderid'] ) );
-		} else {
+		// Get the WC order ID from the post meta field _billmate_saved_woo_order_no.
+		// If that doesn't exist, try getting it from the WC order transaction ID.
+		$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
+		if ( empty( $order_id ) ) {
 			$order_id = bco_get_order_id_by_transaction_id( sanitize_text_field( $data['data']['number'] ) );
 		}
 
