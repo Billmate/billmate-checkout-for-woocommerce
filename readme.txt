@@ -33,6 +33,10 @@ For help setting up and configuring Billmate Checkout for WooCommerce please ref
 * A SSL Certificate is required.
 
 == Changelog ==
+= 2020.11.26    - version 0.6.0 =
+* Tweak         - Added logging for purchase_initialized JS event.
+* Fix           - Improved logic for getting correct WC order ID in push callbacks from Billmate.
+
 = 2020.11.25    - version 0.5.0 =
 * Fix           - Add trailingslashit to home_url in accepturl. Avoid issues when WP is installed in sub folder.
 * Fix           - Change confirm order listener from init to template_redirect. Could cause emails not being sent properly.
