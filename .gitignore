@@ -1,4 +1,5 @@
 node_modules
+/tests/woocommerce*
 .idea
 .vscode
 .env

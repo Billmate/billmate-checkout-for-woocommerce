@@ -17,7 +17,7 @@ const cssNano              = require( 'cssnano' );
 function style( cb ) {
     return pump(
         [
-            src( 'assets/sass/**/*.scss', { sourcemaps: true } ),
+            src( 'src/assets/sass/**/*.scss', { sourcemaps: true } ),
             sass().on( 'error', sass.logError ),
             postcss(
                 [
@@ -53,12 +53,12 @@ const webpackStream = require( 'webpack-stream' );
 function script( cb ) {
     pump(
         [
-            src( 'assets/js/*.js' ),
+            src( 'src/assets/js/*.js' ),
             webpackStream(
                 { config: require( './webpack.config.babel.js' ) },
                 webpack
             ),
-            dest( './assets/js/' ),
+            dest( './src/assets/js/' ),
         ],
         cb
     );
@@ -70,8 +70,8 @@ function script( cb ) {
  */
 function watchfiles() {
     setDevEnv();
-    watch( 'assets/sass/**/*.scss', style );
-    watch( 'assets/js/bco-checkout.js', script );
+    watch( 'src/assets/sass/**/*.scss', style );
+    watch( 'src/assets/js/bco-checkout.js', script );
 }
 
 function setDevEnv() {
