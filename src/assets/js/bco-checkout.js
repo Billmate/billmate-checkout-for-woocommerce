@@ -536,7 +536,7 @@ jQuery(function($) {
 				}
 
 				// Hashchange.
-				$( window ).on('hashchange', bco_wc.hashChange);
+				window.addEventListener('hashchange', bco_wc.hashChange);
 
 				// Error detected.
 				$( document.body ).on( 'checkout_error', bco_wc.errorDetected );
