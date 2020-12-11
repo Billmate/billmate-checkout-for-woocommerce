@@ -2,10 +2,10 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout
 Requires at least: 5.0
-Tested up to: 5.5.3
+Tested up to: 5.6
 Requires PHP: 5.6
 WC requires at least: 4.0.0
-WC tested up to: 4.7.1
+WC tested up to: 4.8.0
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,6 +33,9 @@ For help setting up and configuring Billmate Checkout for WooCommerce please ref
 * A SSL Certificate is required.
 
 == Changelog ==
+= 2020.12.11    - version 0.6.1 =
+* Fix           - Changed how we listen to hashchange in checkout (from jQuery to vanilla JS). Some stores could not complete purchase due to this.
+
 = 2020.11.26    - version 0.6.0 =
 * Tweak         - Added logging for purchase_initialized JS event.
 * Fix           - Improved logic for getting correct WC order ID in push callbacks from Billmate.
