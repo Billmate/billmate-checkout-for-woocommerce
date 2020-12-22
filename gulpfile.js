@@ -40,7 +40,7 @@ function style( cb ) {
                     ),
                 ]
             ),
-            dest( './assets/css/', { sourcemaps: '.' } ),
+            dest( './src/assets/css/', { sourcemaps: '.' } ),
         ],
         cb
     );
