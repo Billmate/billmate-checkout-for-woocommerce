@@ -1,0 +1,193 @@
+# Copyright (C) 2020 billmate-checkout-for-woocommerce
+# This file is distributed under the same license as the billmate-checkout-for-woocommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: billmate-checkout-for-woocommerce\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Krokedil <info@krokedil.se>\n"
+"Last-Translator: Krokedil <info@krokedil.se>\n"
+"Report-Msgid-Bugs-To: http://krokedil.se\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../billmate-checkout-for-woocommerce.php:244
+msgid "Settings"
+msgstr ""
+
+#: ../billmate-checkout-for-woocommerce.php:245
+msgid "Support"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:90
+msgid "Order cancelled in Billmate Online. Billmate Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:102
+msgid "Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:109, ../classes/class-bco-api-callbacks.php:116, ../includes/bco-functions.php:209, ../includes/bco-functions.php:217, ../includes/bco-functions.php:257, ../includes/bco-functions.php:265
+msgid "Payment via Billmate Checkout. Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:123
+msgid "Order reported Cancelled from Billmate Online. Billmate Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:128
+msgid "Order reported Failed from Billmate Online. Billmate Transaction id: %s"
+msgstr ""
+
+#: ../classes/class-bco-gateway.php:22
+msgid "Billmate Checkout"
+msgstr ""
+
+#: ../classes/class-bco-gateway.php:94, ../includes/bco-functions.php:113
+msgid "Select another payment method"
+msgstr ""
+
+#: ../classes/class-bco-gateway.php:95
+msgid "Please wait while we process your order."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:10
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:16
+msgid "Title"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:18
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:23
+msgid "Description"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:25
+msgid "Pay with Billmate via invoice, card and direct bank payments."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:27
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:30
+msgid "Other payment method button text"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:32
+msgid "Customize the <em>Select another payment method</em> button text that is displayed in checkout if using other payment methods than Billmate Checkout. Leave blank to use the default (and translatable) text."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:37
+msgid "Testmode"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:39
+msgid "Enable Billmate Checkout testmode"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:43
+msgid "Debug Log"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:45
+msgid "Enable logging"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:50
+msgid "Checkout layout"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:53
+msgid "One column checkout"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:54
+msgid "Two column checkout"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:56
+msgid "Select the Billmate Checkout layout."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:61
+msgid "Checkout mode"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:64
+msgid "Consumer"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:65
+msgid "Business"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:67
+msgid "Select if you want the checkout to default to B2C or B2B mode."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:72
+msgid "Show order notes"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:74
+msgid "Show Order notes field in checkout."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:78
+msgid "Logo"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:80
+msgid "Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:85, ../includes/bco-functions.php:388
+msgid "Invoice fee"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:87
+msgid "Add Invoice fee excluding tax. Leave blank to deactivate this feature."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:92
+msgid "Tax class for invoice fee"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:95
+msgid "Select the tax class that should be used for the invoice fee."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:105
+msgid "Client ID"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:111
+msgid "Client Secret"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#. translators: Billmate transaction id.
+#: ../includes/bco-functions.php:202, ../includes/bco-functions.php:250
+msgid "Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s"
+msgstr ""
