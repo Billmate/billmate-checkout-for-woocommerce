@@ -2,7 +2,10 @@
  * Base constants
  */
 const { watch, series, src, dest } = require( 'gulp' );
+const gulp                         = require( 'gulp' );
+const sort                         = require('gulp-sort');
 const pump                         = require( 'pump' );
+const wpPot                        = require( 'gulp-wp-pot' );
 
 /**
  * SCSS
@@ -82,6 +85,20 @@ function setProdEnv( cb ) {
     process.env.NODE_ENV = 'production';
     cb();
 }
+
+gulp.task('makePOT', function () {
+    return gulp.src('**/*.php')
+    .pipe(sort())
+    .pipe(wpPot({
+        domain: 'billmate-checkout-for-woocommerce',
+        destFile: 'src/languages/billmate-checkout-for-woocommerce.pot',
+        package: 'billmate-checkout-for-woocommerce',
+        bugReport: 'http://krokedil.se',
+        lastTranslator: 'Krokedil <info@krokedil.se>',
+        team: 'Krokedil <info@krokedil.se>'
+    }))
+    .pipe(gulp.dest('src/languages/billmate-checkout-for-woocommerce.pot'));
+});
 
 exports.style   = style;
 exports.script  = script;

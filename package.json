@@ -29,7 +29,9 @@
     "terser-webpack-plugin": "^4.1.0",
     "webpack": "^4.44.1",
     "webpack-stream": "^5.2.1",
-    "yargs-parser": ">=13.1.2"
+    "yargs-parser": ">=13.1.2",
+    "gulp-wp-pot": "^2.3.5",
+    "gulp-sort": "^2.0.0"
   },
   "scripts": {
     "start": "npm install && gulp",
