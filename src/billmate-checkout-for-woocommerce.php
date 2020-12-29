@@ -1,12 +1,12 @@
 <?php // phpcs:ignore
 /**
  * Plugin Name:     Billmate Checkout for WooCommerce
- * Plugin URI:      http://krokedil.com/
+ * Plugin URI:      https://billmate.se/
  * Description:     Provides an Billmate Checkout gateway for WooCommerce.
  * Version:         0.6.1
- * Author:          Krokedil
- * Author URI:      http://krokedil.com/
- * Developer:       Krokedil
+ * Author:          Billmate in collaboration with Krokedil.
+ * Author URI:      https://billmate.se/
+ * Developer:       Billmate in collaboration with Krokedil.
  * Developer URI:   http://krokedil.com/
  * Text Domain:     billmate-checkout-for-woocommerce
  * Domain Path:     /languages
@@ -14,7 +14,7 @@
  * WC requires at least: 4.0.0
  * WC tested up to: 4.8.0
  *
- * Copyright:       © 2020 Krokedil.
+ * Copyright:       © 2020 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
  * License URI:     http://www.gnu.org/licenses/gpl-3.0.html
  *
