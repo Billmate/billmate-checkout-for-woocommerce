@@ -6,47 +6,47 @@
  */
 
 $settings = array(
-	'enabled'                    => array(
+	'enabled'                            => array(
 		'title'   => __( 'Enable/Disable', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',
 		'label'   => __( 'Enable ' . $this->method_title, 'billmate-checkout-for-woocommerce' ), // phpcs:ignore
 		'default' => 'yes',
 	),
-	'title'                      => array(
+	'title'                              => array(
 		'title'       => __( 'Title', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'This controls the title which the user sees during checkout.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => __( $this->method_title, 'billmate-checkout-for-woocommerce' ), // phpcs:ignore
 		'desc_tip'    => true,
 	),
-	'description'                => array(
+	'description'                        => array(
 		'title'       => __( 'Description', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'textarea',
 		'default'     => __( 'Pay with Billmate via invoice, card and direct bank payments.', 'billmate-checkout-for-woocommerce' ),
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'billmate-checkout-for-woocommerce' ),
 	),
-	'select_another_method_text' => array(
+	'select_another_method_text'         => array(
 		'title'       => __( 'Other payment method button text', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'Customize the <em>Select another payment method</em> button text that is displayed in checkout if using other payment methods than Billmate Checkout. Leave blank to use the default (and translatable) text.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
-	'testmode'                   => array(
+	'testmode'                           => array(
 		'title'   => __( 'Testmode', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',
 		'label'   => __( 'Enable Billmate Checkout testmode', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'no',
 	),
-	'debug'                      => array(
+	'debug'                              => array(
 		'title'       => __( 'Debug Log', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable logging', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'no',
 		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), wc_get_log_file_path( 'billmate_checkout' ) ), // phpcs:ignore
 	),
-	'checkout_layout'            => array(
+	'checkout_layout'                    => array(
 		'title'       => __( 'Checkout layout', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'select',
 		'options'     => array(
@@ -57,7 +57,7 @@ $settings = array(
 		'default'     => 'two_column_checkout',
 		'desc_tip'    => false,
 	),
-	'company_view'               => array(
+	'company_view'                       => array(
 		'title'       => __( 'Checkout mode', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'select',
 		'options'     => array(
@@ -68,27 +68,27 @@ $settings = array(
 		'default'     => 'false',
 		'desc_tip'    => false,
 	),
-	'show_order_notes'           => array(
+	'show_order_notes'                   => array(
 		'title'   => __( 'Show order notes', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',
 		'label'   => __( 'Show Order notes field in checkout.', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'yes',
 	),
-	'logo'                       => array(
+	'logo'                               => array(
 		'title'       => __( 'Logo', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
-	'invoice_fee'                => array(
+	'invoice_fee'                        => array(
 		'title'       => __( 'Invoice fee', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'Add Invoice fee excluding tax. Leave blank to deactivate this feature.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
-	'invoice_fee_tax'            => array(
+	'invoice_fee_tax'                    => array(
 		'title'       => __( 'Tax class for invoice fee', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'select',
 		'options'     => wc_get_product_tax_class_options(),
@@ -96,18 +96,52 @@ $settings = array(
 		'default'     => 'false',
 		'desc_tip'    => false,
 	),
-	// SE.
-	'credentials_se'             => array(
-		'title' => 'API Credentials Sweden',
+	// Monthly cost display.
+	'montly_cost_display'                => array(
+		'title' => __( 'Monthly cost display', 'billmate-checkout-for-woocommerce' ),
 		'type'  => 'title',
 	),
-	'merchant_id_se'             => array(
+	'display_monthly_cost_product_page'  => array(
+		'title'   => __( 'Display monthly cost', 'billmate-checkout-for-woocommerce' ),
+		'type'    => 'checkbox',
+		'label'   => __( 'Display monthly cost on single product pages.', 'billmate-checkout-for-woocommerce' ),
+		'default' => 'no',
+	),
+	'monthly_cost_product_page_location' => array(
+		'title'   => __( 'Monthly cost placement', 'billmate-checkout-for-woocommerce' ),
+		'desc'    => __( 'Select where to display the widget in your product pages', 'billmate-checkout-for-woocommerce' ),
+		'id'      => '',
+		'default' => '45',
+		'type'    => 'select',
+		'options' => array(
+			'4'  => __( 'Above Title', 'billmate-checkout-for-woocommerce' ),
+			'7'  => __( 'Between Title and Price', 'billmate-checkout-for-woocommerce' ),
+			'15' => __( 'Between Price and Excerpt', 'billmate-checkout-for-woocommerce' ),
+			'25' => __( 'Between Excerpt and Add to cart button', 'billmate-checkout-for-woocommerce' ),
+			'35' => __( 'Between Add to cart button and Product meta', 'billmate-checkout-for-woocommerce' ),
+			'45' => __( 'Between Product meta and Product sharing buttons', 'billmate-checkout-for-woocommerce' ),
+			'55' => __( 'After Product sharing-buttons', 'billmate-checkout-for-woocommerce' ),
+		),
+	),
+	'monthly_cost_text'                  => array(
+		'title'       => __( 'Text for monthly cost', 'billmate-checkout-for-woocommerce' ),
+		'type'        => 'textarea',
+		'default'     => __( '{billmate_img}<br/>Part pay from {billmate_price}/month', 'billmate-checkout-for-woocommerce' ),
+		'desc_tip'    => false,
+		'description' => __( 'Use {billmate_img} to display the Billmate logo and {billmate_price} to display the monthly fee as a formatted WooCommerce price (with currency).', 'billmate-checkout-for-woocommerce' ),
+	),
+	// SE.
+	'credentials_se'                     => array(
+		'title' => __( 'API Credentials Sweden', 'billmate-checkout-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	'merchant_id_se'                     => array(
 		'title'    => __( 'Client ID', 'billmate-checkout-for-woocommerce' ),
 		'type'     => 'text',
 		'default'  => '',
 		'desc_tip' => true,
 	),
-	'api_key_se'                 => array(
+	'api_key_se'                         => array(
 		'title'    => __( 'Client Secret', 'billmate-checkout-for-woocommerce' ),
 		'type'     => 'password',
 		'default'  => '',

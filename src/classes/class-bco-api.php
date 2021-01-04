@@ -83,6 +83,20 @@ class BCO_API {
 	}
 
 	/**
+	 * Get Billmate Payment Plans.
+	 *
+	 * @param string $price The product price used for the payment plans calculation.
+	 * @return mixed
+	 */
+	public function request_get_payment_plans( $price = null ) {
+		$request  = new BCO_Request_Get_Payment_Plans();
+		$response = $request->request( $price );
+		// Don't run the respons via check_for_api_error function.
+		// If we don't get a payment plan we simply don't want to display anything in front end.
+		return $response;
+	}
+
+	/**
 	 * Checks for WP Errors and returns either the response as array or a false.
 	 *
 	 * @param array $response The response from the request.
