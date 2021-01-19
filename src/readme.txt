@@ -33,6 +33,9 @@ For help setting up and configuring Billmate Checkout for WooCommerce please ref
 * A SSL Certificate is required.
 
 == Changelog ==
+= 2021.01.19    - version 1.0.0 =
+* Release       - First release of new Billmate Checkout for WooCommerce
+
 = 2020.12.11    - version 0.6.1 =
 * Fix           - Changed how we listen to hashchange in checkout (from jQuery to vanilla JS). Some stores could not complete purchase due to this.
 

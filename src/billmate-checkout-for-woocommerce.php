@@ -3,7 +3,7 @@
  * Plugin Name:     Billmate Checkout for WooCommerce
  * Plugin URI:      https://billmate.se/
  * Description:     Provides an Billmate Checkout gateway for WooCommerce.
- * Version:         0.6.1
+ * Version:         1.0.0
  * Author:          Billmate in collaboration with Krokedil.
  * Author URI:      https://billmate.se/
  * Developer:       Billmate in collaboration with Krokedil.
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '0.6.1' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.0.0' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
