@@ -1,7 +1,7 @@
 <?php // phpcs:ignore
 /**
  * Plugin Name:     Billmate Checkout for WooCommerce
- * Plugin URI:      https://billmate.se/
+ * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
  * Description:     Provides an Billmate Checkout gateway for WooCommerce.
  * Version:         1.0.0
  * Author:          Billmate in collaboration with Krokedil.
