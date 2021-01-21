@@ -179,11 +179,12 @@ function bco_extract_error_message( $wp_error ) {
 /**
  * Confirm Billmate order.
  *
- * @param string   $order_id The WooCommerce order id.
- * @param WC_Order $order The WooCommerce order id.
- * @param array    $bco_checkout The Billmate checkout data.
+ * @param string $order_id The WooCommerce order id.
+ * @param array  $bco_checkout The Billmate checkout data.
  */
-function bco_confirm_billmate_order( $order_id, $order, $bco_checkout ) {
+function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
+
+	$order = wc_get_order( $order_id );
 	if ( is_object( $order ) && ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
 		$bco_order_number = $bco_checkout['data']['PaymentData']['order']['number'];
 		update_post_meta( $order_id, '_transaction_id', $bco_order_number );
@@ -192,8 +193,6 @@ function bco_confirm_billmate_order( $order_id, $order, $bco_checkout ) {
 		if ( '' !== $bco_order_number ) {
 			$bco_order = BCO_WC()->api->request_get_payment( $bco_order_number );
 		}
-		// Set payment method title.
-		bco_set_payment_method_title( $order_id, $bco_order );
 
 		// Confirm order.
 		switch ( strtolower( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
