@@ -86,6 +86,15 @@ class BCO_AJAX extends WC_AJAX {
 
 		if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
 
+			if ( ! WC()->cart->needs_payment() ) {
+				wp_send_json_success(
+					array(
+						'refreshZeroAmount' => 'refreshZeroAmount',
+					)
+				);
+				wp_die();
+			}
+
 			$bco_wc_hash = WC()->session->get( 'bco_wc_hash' );
 
 			// Set empty return array for errors.
