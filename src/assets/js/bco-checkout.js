@@ -287,7 +287,7 @@ jQuery(function($) {
 					console.log(data.responseJSON);
 					if (true === data.responseJSON.success) {
 
-						if( data.responseJSON.data.refreshZeroAmount){
+						if( data.responseJSON.data && data.responseJSON.data.refreshZeroAmount ) {
 							window.location.reload();
 						}
 
