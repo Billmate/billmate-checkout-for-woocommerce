@@ -286,6 +286,11 @@ jQuery(function($) {
 				complete: function(data) {
 					console.log(data.responseJSON);
 					if (true === data.responseJSON.success) {
+
+						if( data.responseJSON.data.refreshZeroAmount){
+							window.location.reload();
+						}
+
 						bco_wc.update();
 						// bco_wc.unlock();
 						$('.woocommerce-checkout-review-order-table').unblock();
