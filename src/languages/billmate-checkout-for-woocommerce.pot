@@ -1,4 +1,4 @@
-# Copyright (C) 2020 billmate-checkout-for-woocommerce
+# Copyright (C) 2021 billmate-checkout-for-woocommerce
 # This file is distributed under the same license as the billmate-checkout-for-woocommerce package.
 msgid ""
 msgstr ""
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../billmate-checkout-for-woocommerce.php:244
+#: ../billmate-checkout-for-woocommerce.php:160
 msgid "Settings"
 msgstr ""
 
-#: ../billmate-checkout-for-woocommerce.php:245
+#: ../billmate-checkout-for-woocommerce.php:161
 msgid "Support"
 msgstr ""
 
@@ -40,7 +40,7 @@ msgstr ""
 #. translators: Billmate transaction id.
 #. translators: Billmate transaction id.
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:109, ../classes/class-bco-api-callbacks.php:116, ../includes/bco-functions.php:209, ../includes/bco-functions.php:217, ../includes/bco-functions.php:257, ../includes/bco-functions.php:265
+#: ../classes/class-bco-api-callbacks.php:109, ../classes/class-bco-api-callbacks.php:116, ../includes/bco-functions.php:208, ../includes/bco-functions.php:216, ../includes/bco-functions.php:256, ../includes/bco-functions.php:264
 msgid "Payment via Billmate Checkout. Transaction id: %s"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 msgid "Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:85, ../includes/bco-functions.php:388
+#: ../includes/bco-form-fields.php:85, ../includes/bco-functions.php:387
 msgid "Invoice fee"
 msgstr ""
 
@@ -178,16 +178,80 @@ msgstr ""
 msgid "Select the tax class that should be used for the invoice fee."
 msgstr ""
 
+#: ../includes/bco-form-fields.php:101
+msgid "Monthly cost display"
+msgstr ""
+
 #: ../includes/bco-form-fields.php:105
-msgid "Client ID"
+msgid "Display monthly cost"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:107
+msgid "Display monthly cost on single product pages."
 msgstr ""
 
 #: ../includes/bco-form-fields.php:111
+msgid "Monthly cost placement"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:112
+msgid "Select where to display the widget in your product pages"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:117
+msgid "Above Title"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:118
+msgid "Between Title and Price"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:119
+msgid "Between Price and Excerpt"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:120
+msgid "Between Excerpt and Add to cart button"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:121
+msgid "Between Add to cart button and Product meta"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:122
+msgid "Between Product meta and Product sharing buttons"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:123
+msgid "After Product sharing-buttons"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:127
+msgid "Text for monthly cost"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:129
+msgid "{billmate_img}<br/>Part pay from {billmate_price}/month"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:131
+msgid "Use {billmate_img} to display the Billmate logo and {billmate_price} to display the monthly fee as a formatted WooCommerce price (with currency)."
+msgstr ""
+
+#: ../includes/bco-form-fields.php:135
+msgid "API Credentials Sweden"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:139
+msgid "Client ID"
+msgstr ""
+
+#: ../includes/bco-form-fields.php:145
 msgid "Client Secret"
 msgstr ""
 
 #. translators: Billmate transaction id.
 #. translators: Billmate transaction id.
-#: ../includes/bco-functions.php:202, ../includes/bco-functions.php:250
+#: ../includes/bco-functions.php:201, ../includes/bco-functions.php:249
 msgid "Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s"
 msgstr ""
