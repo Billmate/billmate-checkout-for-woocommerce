@@ -14,6 +14,12 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Billmate Checkout for WooCommerce is a plugin that extends WooCommerce, allowing you to take payments via Billmate.
 
+This plugin is relying upon the payment provider Billmate. The payment data will be sent to them as a 3rd party service through the Billmate API.
+
+* Billmate website: https://www.billmate.se/
+* Billmate API documentation: https://billmate.github.io/api-docs/
+* Billmate terms and privacy policies: https://www.billmate.se/policyer/
+
 == Installation ==
 1. Upload plugin folder to to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
