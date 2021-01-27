@@ -255,3 +255,7 @@ msgstr ""
 #: ../includes/bco-functions.php:201, ../includes/bco-functions.php:249
 msgid "Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s"
 msgstr ""
+
+#: ../classes/requests/helpers/cart/class-bco-cart-articles-helper.php:101
+msgid "Gift Card"
+msgstr ""
