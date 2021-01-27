@@ -54,7 +54,7 @@ class BCO_API_Callbacks {
 
 		// Get the WC order ID from the post meta field _billmate_saved_woo_order_no.
 		// If that doesn't exist, try getting it from the WC order transaction ID.
-		$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
+		$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['data']['orderid'] );
 		if ( empty( $order_id ) ) {
 			$order_id = bco_get_order_id_by_transaction_id( sanitize_text_field( $data['data']['number'] ) );
 		}
