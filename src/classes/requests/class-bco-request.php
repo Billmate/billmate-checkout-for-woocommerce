@@ -52,8 +52,8 @@ class BCO_Request {
 		$this->secret            = $this->billmate_settings['api_key_se'];
 		$this->checkout_flow     = ( isset( $this->billmate_settings['checkout_flow'] ) ) ? $this->billmate_settings['checkout_flow'] : 'checkout';
 		$this->company_view      = ( isset( $this->billmate_settings['company_view'] ) ) ? $this->billmate_settings['company_view'] : 'false';
-		$this->version           = 'WordPress: ' . get_bloginfo( 'version' ) . '. WooCommerce: ' . WC()->version . '. BCO:' . BILLMATE_CHECKOUT_VERSION . '. PHP Version: ' . phpversion() . '. Krokedil';
-		$this->client            = wc_get_user_agent();
+		$this->version           = '2.2.2';
+		$this->client            = 'WooCommerce_v2:' . BILLMATE_CHECKOUT_VERSION;
 
 	}
 
