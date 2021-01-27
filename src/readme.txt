@@ -18,16 +18,15 @@ The Checkout have a speedy and low-click checkout process that also remembers th
 
 === How to Get Started ===
 1. [Get a Billmate Account](https://www.billmate.se/checkout/)
-2. [Install & configure the plugin](
-3. [Configure the plugin](
+2. [Install & configure the plugin](https://support.billmate.se/hc/sv/articles/360017161317)
 3. Billmate approves your store, no more steps required!
 
 === Verified Third Party Compatible Plugins ===
-On the following link you can see which plugins we know are compatible. [https://support.billmate.se/hc/sv/articles/360017162677](https://support.billmate.se/hc/sv/articles/360017162677)
-However, note that many more third party plugins are compatible. 
+On the following link you can see which plugins we know are compatible, https://support.billmate.se/hc/sv/articles/360017162677.
+Please note that many more third party plugins are compatible even though they are not listed.
 
 === Privacy ===
-This plugin is relying upon the payment provider Billmate. The payment data will be sent to them as a 3rd party service through the Billmate API.
+This plugin is relying on the payment service provider Billmate. The payment data will be sent to Billmate as a 3rd party service through the Billmate API.
 * Billmate website: https://www.billmate.se/
 * Billmate API documentation: https://billmate.github.io/api-docs/
 * Billmate terms and privacy policies: https://www.billmate.se/policyer/
