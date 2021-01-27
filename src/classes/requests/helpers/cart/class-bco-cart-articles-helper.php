@@ -20,9 +20,10 @@ class BCO_Cart_Articles_Helper {
 	 * @return array
 	 */
 	public static function get_articles() {
-		$articles   = array();
-		$cart_items = WC()->cart->get_cart();
-		$cart_fees  = WC()->cart->get_fees();
+		$articles     = array();
+		$cart_items   = WC()->cart->get_cart();
+		$cart_fees    = WC()->cart->get_fees();
+		$cart_coupons = WC()->cart->get_coupons();
 
 		foreach ( $cart_items as $cart_item ) {
 			array_push( $articles, self::get_cart_lines( $cart_item ) );
@@ -30,6 +31,13 @@ class BCO_Cart_Articles_Helper {
 
 		foreach ( $cart_fees as $fee ) {
 			array_push( $articles, self::get_fee_lines( $fee ) );
+		}
+
+		// Smart coupons.
+		foreach ( $cart_coupons as $coupon ) {
+			if ( 'smart_coupon' === $coupon->get_discount_type() ) {
+				array_push( $articles, self::get_smart_coupon_line( $coupon ) );
+			}
 		}
 
 		return $articles;
@@ -77,6 +85,24 @@ class BCO_Cart_Articles_Helper {
 			'aprice'     => round( $fee->amount * 100 ),
 			'withouttax' => round( $fee->amount * 100 ),
 			'taxrate'    => self::get_fee_tax_rate( $fee ),
+			'discount'   => 0,
+		);
+	}
+
+	/**
+	 * Gets the formatted cart lines for Smart coupon (gift card).
+	 *
+	 * @param array $coupon cart item fee.
+	 * @return array
+	 */
+	public static function get_smart_coupon_line( $coupon ) {
+		return array(
+			'artnr'      => $coupon->get_id(),
+			'title'      => __( 'Gift Card', 'billmate-checkout-for-woocommerce' ),
+			'quantity'   => 1,
+			'aprice'     => round( ( $coupon->get_amount() * -1 ) * 100 ),
+			'withouttax' => round( ( $coupon->get_amount() * -1 ) * 100 ),
+			'taxrate'    => 0,
 			'discount'   => 0,
 		);
 	}
