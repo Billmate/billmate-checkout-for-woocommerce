@@ -4,9 +4,9 @@
  * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
  * Description:     Provides an Billmate Checkout gateway for WooCommerce.
  * Version:         __STABLE_TAG__
- * Author:          Billmate in collaboration with Krokedil.
+ * Author:          Billmate, Krokedil
  * Author URI:      https://billmate.se/
- * Developer:       Billmate in collaboration with Krokedil.
+ * Developer:       Billmate, Krokedil
  * Developer URI:   http://krokedil.com/
  * Text Domain:     billmate-checkout-for-woocommerce
  * Domain Path:     /languages
