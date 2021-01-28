@@ -51,7 +51,7 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-order-mangement-for-woocommerce](https://github.com/Billmate/billmate-order-mangement-for-woocommerce).
 
 == Changelog ==
-= 2021.01.25    - version 1.0.0 =
+= 2021.01.28    - version 1.0.0 =
 * Release       - First release of new Billmate Checkout for WooCommerce
 
 = 2020.12.11    - version 0.6.1 =
