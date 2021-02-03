@@ -108,6 +108,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 			'checkout_success_nonce'               => wp_create_nonce( 'bco_wc_checkout_success' ),
 			'log_to_file_url'                      => WC_AJAX::get_endpoint( 'bco_wc_log_js' ),
 			'log_to_file_nonce'                    => wp_create_nonce( 'bco_wc_log_js' ),
+			'submit_order'                         => WC_AJAX::get_endpoint( 'checkout' ),
 		);
 
 		wp_localize_script(
@@ -164,26 +165,59 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
-		WC()->session->set( 'bco_wc_order_id', $order_id );
-		$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ), $order_id );
-		update_post_meta( $order_id, '_billmate_saved_woo_order_no', $order->get_order_number() );
 
-		$confirmation_url = add_query_arg(
-			array(
-				'bco_confirm' => 'yes',
-				'bco_flow'    => 'checkout',
-				'wc_order_id' => $order_id,
-			),
-			$order->get_checkout_order_received_url()
-		);
-		$response         = array(
-			'redirect_url' => $confirmation_url,
-			'time'         => microtime(),
-		);
-		return array(
-			'result'   => 'success',
-			'redirect' => ( 'checkout' === $this->checkout_flow ) ? '#billmate-success=' . base64_encode( wp_json_encode( $response ) ) : $order->get_checkout_payment_url(), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions -- Base64 used to give a unique nondescript string.
-		);
+		// 1. Process the payment.
+		// 2. Redirect to confirmation page.
+		if ( $this->process_payment_handler( $order_id ) ) {
+			$confirmation_url = add_query_arg(
+				array(
+					'bco_confirm' => 'yes',
+					'bco_flow'    => 'checkout',
+					'wc_order_id' => $order_id,
+
+				),
+				$order->get_checkout_order_received_url()
+			);
+			return array(
+				'result'       => 'success',
+				'redirect_url' => $confirmation_url,
+			);
+		} else {
+			return array(
+				'result' => 'error',
+			);
+		}
+	}
+
+	/**
+	 * Process the payment with information from Billmate and return the result.
+	 *
+	 * @param  int $order_id WooCommerce order ID.
+	 *
+	 * @return mixed
+	 */
+	public function process_payment_handler( $order_id ) {
+
+		$order = wc_get_order( $order_id );
+
+		WC()->session->set( 'bco_wc_order_id', $order_id );
+		update_post_meta( $order_id, '_billmate_saved_woo_order_no', $order->get_order_number() );
+		$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ), $order_id );
+
+		if ( ! $billmate_order ) {
+			return false;
+		}
+
+		if ( $order_id && $billmate_order ) {
+
+			// Let other plugins hook into this sequence.
+			do_action( 'bco_wc_process_payment', $order_id, $billmate_order );
+
+			return true;
+		}
+
+		// Return false if we get here. Something went wrong.
+		return false;
 	}
 
 	/**

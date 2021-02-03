@@ -59,10 +59,12 @@ jQuery(function($) {
 						bco_wc.logToFile( 'purchase_initialized from Billmate triggered' );
 						bco_wc.getBillmateCheckout();
 
-						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {
+						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {							
 							if ( true === bool ) {
 								// Success.
 								bco_wc.purchase_complete();
+							} else {
+								// Fail.
 							}
 						});
 						break;
@@ -324,8 +326,9 @@ jQuery(function($) {
 					if ($("form.checkout #terms").length > 0) {
 						$("form.checkout #terms").prop("checked", true);
 					}
-					$('form.checkout').submit();
-					return true;
+					// $('form.checkout').submit();
+					// return true;
+					bco_wc.submitForm();
 				}
 			});
 		},
@@ -368,34 +371,6 @@ jQuery(function($) {
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.billing_address ) ? data.billing_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
 			}
-		},
-
-		hashChange: function() {
-			console.log('hashchange');
-			var currentHash = location.hash;
-			var splittedHash = currentHash.split("=");
-			console.log(splittedHash[0]);
-			console.log(splittedHash[1]);
-			if(splittedHash[0] === "#billmate-success"){
-				bco_wc.logToFile( 'billmate-success hashtag detected in URL.' );
-				$( 'body' ).trigger( 'bco_order_validation', true );
-				var response = JSON.parse( atob( splittedHash[1] ) );
-				console.log('response.redirect_url');
-				console.log(response.redirect_url);
-				sessionStorage.setItem( 'billmateRedirectUrl', response.redirect_url );
-				$('#bco-wrapper').block({
-					message: null,
-					overlayCSS: {
-						background: '#fff',
-						opacity: 0.6
-					}
-				});
-				$('form.checkout').removeClass( 'processing' ).unblock();
-			}
-		},
-
-		errorDetected: function() {
-			$( 'body' ).trigger( 'bco_order_validation', false );
 		},
 
 		/*
@@ -510,6 +485,73 @@ jQuery(function($) {
 			return false;
 		},
 
+		/**
+		 * Submit the order using the WooCommerce AJAX function.
+		 */
+		submitForm: function() {
+			$( '.woocommerce-checkout-review-order-table' ).block({
+				message: null,
+				overlayCSS: {
+					background: '#fff',
+					opacity: 0.6
+				}
+			});
+			$.ajax({
+				type: 'POST',
+				url: bco_wc_params.submit_order,
+				data: $('form.checkout').serialize(),
+				dataType: 'json',
+				success: function( data ) {
+					try {
+						if ( 'success' === data.result ) {
+							bco_wc.logToFile( 'Successfully placed order. Sending bco_order_validation true to Billmate' );
+
+							$( 'body' ).trigger( 'bco_order_validation', true );
+							console.log('data.redirect_url');
+							console.log(data.redirect_url);
+							sessionStorage.setItem( 'billmateRedirectUrl', data.redirect_url );
+							$('form.checkout').removeClass( 'processing' ).unblock();
+						} else {
+							throw 'Result failed';
+						}
+					} catch ( err ) {
+						if ( data.messages )  {
+							bco_wc.logToFile( 'Checkout error | ' + data.messages );
+							bco_wc.failOrder( 'submission', data.messages );
+						} else {
+							bco_wc.logToFile( 'Checkout error | No message' );
+							bco_wc.failOrder( 'submission', '<div class="woocommerce-error">' + 'Checkout error' + '</div>' );
+						}
+					}
+				},
+				error: function( data ) {
+					bco_wc.logToFile( 'AJAX error | ' + data );
+					bco_wc.failOrder( 'ajax-error', data );
+				}
+			});
+		},
+
+		failOrder: function( event, error_message ) {
+			// Send false and cancel.
+			console.log('failOrder');
+			$( 'body' ).trigger( 'bco_order_validation', false );
+		
+			// Re-enable the form.
+			$( 'body' ).trigger( 'updated_checkout' );
+			$( bco_wc.checkoutFormSelector ).unblock();
+			$( '.woocommerce-checkout-review-order-table' ).unblock();
+
+			// Print error messages, and trigger checkout_error, and scroll to notices.
+			$( '.woocommerce-NoticeGroup-checkout, .woocommerce-error, .woocommerce-message' ).remove();
+			$( 'form.checkout' ).prepend( '<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">' + error_message + '</div>' ); // eslint-disable-line max-len
+			$( 'form.checkout' ).removeClass( 'processing' ).unblock();
+			$( 'form.checkout' ).find( '.input-text, select, input:checkbox' ).trigger( 'validate' ).blur();
+			$( document.body ).trigger( 'checkout_error' , [ error_message ] );
+			$( 'html, body' ).animate( {
+				scrollTop: ( $( 'form.checkout' ).offset().top - 100 )
+			}, 1000 );
+		},
+
 		logToFile: function( message ) {
 			$.ajax(
 				{
@@ -539,12 +581,6 @@ jQuery(function($) {
 					// Lock Billmate on update_checkout.
 					// bco_wc.bodyEl.on('update_checkout', bco_wc.lock);
 				}
-
-				// Hashchange.
-				window.addEventListener('hashchange', bco_wc.hashChange);
-
-				// Error detected.
-				$( document.body ).on( 'checkout_error', bco_wc.errorDetected );
 			}
 			bco_wc.bodyEl.on('change', 'input[name="payment_method"]', bco_wc.maybeChangeToBCO);
 			bco_wc.bodyEl.on( 'click', bco_wc.selectAnotherSelector, bco_wc.changeFromBCO );
