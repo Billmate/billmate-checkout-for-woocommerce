@@ -52,7 +52,7 @@ The easiest way to report a bug is to email us at [support@billmate.se](mailto:s
 
 == Changelog ==
 = 2021.02.08    - version 1.0.2 =
-* Tweak         - Tweak WC checkout form submission logic. The plugin is no longer reliant on a hashchange to send purchase_complete reponse to Billmate.
+* Tweak         - Tweak WC checkout form submission logic. The plugin is no longer reliant on a hashchange to send purchase_complete response to Billmate.
 * Tweak         - Adds stacktrace in logging.
 
 = 2021.01.28    - version 1.0.1 =
