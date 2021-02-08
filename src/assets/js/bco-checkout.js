@@ -507,8 +507,6 @@ jQuery(function($) {
 							bco_wc.logToFile( 'Successfully placed order. Sending bco_order_validation true to Billmate' );
 
 							$( 'body' ).trigger( 'bco_order_validation', true );
-							console.log('data.redirect_url');
-							console.log(data.redirect_url);
 							sessionStorage.setItem( 'billmateRedirectUrl', data.redirect_url );
 							$('form.checkout').removeClass( 'processing' ).unblock();
 						} else {
