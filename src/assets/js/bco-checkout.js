@@ -326,8 +326,6 @@ jQuery(function($) {
 					if ($("form.checkout #terms").length > 0) {
 						$("form.checkout #terms").prop("checked", true);
 					}
-					// $('form.checkout').submit();
-					// return true;
 					bco_wc.submitForm();
 				}
 			});
