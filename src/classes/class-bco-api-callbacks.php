@@ -118,6 +118,18 @@ class BCO_API_Callbacks {
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
+				case 'approved':
+					// Translators: Billmate transaction id.
+					$note = sprintf( __( 'Payment reported Approved from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					$order->add_order_note( $note );
+					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
+					$order->payment_complete( $process_data['bco_number'] );
+					break;
+				case 'denied':
+					// Translators: Billmate transaction id.
+					$note = sprintf( __( 'Order reported Denied from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					$order->update_status( 'failed', $note );
+					break;
 				case 'cancelled':
 					// Translators: Billmate transaction id.
 					$note = sprintf( __( 'Order reported Cancelled from Billmate Online. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
