@@ -128,6 +128,7 @@ class BCO_API_Callbacks {
 				case 'denied':
 					// Translators: Billmate transaction id.
 					$note = sprintf( __( 'Order reported Denied from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->update_status( 'failed', $note );
 					break;
 				case 'cancelled':
