@@ -82,6 +82,11 @@ class BCO_API_Callbacks {
 		$order_id = $process_data['order_id'];
 		$order    = wc_get_order( $order_id );
 
+		// Abort the callback if we already have received a callback about the payment being Denied.
+		if ( is_object( $order ) && 'yes' === get_post_meta( $order_id, '_billmate_payment_denied', true ) ) {
+			return;
+		}
+
 		// Maybe abort the callback (if the order already has been processed in Woo).
 		if ( is_object( $order ) && ! empty( $order->get_date_paid() ) ) {
 			// If this ia a cancel order request from Billmate Online lets cancel the order in Woo.
@@ -129,6 +134,7 @@ class BCO_API_Callbacks {
 					// Translators: Billmate transaction id.
 					$note = sprintf( __( 'Order reported Denied from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
+					update_post_meta( $order_id, '_billmate_payment_denied', 'yes' );
 					$order->update_status( 'failed', $note );
 					break;
 				case 'cancelled':
