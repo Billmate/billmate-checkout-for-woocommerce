@@ -46,11 +46,21 @@ msgstr ""
 
 #. translators: Billmate transaction id.
 #: ../classes/class-bco-api-callbacks.php:123
+msgid "Payment reported Approved from Billmate Online. Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:130
+msgid "Order reported Denied from Billmate Online. Transaction id: %s"
+msgstr ""
+
+#. translators: Billmate transaction id.
+#: ../classes/class-bco-api-callbacks.php:136
 msgid "Order reported Cancelled from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:128
+#: ../classes/class-bco-api-callbacks.php:141
 msgid "Order reported Failed from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 
