@@ -109,6 +109,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 			'log_to_file_url'                      => WC_AJAX::get_endpoint( 'bco_wc_log_js' ),
 			'log_to_file_nonce'                    => wp_create_nonce( 'bco_wc_log_js' ),
 			'submit_order'                         => WC_AJAX::get_endpoint( 'checkout' ),
+			'populate_address_fields'              => apply_filters( 'bco_populate_address_fields', 'yes' ),
 		);
 
 		wp_localize_script(
