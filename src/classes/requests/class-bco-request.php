@@ -44,16 +44,17 @@ class BCO_Request {
 	 * @return void
 	 */
 	public function set_environment_variables() {
-		$this->billmate_settings = get_option( 'woocommerce_bco_settings' );
-		$this->testmode          = $this->billmate_settings['testmode'];
-		$this->test              = ( 'yes' === $this->testmode ) ? 'true' : 'false';
-		$this->base_url          = BILLMATE_CHECKOUT_ENV;
-		$this->id                = $this->billmate_settings['merchant_id_se'];
-		$this->secret            = $this->billmate_settings['api_key_se'];
-		$this->checkout_flow     = ( isset( $this->billmate_settings['checkout_flow'] ) ) ? $this->billmate_settings['checkout_flow'] : 'checkout';
-		$this->company_view      = ( isset( $this->billmate_settings['company_view'] ) ) ? $this->billmate_settings['company_view'] : 'false';
-		$this->version           = '2.2.2';
-		$this->client            = 'WooCommerce_v2:' . BILLMATE_CHECKOUT_VERSION;
+		$this->billmate_settings     = get_option( 'woocommerce_bco_settings' );
+		$this->testmode              = $this->billmate_settings['testmode'];
+		$this->test                  = ( 'yes' === $this->testmode ) ? 'true' : 'false';
+		$this->base_url              = BILLMATE_CHECKOUT_ENV;
+		$this->id                    = $this->billmate_settings['merchant_id_se'];
+		$this->secret                = $this->billmate_settings['api_key_se'];
+		$this->checkout_flow         = ( isset( $this->billmate_settings['checkout_flow'] ) ) ? $this->billmate_settings['checkout_flow'] : 'checkout';
+		$this->company_view          = ( isset( $this->billmate_settings['company_view'] ) ) ? $this->billmate_settings['company_view'] : 'false';
+		$this->hide_shipping_address = ( 'yes' === $this->billmate_settings['hide_shipping_address'] ) ? 'true' : 'false';
+		$this->version               = '2.2.2';
+		$this->client                = 'WooCommerce_v2:' . BILLMATE_CHECKOUT_VERSION;
 
 	}
 
