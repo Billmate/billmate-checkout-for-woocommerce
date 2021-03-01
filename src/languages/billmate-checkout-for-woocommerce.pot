@@ -25,12 +25,12 @@ msgid "Support"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:95
+#: ../classes/class-bco-api-callbacks.php:90
 msgid "Order cancelled in Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:107
+#: ../classes/class-bco-api-callbacks.php:102
 msgid "Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s"
 msgstr ""
 
@@ -40,27 +40,27 @@ msgstr ""
 #. translators: Billmate transaction id.
 #. translators: Billmate transaction id.
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:114, ../classes/class-bco-api-callbacks.php:121, ../includes/bco-functions.php:208, ../includes/bco-functions.php:216, ../includes/bco-functions.php:256, ../includes/bco-functions.php:264
+#: ../classes/class-bco-api-callbacks.php:109, ../classes/class-bco-api-callbacks.php:116, ../includes/bco-functions.php:208, ../includes/bco-functions.php:216, ../includes/bco-functions.php:256, ../includes/bco-functions.php:264
 msgid "Payment via Billmate Checkout. Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:128
+#: ../classes/class-bco-api-callbacks.php:123
 msgid "Payment reported Approved from Billmate Online. Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:135
+#: ../classes/class-bco-api-callbacks.php:130
 msgid "Order reported Denied from Billmate Online. Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:142
+#: ../classes/class-bco-api-callbacks.php:136
 msgid "Order reported Cancelled from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 
 #. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:147
+#: ../classes/class-bco-api-callbacks.php:141
 msgid "Order reported Failed from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 
@@ -165,106 +165,98 @@ msgid "Show Order notes field in checkout."
 msgstr ""
 
 #: ../includes/bco-form-fields.php:78
-msgid "Hide shipping address"
-msgstr ""
-
-#: ../includes/bco-form-fields.php:80
-msgid "Hide customer shipping address in checkout."
-msgstr ""
-
-#: ../includes/bco-form-fields.php:84
 msgid "Logo"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:86
+#: ../includes/bco-form-fields.php:80
 msgid "Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:91, ../includes/bco-functions.php:387
+#: ../includes/bco-form-fields.php:85, ../includes/bco-functions.php:387
 msgid "Invoice fee"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:93
+#: ../includes/bco-form-fields.php:87
 msgid "Add Invoice fee excluding tax. Leave blank to deactivate this feature."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:98
+#: ../includes/bco-form-fields.php:92
 msgid "Tax class for invoice fee"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:101
+#: ../includes/bco-form-fields.php:95
 msgid "Select the tax class that should be used for the invoice fee."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:107
+#: ../includes/bco-form-fields.php:101
 msgid "Monthly cost display"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:111
+#: ../includes/bco-form-fields.php:105
 msgid "Display monthly cost"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:113
+#: ../includes/bco-form-fields.php:107
 msgid "Display monthly cost on single product pages."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:117
+#: ../includes/bco-form-fields.php:111
 msgid "Monthly cost placement"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:118
+#: ../includes/bco-form-fields.php:112
 msgid "Select where to display the widget in your product pages"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:123
+#: ../includes/bco-form-fields.php:117
 msgid "Above Title"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:124
+#: ../includes/bco-form-fields.php:118
 msgid "Between Title and Price"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:125
+#: ../includes/bco-form-fields.php:119
 msgid "Between Price and Excerpt"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:126
+#: ../includes/bco-form-fields.php:120
 msgid "Between Excerpt and Add to cart button"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:127
+#: ../includes/bco-form-fields.php:121
 msgid "Between Add to cart button and Product meta"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:128
+#: ../includes/bco-form-fields.php:122
 msgid "Between Product meta and Product sharing buttons"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:129
+#: ../includes/bco-form-fields.php:123
 msgid "After Product sharing-buttons"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:133
+#: ../includes/bco-form-fields.php:127
 msgid "Text for monthly cost"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:135
+#: ../includes/bco-form-fields.php:129
 msgid "{billmate_img}<br/>Part pay from {billmate_price}/month"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:137
+#: ../includes/bco-form-fields.php:131
 msgid "Use {billmate_img} to display the Billmate logo and {billmate_price} to display the monthly fee as a formatted WooCommerce price (with currency)."
 msgstr ""
 
-#: ../includes/bco-form-fields.php:141
+#: ../includes/bco-form-fields.php:135
 msgid "API Credentials Sweden"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:145
+#: ../includes/bco-form-fields.php:139
 msgid "Client ID"
 msgstr ""
 
-#: ../includes/bco-form-fields.php:151
+#: ../includes/bco-form-fields.php:145
 msgid "Client Secret"
 msgstr ""
 
