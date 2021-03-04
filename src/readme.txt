@@ -51,6 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2021.03.04    - version 1.0.4 =
+* Fix           - Avoid division by zero problem in discount calculation. Fixes compatibility issue with WPC Product Bundles for WooCommerce.
+
 = 2021.02.23    - version 1.0.3 =
 * Fix           - Adds support for Approved and Denied callback order status from Billmate when order had status Pending previously.
 
