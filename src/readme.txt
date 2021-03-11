@@ -51,8 +51,8 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
-= 2021.03.09    - version 1.1.0 =
-* Feature       - Add setting for Hide shipping address in Billmate checkout.
+= 2021.03.11    - version 1.1.0 =
+* Feature       - Add setting for hide shipping address in Billmate Checkout.
 * Fix           - Make sure the lowest monthly cost returned from Billmate is used in monthly cost display widget.
 
 = 2021.03.04    - version 1.0.4 =
