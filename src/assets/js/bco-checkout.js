@@ -133,7 +133,7 @@ jQuery(function($) {
 										// All good trigger update_checkout event.
 										$( 'body' ).trigger( 'update_checkout' );
 									},
-									error: function() {
+									error: function( response ) {
 										console.log( response );
 									},
 									complete: function() {
