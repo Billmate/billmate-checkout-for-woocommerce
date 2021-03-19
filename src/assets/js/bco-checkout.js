@@ -380,14 +380,6 @@ jQuery(function($) {
 		*/
 		documentReady: function() {
 			bco_wc.moveExtraCheckoutFields();
-
-			if ( 'checkout' === bco_wc_params.checkout_flow ) {
-				// Add two column class to checkout if Billmate setting in Woo is set.
-				if ( 'two_column_checkout' === bco_wc_params.checkout_layout ) {
-					$('form.checkout.woocommerce-checkout').addClass('bco-two-column-checkout-left');
-					$('#bco-iframe').addClass('bco-two-column-checkout-right');
-				}
-			}
 		},
 
 		// When "Change to another payment method" is clicked.

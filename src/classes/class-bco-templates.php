@@ -40,6 +40,7 @@ class BCO_Templates {
 		$this->enabled          = ( isset( $bco_settings['enabled'] ) ) ? $bco_settings['enabled'] : '';
 		$this->show_order_notes = ( isset( $bco_settings['show_order_notes'] ) ) ? $bco_settings['show_order_notes'] : 'yes';
 		$checkout_flow          = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+		$this->checkout_layout  = ( isset( $bco_settings['checkout_layout'] ) ) ? $bco_settings['checkout_layout'] : 'two_column_checkout';
 
 		if ( 'checkout' === $checkout_flow ) {
 			// Override template if Billmate Checkout page.
@@ -58,6 +59,9 @@ class BCO_Templates {
 
 		// Hook to check if we should hide the Order notes field in checkout.
 		add_action( 'template_redirect', array( $this, 'maybe_hide_order_notes_field' ), 1000 );
+
+		// Body class. For checkout layout setting.
+		add_filter( 'body_class', array( $this, 'add_body_class' ) );
 	}
 
 	/**
@@ -237,6 +241,36 @@ class BCO_Templates {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Add bco-two-column-checkout body class.
+	 *
+	 * @param array $class CSS classes used in body tag.
+	 *
+	 * @return array
+	 */
+	public function add_body_class( $class ) {
+		if ( is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
+			// Don't display Billmate body classes if we have a cart that doesn't needs payment.
+			if ( method_exists( WC()->cart, 'needs_payment' ) && ! WC()->cart->needs_payment() ) {
+				return $class;
+			}
+
+			$first_gateway = '';
+			if ( WC()->session->get( 'chosen_payment_method' ) ) {
+				$first_gateway = WC()->session->get( 'chosen_payment_method' );
+			} else {
+				$available_payment_gateways = WC()->payment_gateways->get_available_payment_gateways();
+				reset( $available_payment_gateways );
+				$first_gateway = key( $available_payment_gateways );
+			}
+
+			if ( 'bco' === $first_gateway && 'two_column_checkout' === $this->checkout_layout ) {
+				$class[] = 'bco-two-column-checkout';
+			}
+		}
+		return $class;
 	}
 }
 
