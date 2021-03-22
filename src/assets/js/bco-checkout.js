@@ -452,6 +452,11 @@ jQuery(function($) {
 			for ( i = 0; i < form.length; i++ ) {
 				var name = form[i].name.replace('[]', '\\[\\]'); // Escape any empty "array" keys to prevent errors.
 
+				// Check if field is inside the order review.
+				if( $( 'table.woocommerce-checkout-review-order-table' ).find( form[i] ).length ) {
+					continue;
+				}
+
 				// Check if this is a standard field.
 				if ( -1 === $.inArray( name, bco_wc_params.standard_woo_checkout_fields ) ) {
 
