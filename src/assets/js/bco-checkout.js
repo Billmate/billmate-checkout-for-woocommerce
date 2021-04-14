@@ -91,8 +91,8 @@ jQuery(function($) {
 							bco_wc.addressData.updateNeeded = 'yes';
 						} else {
 							billingAddress = bco_wc.setBillingAddress(json.data);
-							shippingZip = json.data.Customer.Billing.zip;
-							shippingCountry = json.data.Customer.Billing.country;
+							shippingZip = billingAddress.billingZip;
+							shippingCountry = billingAddress.billingCountry;
 
 							if ( bco_wc.addressData.billingZip === billingAddress.billingZip ) {
 								return;
