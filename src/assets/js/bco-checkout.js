@@ -91,8 +91,8 @@ jQuery(function($) {
 							bco_wc.addressData.updateNeeded = 'yes';
 						} else {
 							billingAddress = bco_wc.setBillingAddress(json.data);
-							shippingZip = json.data.Customer.Billing.zip;
-							shippingCountry = json.data.Customer.Billing.country;
+							shippingZip = billingAddress.billingZip;
+							shippingCountry = billingAddress.billingCountry;
 
 							if ( bco_wc.addressData.billingZip === billingAddress.billingZip ) {
 								return;
@@ -133,7 +133,7 @@ jQuery(function($) {
 										// All good trigger update_checkout event.
 										$( 'body' ).trigger( 'update_checkout' );
 									},
-									error: function() {
+									error: function( response ) {
 										console.log( response );
 									},
 									complete: function() {
@@ -332,7 +332,7 @@ jQuery(function($) {
 		},
 
 		setCustomerData: function( data ) {
-			if ( data.billing_address !== null ) {
+			if ( data.billing_address !== null && data.billing_address !== undefined ) {
 				// Billing fields.
 				$( '#billing_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
 				$( '#billing_last_name' ).val( ( ( 'lastname' in data.billing_address ) ? data.billing_address.lastname : '' ) );
@@ -344,6 +344,9 @@ jQuery(function($) {
 				$( '#billing_phone' ).val( ( ( 'phone' in data.billing_address ) ? data.billing_address.phone : '' ) );
 				$( '#billing_email' ).val( ( ( 'email' in data.billing_address ) ? data.billing_address.email : '' ) );
 				$( '#billing_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
+			} else {
+				// We did not receive a billing address from Billmate, let's reload the checkout page an try again.
+				window.location.reload();
 			}
 
 			if ( data.shipping_address !== null ) {
