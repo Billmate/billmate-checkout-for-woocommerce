@@ -195,6 +195,11 @@ class BCO_Cart_Articles_Helper {
 		$article_price = wc_get_price_excluding_tax( $cart_item['data'] );
 		$line_total    = $cart_item['line_total'];
 
+		// No discount for already 0 value articles.
+		if ( 0.0 === round( $article_price, 2 ) ) {
+			return 0;
+		}
+
 		if ( ( $article_price * $cart_item['quantity'] ) !== $line_total ) {
 			return round( ( 1 - ( $line_total / ( $article_price * $cart_item['quantity'] ) ) ) * 100 );
 		} else {
