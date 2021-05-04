@@ -72,6 +72,11 @@ jQuery(function($) {
 						if ( 'checkout' !== bco_wc_params.checkout_flow ) {
 							return;
 						}
+
+						// Don't update customer data in Woo if disabled via filter.
+						if( 'no' === bco_wc_params.populate_address_fields ) {
+							return;
+						}
 						
 						var shippingZip = '';
 						var shippingCountry = '';
@@ -332,6 +337,12 @@ jQuery(function($) {
 		},
 
 		setCustomerData: function( data ) {
+
+			// Don't update customer data in Woo if disabled via filter.
+			if( 'no' === bco_wc_params.populate_address_fields ) {
+				return;
+			}
+
 			if ( data.billing_address !== null && data.billing_address !== undefined ) {
 				// Billing fields.
 				$( '#billing_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
