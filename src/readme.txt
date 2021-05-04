@@ -51,8 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
-= 2021.03.16    - version 1.1.1 =
+= 2021.04.14    - version 1.1.1 =
 * Tweak         - Reloads checkout if customer address is missing during the WooCommerce order creation process.
+* Fix           - Shipping address update fix. Billing zip and country could be returned both in billingAddress & Customer.Billing from Billmate.
 
 = 2021.03.11    - version 1.1.0 =
 * Feature       - Add setting for hide shipping address in Billmate Checkout.
