@@ -379,13 +379,14 @@ function bco_maybe_add_invoice_fee( $order ) {
 	$order_id = $order->get_id();
 	if ( '1' === get_post_meta( $order_id, '_billmate_payment_method_id', true ) ) {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
-		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+		$invoice_fee       = isset( $billmate_settings['invoice_fee'] ) ? str_replace( ',', '.', $billmate_settings['invoice_fee'] ) : '';
+		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) ) {
 
 			$fee = new WC_Order_Item_Fee();
 
 			$fee_args = array(
 				'name'      => __( 'Invoice fee', 'billmate-checkout-for-woocommerce' ),
-				'total'     => $billmate_settings['invoice_fee'],
+				'total'     => $invoice_fee,
 				'tax_class' => $billmate_settings['invoice_fee_tax'],
 			);
 
