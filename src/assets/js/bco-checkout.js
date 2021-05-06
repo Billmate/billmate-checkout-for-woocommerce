@@ -213,6 +213,12 @@ jQuery(function($) {
 						 */
 						bco_wc.hide_overlay();
 						break;
+					case 'go_to':
+						/**
+						 * Redirect to a URL (app). JSON data includes the URL for the redirection.
+						 */
+						 location.href = json.data;
+						break;
 					default:
 					break;
 				}
