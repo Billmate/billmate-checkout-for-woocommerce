@@ -59,8 +59,9 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_handling_without_tax() {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
-		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
-			$handling_without_tax = round( $billmate_settings['invoice_fee'] * 100 );
+		$invoice_fee       = isset( $billmate_settings['invoice_fee'] ) ? str_replace( ',', '.', $billmate_settings['invoice_fee'] ) : '';
+		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) ) {
+			$handling_without_tax = round( $invoice_fee * 100 );
 		} else {
 			$handling_without_tax = 0;
 		}
@@ -74,6 +75,7 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_handling_tax_rate() {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
+		$invoice_fee       = isset( $billmate_settings['invoice_fee'] ) ? str_replace( ',', '.', $billmate_settings['invoice_fee'] ) : '';
 
 		if ( method_exists( WC()->cart, 'get_customer' ) && true === WC()->cart->get_customer()->get_is_vat_exempt() ) {
 			$is_vat_exempt = true;
@@ -81,7 +83,7 @@ class BCO_Cart_Cart_Helper {
 			$is_vat_exempt = false;
 		}
 
-		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) && ! $is_vat_exempt ) {
+		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) && ! $is_vat_exempt ) {
 			$handling_tax_rate = 0;
 			$invoice_fee_tax   = $billmate_settings['invoice_fee_tax'];
 			$tax_rates         = WC_Tax::get_rates_for_tax_class( $invoice_fee_tax );
@@ -109,11 +111,12 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_handling_tax() {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
-		if ( ! empty( $billmate_settings['invoice_fee'] ) && is_numeric( $billmate_settings['invoice_fee'] ) ) {
+		$invoice_fee       = isset( $billmate_settings['invoice_fee'] ) ? str_replace( ',', '.', $billmate_settings['invoice_fee'] ) : '';
+		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) ) {
 			if ( 0 === self::get_handling_tax_rate() ) {
 				$handling_tax = 0;
 			} else {
-				$handling_tax = ( $billmate_settings['invoice_fee'] * ( ( self::get_handling_tax_rate() / 100 ) + 1 ) ) - $billmate_settings['invoice_fee'];
+				$handling_tax = ( $invoice_fee * ( ( self::get_handling_tax_rate() / 100 ) + 1 ) ) - $invoice_fee;
 				$handling_tax = round( $handling_tax * 100 );
 			}
 		} else {

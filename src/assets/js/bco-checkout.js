@@ -72,6 +72,11 @@ jQuery(function($) {
 						if ( 'checkout' !== bco_wc_params.checkout_flow ) {
 							return;
 						}
+
+						// Don't update customer data in Woo if disabled via filter.
+						if( 'no' === bco_wc_params.populate_address_fields ) {
+							return;
+						}
 						
 						var shippingZip = '';
 						var shippingCountry = '';
@@ -208,6 +213,12 @@ jQuery(function($) {
 						 */
 						bco_wc.hide_overlay();
 						break;
+					case 'go_to':
+						/**
+						 * Redirect to a URL (app). JSON data includes the URL for the redirection.
+						 */
+						 location.href = json.data;
+						break;
 					default:
 					break;
 				}
@@ -332,6 +343,12 @@ jQuery(function($) {
 		},
 
 		setCustomerData: function( data ) {
+
+			// Don't update customer data in Woo if disabled via filter.
+			if( 'no' === bco_wc_params.populate_address_fields ) {
+				return;
+			}
+
 			if ( data.billing_address !== null && data.billing_address !== undefined ) {
 				// Billing fields.
 				$( '#billing_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
@@ -380,14 +397,6 @@ jQuery(function($) {
 		*/
 		documentReady: function() {
 			bco_wc.moveExtraCheckoutFields();
-
-			if ( 'checkout' === bco_wc_params.checkout_flow ) {
-				// Add two column class to checkout if Billmate setting in Woo is set.
-				if ( 'two_column_checkout' === bco_wc_params.checkout_layout ) {
-					$('form.checkout.woocommerce-checkout').addClass('bco-two-column-checkout-left');
-					$('#bco-iframe').addClass('bco-two-column-checkout-right');
-				}
-			}
 		},
 
 		// When "Change to another payment method" is clicked.
@@ -458,7 +467,12 @@ jQuery(function($) {
 
 			var form = $( 'form[name="checkout"] input, form[name="checkout"] select, textarea' );
 			for ( i = 0; i < form.length; i++ ) {
-				var name = form[i].name;
+				var name = form[i].name.replace('[]', '\\[\\]'); // Escape any empty "array" keys to prevent errors.
+
+				// Check if field is inside the order review.
+				if( $( 'table.woocommerce-checkout-review-order-table' ).find( form[i] ).length ) {
+					continue;
+				}
 
 				// Check if this is a standard field.
 				if ( -1 === $.inArray( name, bco_wc_params.standard_woo_checkout_fields ) ) {
