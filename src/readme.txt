@@ -55,7 +55,7 @@ The easiest way to report a bug is to email us at [support@billmate.se](mailto:s
 * Feature       - Add feature for disabling address update in WooCommerce checkout form. By using bco_populate_address_fields filter, Billmate address data will not override logged in Woocommerce customer data. 
 * Feature       - Checkout page template: Changes in template file markup.
 * Tweak         - Checkout page template: Don't move extra fields that are already inside the order review area.
-* Tweak         - @TODO - write final changelog about bco_wc_before_checkout_form & woocommerce_before_checkout_form.
+* Tweak         - Changed bco_wc_before_checkout_form hook to woocommerce_before_checkout_form in checkout template file.
 * Tweak         - Remove utf8_decode when printing error message returned from Billmate.
 * Tweak         - Change logic for checkout layout to use body_class instead of JS.
 * Tweak         - Adds go_to JS event listener. Makes it possible to redirect mobile users to Swish or Bank ID app automatically.
