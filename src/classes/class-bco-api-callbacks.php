@@ -136,6 +136,8 @@ class BCO_API_Callbacks {
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					update_post_meta( $order_id, '_billmate_payment_denied', 'yes' );
 					$order->update_status( 'failed', $note );
+					// Trigger bco_callback_denied_order action so we can cancel the order in BO from Billmate Order Management plugin.
+					do_action( 'bco_callback_denied_order', $order_id );
 					break;
 				case 'cancelled':
 					// Translators: Billmate transaction id.
