@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 5.7.2
 Requires PHP: 5.6
 WC requires at least: 4.0.0
-WC tested up to: 5.3.0
+WC tested up to: 5.4.1
 Stable tag: __STABLE_TAG__
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,10 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2021.07.05    - version 1.3.0 =
+* Tweak         - Add hook bco_callback_denied_order, to be able to automatically cancel order in Billmate if a denied order callback is triggered from Billmate.
+* Fix           - Only add invoice fee to order if no transaction_id exists. Avoids multiple invoice fee lines.
+
 = 2021.05.19    - version 1.2.0 =
 * Feature       - Add feature for disabling address update in WooCommerce checkout form. By using bco_populate_address_fields filter, Billmate address data will not override logged in Woocommerce customer data. 
 * Feature       - Checkout page template: Changes in template file markup.
