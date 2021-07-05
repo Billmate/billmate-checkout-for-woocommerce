@@ -54,6 +54,7 @@ The easiest way to report a bug is to email us at [support@billmate.se](mailto:s
 = 2021.07.05    - version 1.3.0 =
 * Tweak         - Add hook bco_callback_denied_order, to be able to automatically cancel order in Billmate if a denied order callback is triggered from Billmate.
 * Fix           - Only add invoice fee to order if no transaction_id exists. Avoids multiple invoice fee lines.
+* Fix           - PHP8 warning fix.
 
 = 2021.05.19    - version 1.2.0 =
 * Feature       - Add feature for disabling address update in WooCommerce checkout form. By using bco_populate_address_fields filter, Billmate address data will not override logged in Woocommerce customer data. 
