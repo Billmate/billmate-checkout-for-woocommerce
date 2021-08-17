@@ -380,7 +380,9 @@ function bco_maybe_add_invoice_fee( $order ) {
 	if ( '1' === get_post_meta( $order_id, '_billmate_payment_method_id', true ) ) {
 		$billmate_settings = get_option( 'woocommerce_bco_settings' );
 		$invoice_fee       = isset( $billmate_settings['invoice_fee'] ) ? str_replace( ',', '.', $billmate_settings['invoice_fee'] ) : '';
-		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) ) {
+
+		// Check that we have an invoice fee and that no transaction id is set yet (to avoid that we add invoice fee multiple times).
+		if ( ! empty( $invoice_fee ) && is_numeric( $invoice_fee ) && empty( $order->get_transaction_id() ) ) {
 
 			$fee = new WC_Order_Item_Fee();
 

@@ -131,9 +131,7 @@ class BCO_Order_Customer_Helper {
 	 * @return string
 	 */
 	public static function get_billing_country( $order ) {
-		$countries     = include WC()->plugin_path() . '/i18n/countries.php';
-		$order_country = $order->get_billing_country();
-		return $countries[ $order_country ];
+		return $order->get_billing_country();
 	}
 
 	/**
@@ -235,8 +233,6 @@ class BCO_Order_Customer_Helper {
 	 * @return string
 	 */
 	public static function get_shipping_country( $order ) {
-		$countries     = include WC()->plugin_path() . '/i18n/countries.php';
-		$order_country = $order->get_shipping_country();
-		return $countries[ $order_country ];
+		return $order->get_shipping_country();
 	}
 }
