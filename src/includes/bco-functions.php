@@ -35,7 +35,7 @@ function bco_init_checkout() {
 		WC()->cart->calculate_fees();
 		WC()->cart->calculate_shipping();
 		WC()->cart->calculate_totals();
-		if ( WC()->session->get( 'bco_wc_hash' ) ) {
+		if ( WC()->session->get( 'bco_wc_hash' ) && get_woocommerce_currency() === WC()->session->get( 'bco_currency' ) ) {
 
 			// Try to update the order, if it fails try to create new order.
 			$billmate_order = BCO_WC()->api->request_update_checkout( WC()->session->get( 'bco_wc_number' ) );
@@ -49,6 +49,7 @@ function bco_init_checkout() {
 				}
 				WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
 				WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] . '?activateJsEvents=1' );
+				WC()->session->set( 'bco_currency', get_woocommerce_currency() );
 				set_checkout_hash( $billmate_order['data']['url'] );
 				return $billmate_order;
 			}
@@ -65,6 +66,7 @@ function bco_init_checkout() {
 			}
 			WC()->session->set( 'bco_wc_number', $billmate_order['data']['number'] );
 			WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] . '?activateJsEvents=1' );
+			WC()->session->set( 'bco_currency', get_woocommerce_currency() );
 			set_checkout_hash( $billmate_order['data']['url'] );
 
 			return $billmate_order;
@@ -80,6 +82,7 @@ function bco_init_checkout() {
 
 		WC()->session->set( 'bco_wc_order_id', $billmate_order['data']['orderid'] );
 		WC()->session->set( 'bco_wc_checkout_url', $billmate_order['data']['url'] );
+		WC()->session->set( 'bco_currency', get_woocommerce_currency() );
 		set_checkout_hash( $billmate_order['data']['url'] );
 
 		return $billmate_order;
@@ -162,6 +165,7 @@ function bco_wc_unset_sessions() {
 	WC()->session->__unset( 'bco_wc_checkout_url' );
 	WC()->session->__unset( 'bco_wc_number' );
 	WC()->session->__unset( 'bco_wc_temp_order_id' );
+	WC()->session->__unset( 'bco_currency' );
 }
 
 
