@@ -56,8 +56,20 @@ class BCO_Cart_Payment_Data_Helper {
 	 * @return string
 	 */
 	public static function get_language() {
-		// Swedish is the only supported language at the moment.
-		return 'sv';
+		$locale = substr( get_locale(), 0, 2 );
+
+		// If the site language is Englis - let's return en.
+		if ( 'en' === $locale ) {
+			return 'en';
+		}
+
+		// If SEK is the selected currency  - let's use sv.
+		if ( 'SEK' === get_woocommerce_currency() ) {
+			return 'sv';
+		}
+
+		// Otherwise - let's use en.
+		return 'en';
 	}
 
 	/**
