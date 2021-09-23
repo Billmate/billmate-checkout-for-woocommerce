@@ -256,6 +256,9 @@ class BCO_AJAX extends WC_AJAX {
 		$bco_checkout = BCO_WC()->api->request_get_checkout( WC()->session->get( 'bco_wc_hash' ) );
 		update_post_meta( $order_id, '_billmate_transaction_id', $bco_checkout['data']['PaymentData']['order']['number'] );
 
+		// Set payment method title.
+		bco_set_payment_method_title( $order_id, $bco_checkout );
+
 		bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 		bco_confirm_billmate_order( $order_id, $bco_checkout );
 
