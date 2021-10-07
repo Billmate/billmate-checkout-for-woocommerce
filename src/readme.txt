@@ -3,9 +3,9 @@ Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
 Tested up to: 5.8.1
-Requires PHP: 5.6
+Requires PHP: 7.0
 WC requires at least: 4.0.0
-WC tested up to: 5.6.0
+WC tested up to: 5.7.1
 Stable tag: __STABLE_TAG__
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,11 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2021.10.07    - version 1.5.0 =
+* Feature       - Add setting for disabling automatic scroll to Billmate iframe in checkout on page load.
+* Tweak         - Bumped required PHP version to 7.0.
+* Fix           - Improved functionality for saving used payment method to WooCommerce order.
+
 = 2021.09.13    - version 1.4.0 =
 * Feature       - Add support for selling to Nordic countries (DKK, EUR & NOK). Specific agreement with Billmate needed. Logic for sending correct customer country and currency needs to be handled by WooCommerce.
 * Feature       - Add support for English locale in Billmate Checkout (logic based on selected WP locale).
