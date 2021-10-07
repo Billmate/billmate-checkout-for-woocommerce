@@ -87,6 +87,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 		$standard_woo_checkout_fields = array( 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_postcode', 'billing_city', 'billing_phone', 'billing_email', 'billing_state', 'billing_country', 'billing_company', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_postcode', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_company', 'terms', 'terms-field', 'account_username', 'account_password', '_wp_http_referer' );
 		$bco_settings                 = get_option( 'woocommerce_bco_settings' );
 		$checkout_flow                = ( isset( $bco_settings['checkout_flow'] ) ) ? $bco_settings['checkout_flow'] : 'checkout';
+		$disable_scroll_to_checkout   = ( isset( $bco_settings['disable_scroll_to_checkout'] ) ) ? $bco_settings['disable_scroll_to_checkout'] : 'no';
 
 		$params = array(
 			'ajax_url'                             => admin_url( 'admin-ajax.php' ),
@@ -108,6 +109,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 			'log_to_file_nonce'                    => wp_create_nonce( 'bco_wc_log_js' ),
 			'submit_order'                         => WC_AJAX::get_endpoint( 'checkout' ),
 			'populate_address_fields'              => apply_filters( 'bco_populate_address_fields', 'yes' ),
+			'disable_scroll_to_checkout'           => $disable_scroll_to_checkout,
 		);
 
 		wp_localize_script(

@@ -5,8 +5,8 @@ Billmate Checkout for WooCommerce is a plugin that extends WooCommerce, allowing
 # Requirements
 
 * You need an [agreement with Billmate](https://www.billmate.se/kontakt/) to be able to use this plugin.
-* WooCommerce 3.0 or newer is required.
-* PHP 5.6 or higher is required.
+* WooCommerce 4.0.0 or newer is required.
+* PHP 7.0 or higher is required.
 * SSL Certificate is required.
 
 # Documentation
