@@ -74,6 +74,12 @@ $settings = array(
 		'label'   => __( 'Show Order notes field in checkout.', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'yes',
 	),
+	'disable_scroll_to_checkout'         => array(
+		'title'   => __( 'Disable scroll to checkout', 'billmate-checkout-for-woocommerce' ),
+		'type'    => 'checkbox',
+		'label'   => __( 'Disable automatic scroll to Billmate checkout iframe when checkout page is rendered.', 'billmate-checkout-for-woocommerce' ),
+		'default' => 'no',
+	),
 	'hide_shipping_address'              => array(
 		'title'   => __( 'Hide shipping address', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',

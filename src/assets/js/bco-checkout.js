@@ -197,12 +197,14 @@ jQuery(function($) {
 					case 'content_scroll_position':
 						/**
 						 * When checkout iframe page is scrolled 
-						 * If iframe have same height as Billmate Checkout the store can do the scrolling 
+						 * If iframe have same height as Billmate Checkout the store can do the scrolling
+						 * Only scroll to checkout if enabled in settings.
 						 */
-						window.latestScroll = $(document).find( "#checkout" ).offset().top + json.data;
-						$('html, body').animate({scrollTop: $(document).find( "#checkout" ).offset().top + json.data}, 400);
-
-						$('#jsLog').append('content_scroll_position: ' + json.data + '<br />');
+						if( 'no' === bco_wc_params.disable_scroll_to_checkout ) {
+							window.latestScroll = $(document).find( "#checkout" ).offset().top + json.data;
+							$('html, body').animate({scrollTop: $(document).find( "#checkout" ).offset().top + json.data}, 400);
+							$('#jsLog').append('content_scroll_position: ' + json.data + '<br />');
+						}
 						break;
 					case 'checkout_loaded':
 						$('#jsLog').append('checkout_loaded<br />');
