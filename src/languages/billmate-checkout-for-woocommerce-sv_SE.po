@@ -18,57 +18,74 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "POT-Creation-Date: 2021-01-19 08:06+0000\n"
-"PO-Revision-Date: 2021-03-01 12:48+0000\n"
-"Language: sv-SE\n"
+"PO-Revision-Date: 2021-10-07 11:24+0000\n"
+"Language: sv_SE\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.5.0; wp-5.6"
 
-#: ../includes/bco-form-fields.php:123
+#: includes/bco-form-fields.php:47
+#, php-format
+msgid " events in <code>%s</code>"
+msgstr ""
+
+#: classes/class-bco-gateway.php:24
+msgid "."
+msgstr ""
+
+#: includes/bco-form-fields.php:129
 msgid "Above Title"
 msgstr "Ovanför titeln"
 
-#: ../includes/bco-form-fields.php:93
+#: includes/bco-form-fields.php:99
 msgid "Add Invoice fee excluding tax. Leave blank to deactivate this feature."
 msgstr ""
 "Lägg till en fakturaavgift ex. moms, lämna tomt för att inaktivera.\n"
 
-#: ../includes/bco-form-fields.php:129
+#: includes/bco-form-fields.php:135
 msgid "After Product sharing-buttons"
 msgstr "Efter: Product delningsknapp"
 
-#: ../includes/bco-form-fields.php:141
+#: includes/bco-form-fields.php:147
 msgid "API Credentials Sweden"
 msgstr "API Uppgifter Sverige"
 
-#: ../includes/bco-form-fields.php:127
+#: includes/bco-form-fields.php:133
 msgid "Between Add to cart button and Product meta"
 msgstr "Mellan: Lägg i kundvagn knapp och produkt metadata"
 
-#: ../includes/bco-form-fields.php:126
+#: includes/bco-form-fields.php:132
 msgid "Between Excerpt and Add to cart button"
 msgstr "Mellan: Excerpt (kort beskrivning) och Lägg i varukorgen knapp"
 
-#: ../includes/bco-form-fields.php:125
+#: includes/bco-form-fields.php:131
 msgid "Between Price and Excerpt"
 msgstr "Mellan: price och excerpt (kort beskrivning)"
 
-#: ../includes/bco-form-fields.php:128
+#: includes/bco-form-fields.php:134
 msgid "Between Product meta and Product sharing buttons"
 msgstr "Mellan: Produkt metadata och Produkt delningsknapp"
 
-#: ../includes/bco-form-fields.php:124
+#: includes/bco-form-fields.php:130
 msgid "Between Title and Price"
 msgstr "Mellan: Pris och Titel"
 
-#: ../classes/class-bco-gateway.php:22
+#: classes/class-bco-gateway.php:22
 msgid "Billmate Checkout"
 msgstr "Billmate Checkout"
 
-#: ../includes/bco-form-fields.php:65
+#. Name of the plugin
+msgid "Billmate Checkout for WooCommerce"
+msgstr ""
+
+#. Author of the plugin
+msgid "Billmate, Krokedil"
+msgstr ""
+
+#: includes/bco-form-fields.php:65
 msgid "Business"
 msgstr "Företag"
 
-#: ../includes/bco-form-fields.php:86
+#: includes/bco-form-fields.php:92
 msgid ""
 "Change logotype for the payment. Enter the file name of the logo uploaded in "
 "your Billmate online account. Leave blank to use the standard logo."
@@ -76,27 +93,27 @@ msgstr ""
 "Ändra logotyp för betalningen. Ange filnamnet på logotypen som laddats upp i "
 "ditt Billmate online konto. Lämna tomt för att använda standardlogotypen."
 
-#: ../includes/bco-form-fields.php:50
+#: includes/bco-form-fields.php:50
 msgid "Checkout layout"
 msgstr "Kassa layout"
 
-#: ../includes/bco-form-fields.php:61
+#: includes/bco-form-fields.php:61
 msgid "Checkout mode"
 msgstr "Kassaläge"
 
-#: ../includes/bco-form-fields.php:145
+#: includes/bco-form-fields.php:151
 msgid "Client ID"
 msgstr "Billmate ID"
 
-#: ../includes/bco-form-fields.php:151
+#: includes/bco-form-fields.php:157
 msgid "Client Secret"
 msgstr "Billmate nyckel"
 
-#: ../includes/bco-form-fields.php:64
+#: includes/bco-form-fields.php:64
 msgid "Consumer"
 msgstr "Privatperson "
 
-#: ../includes/bco-form-fields.php:32
+#: includes/bco-form-fields.php:32
 msgid ""
 "Customize the <em>Select another payment method</em> button text that is "
 "displayed in checkout if using other payment methods than Billmate Checkout. "
@@ -106,81 +123,100 @@ msgstr ""
 "kassan om du använder andra betalningsmetoder än Billmate Checkout. Lämna "
 "tomt för att använda standardtexten och översättningsbar text."
 
-#: ../includes/bco-form-fields.php:43
+#: includes/bco-form-fields.php:43
 msgid "Debug Log"
 msgstr "Felsökningsloggar"
 
-#: ../includes/bco-form-fields.php:23
+#: includes/bco-form-fields.php:23
 msgid "Description"
 msgstr "Beskrivning"
 
-#: ../includes/bco-form-fields.php:111
+#: includes/bco-form-fields.php:80
+msgid ""
+"Disable automatic scroll to Billmate checkout iframe when checkout page is "
+"rendered."
+msgstr ""
+"Inaktivera automatisk scrollning till Billmate checkout iframe när "
+"kassasidan renderats."
+
+#: includes/bco-form-fields.php:78
+msgid "Disable scroll to checkout"
+msgstr "Inaktivera scrollning till kassan"
+
+#: includes/bco-form-fields.php:117
 msgid "Display monthly cost"
 msgstr "Visa månadskostnad"
 
-#: ../includes/bco-form-fields.php:113
+#: includes/bco-form-fields.php:119
 msgid "Display monthly cost on single product pages."
 msgstr "Visa månadskostnad – produktsidan"
 
-#: ../includes/bco-form-fields.php:39
+#: includes/bco-form-fields.php:39
 msgid "Enable Billmate Checkout testmode"
 msgstr "Aktivera Billmate Testläge"
 
-#: ../includes/bco-form-fields.php:45
+#: includes/bco-form-fields.php:45
 msgid "Enable logging"
 msgstr ""
 "Logga felsökningsmeddelanden\n"
 
-#: ../includes/bco-form-fields.php:10
+#: includes/bco-form-fields.php:10
 msgid "Enable/Disable"
 msgstr ""
 "Aktivera/Inaktivera\n"
 
-#: ../classes/requests/helpers/cart/class-bco-cart-articles-helper.php:101
+#: classes/requests/helpers/cart/class-bco-cart-articles-helper.php:101
 msgid "Gift Card"
 msgstr ""
 "Present kort\n"
 
-#: ../includes/bco-form-fields.php:80
+#: includes/bco-form-fields.php:86
 msgid "Hide customer shipping address in checkout."
 msgstr ""
 "Dölj kundens leveransadress i kassan.\n"
 
-#: ../includes/bco-form-fields.php:78
+#: includes/bco-form-fields.php:84
 msgid "Hide shipping address"
 msgstr ""
 "Dölj leveransadress\n"
 
-#: ../includes/bco-form-fields.php:91, ../includes/bco-functions.php:387
+#. Author URI of the plugin
+msgid "https://billmate.se/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/Billmate/billmate-checkout-for-woocommerce"
+msgstr ""
+
+#: includes/bco-form-fields.php:97 includes/bco-functions.php:394
 msgid "Invoice fee"
 msgstr "Fakturaavgift"
 
-#: ../includes/bco-form-fields.php:84
+#: includes/bco-form-fields.php:90
 msgid "Logo"
 msgstr "Logotype som visas på fakturan"
 
-#: ../includes/bco-form-fields.php:107
+#: includes/bco-form-fields.php:113
 msgid "Monthly cost display"
 msgstr "Månadskostnad Produktsidan"
 
-#: ../includes/bco-form-fields.php:117
+#: includes/bco-form-fields.php:123
 msgid "Monthly cost placement"
 msgstr "Placering av månadskostnad"
 
-#: ../includes/bco-form-fields.php:53
+#: includes/bco-form-fields.php:53
 msgid "One column checkout"
 msgstr ""
 "En kolumn kassa\n"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:95
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:95
 msgid "Order cancelled in Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 "Beställningen är makulerad ifrån Billmate Online. Billmate Transaction id: %s"
 
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#: ../includes/bco-functions.php:201, ../includes/bco-functions.php:249
+#. Billmate transaction id.
+#: includes/bco-functions.php:205 includes/bco-functions.php:253
 msgid ""
 "Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the "
 "latest status on this order. Billmate Transaction id: %s"
@@ -189,8 +225,8 @@ msgstr ""
 "Billmate Online för den senaste statusen för denna beställning. Billmate "
 "Transaction id: %s\n"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:107
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:107
 msgid ""
 "Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online "
 "for the latest status on this order. Billmate Transaction id: %s"
@@ -199,130 +235,129 @@ msgstr ""
 "Billmate. Besök Billmate Online för den senaste statusen för denna "
 "beställning. Billmate Transaction id: %s\n"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:142
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:144
 msgid ""
 "Order reported Cancelled from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 "Beställningen rapporterades makulerad från Billmate Online. Billmate "
 "Transaction id: %s"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:135
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:135
 msgid "Order reported Denied from Billmate Online. Transaction id: %s"
 msgstr ""
 "Order rapporterad nekad från Billmate Online. Transaction id: %s\n"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:147
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:149
 msgid "Order reported Failed from Billmate Online. Billmate Transaction id: %s"
 msgstr ""
 "Beställningen rapporterades misslyckad från Billmate Online. Billmate "
 "Transaction id: %s"
 
-#: ../includes/bco-form-fields.php:30
+#: includes/bco-form-fields.php:30
 msgid "Other payment method button text"
 msgstr "Annan knapp text för välj ett annat betalsätt"
 
-#: ../includes/bco-form-fields.php:25
+#: includes/bco-form-fields.php:25
 msgid "Pay with Billmate via invoice, card and direct bank payments."
 msgstr ""
 "Betala med Billmate via faktura, kort och direktbetalning.\n"
 
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:128
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:128
 msgid "Payment reported Approved from Billmate Online. Transaction id: %s"
 msgstr "Betalning rapporterad Godkänd från Billmate Online. Transaction id: %s"
 
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#. translators: Billmate transaction id.
-#: ../classes/class-bco-api-callbacks.php:114, 
-#: ../classes/class-bco-api-callbacks.php:121, 
-#: ../includes/bco-functions.php:208, ../includes/bco-functions.php:216, 
-#: ../includes/bco-functions.php:256, ../includes/bco-functions.php:264
+#. Billmate transaction id.
+#: classes/class-bco-api-callbacks.php:114
+#: classes/class-bco-api-callbacks.php:121 includes/bco-functions.php:212
+#: includes/bco-functions.php:220 includes/bco-functions.php:260
+#: includes/bco-functions.php:268
 msgid "Payment via Billmate Checkout. Transaction id: %s"
 msgstr "Betalning via Billmate Checkout. Transaction id: %s"
 
-#: ../classes/class-bco-gateway.php:95
+#: classes/class-bco-gateway.php:95
 msgid "Please wait while we process your order."
 msgstr "Vänta medan vi behandlar din beställning."
 
-#: ../classes/class-bco-gateway.php:94, ../includes/bco-functions.php:113
+#. Description of the plugin
+msgid "Provides an Billmate Checkout gateway for WooCommerce."
+msgstr ""
+
+#: classes/class-bco-gateway.php:94 includes/bco-functions.php:116
 msgid "Select another payment method"
 msgstr "Välj en annan betalningsmetod"
 
-#: ../includes/bco-form-fields.php:67
+#: includes/bco-form-fields.php:67
 msgid "Select if you want the checkout to default to B2C or B2B mode."
 msgstr ""
 "Välj om du vill framhäva handla som företag eller privatperson först i "
 "Billmate Checkout."
 
-#: ../includes/bco-form-fields.php:56
+#: includes/bco-form-fields.php:56
 msgid "Select the Billmate Checkout layout."
 msgstr "Välj layout för Billmate Checkout."
 
-#: ../includes/bco-form-fields.php:101
+#: includes/bco-form-fields.php:107
 msgid "Select the tax class that should be used for the invoice fee."
 msgstr "Momsklass för fakturaavgiften."
 
-#: ../includes/bco-form-fields.php:118
+#: includes/bco-form-fields.php:124
 msgid "Select where to display the widget in your product pages"
 msgstr "Välj var widgeten ska visas på dina produktsidor"
 
-#: ../billmate-checkout-for-woocommerce.php:160
+#: billmate-checkout-for-woocommerce.php:160
 msgid "Settings"
 msgstr "Inställningar"
 
-#: ../includes/bco-form-fields.php:72
+#: includes/bco-form-fields.php:72
 msgid "Show order notes"
 msgstr ""
 "Visa ordernoteringar\n"
 
-#: ../includes/bco-form-fields.php:74
+#: includes/bco-form-fields.php:74
 msgid "Show Order notes field in checkout."
 msgstr ""
 "Visa ordernoteringar på Checkout sida.\n"
 
-#: ../billmate-checkout-for-woocommerce.php:161
+#: billmate-checkout-for-woocommerce.php:161
 msgid "Support"
 msgstr "Support"
 
-#: ../includes/bco-form-fields.php:98
+#: includes/bco-form-fields.php:104
 msgid "Tax class for invoice fee"
 msgstr ""
 "Momsklass för fakturaavgiften\n"
 
-#: ../includes/bco-form-fields.php:37
+#: includes/bco-form-fields.php:37
 msgid "Testmode"
 msgstr "Testläge"
 
-#: ../includes/bco-form-fields.php:133
+#: includes/bco-form-fields.php:139
 msgid "Text for monthly cost"
 msgstr "Text för månadskostnad"
 
-#: ../includes/bco-form-fields.php:27
+#: includes/bco-form-fields.php:27
 msgid "This controls the description which the user sees during checkout."
 msgstr "Detta är beskrivningen kunden ser i kassan."
 
-#: ../includes/bco-form-fields.php:18
+#: includes/bco-form-fields.php:18
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 "Detta är titeln på betalmetoden kunden ser i kassan.\n"
 
-#: ../includes/bco-form-fields.php:16
+#: includes/bco-form-fields.php:16
 msgid "Title"
 msgstr "Titel"
 
-#: ../includes/bco-form-fields.php:54
+#: includes/bco-form-fields.php:54
 msgid "Two column checkout"
 msgstr ""
 "Två kolumn kassa\n"
 
-#: ../includes/bco-form-fields.php:137
+#: includes/bco-form-fields.php:143
 msgid ""
 "Use {billmate_img} to display the Billmate logo and {billmate_price} to "
 "display the monthly fee as a formatted WooCommerce price (with currency)."
@@ -331,6 +366,6 @@ msgstr ""
 "för att visa månadsavgiften som ett formaterat WooCommerce-pris (med SEK-"
 "valuta)."
 
-#: ../includes/bco-form-fields.php:135
+#: includes/bco-form-fields.php:141
 msgid "{billmate_img}<br/>Part pay from {billmate_price}/month"
 msgstr "{billmate_img}<br/>Betala från {billmate_price}/månad"
