@@ -169,7 +169,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 
 		// 1. Process the payment.
 		// 2. Redirect to confirmation page.
-		if ( $this->process_payment_handler( $order_id ) ) {
+		if ( get_woocommerce_currency() === WC()->session->get( 'bco_currency' ) && $this->process_payment_handler( $order_id ) ) {
 			$confirmation_url = add_query_arg(
 				array(
 					'bco_confirm' => 'yes',

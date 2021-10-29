@@ -100,10 +100,11 @@ class BCO_AJAX extends WC_AJAX {
 			// Set empty return array for errors.
 			$return = array();
 
-			// Check if we have a Billmate checkout hash.
-			if ( empty( $bco_wc_hash ) ) {
-				wc_add_notice( 'Billmate checkout hash is missing.', 'error' );
-				wp_send_json_error();
+			// Check if we have a Billmate checkout hash and that the currency is correct.
+			if ( empty( $bco_wc_hash ) || get_woocommerce_currency() !== WC()->session->get( 'bco_currency' ) ) {
+				bco_wc_unset_sessions();
+				$return['redirect_url'] = wc_get_checkout_url();
+				wp_send_json_error( $return );
 				wp_die();
 			} else {
 
