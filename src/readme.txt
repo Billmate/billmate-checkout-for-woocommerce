@@ -52,7 +52,7 @@ The easiest way to report a bug is to email us at [support@billmate.se](mailto:s
 
 == Changelog ==
 = 2021.11.04    - version 1.5.1 =
-* Fix           - Add control to see that the currency is synced between Billmate and WooCommerce through out the entire order.
+* Fix           - Improved control to see that the currency is synced between Billmate and WooCommerce through out the entire order.
 
 = 2021.10.07    - version 1.5.0 =
 * Feature       - Add setting for disabling automatic scroll to Billmate iframe in checkout on page load.
