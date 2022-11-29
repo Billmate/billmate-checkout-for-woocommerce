@@ -45,8 +45,8 @@ class BCO_Confirmation {
 	 */
 	public function confirm_order() {
         if ( isset( $_GET['bco_confirm'] ) && isset( $_GET['wc_order_id'] ) && isset( $_GET['bco_flow']) ) { // phpcs:ignore
-			$bco_flow    = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_STRING );
-			$wc_order_id = filter_input( INPUT_GET, 'wc_order_id', FILTER_SANITIZE_STRING );
+			$bco_flow    = filter_input( INPUT_GET, 'bco_flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$wc_order_id = filter_input( INPUT_GET, 'wc_order_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			$raw_data    = file_get_contents( 'php://input' );
 			parse_str( urldecode( $raw_data ), $result );
 
