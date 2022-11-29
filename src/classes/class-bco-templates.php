@@ -74,7 +74,7 @@ class BCO_Templates {
 	 */
 	public function override_pay_template( $template, $template_name ) {
 		if ( is_checkout() ) {
-			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_STRING );
+			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			// Billmate Pay for Order.
 			if ( 'checkout/form-pay.php' === $template_name ) {
 				$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
@@ -134,7 +134,7 @@ class BCO_Templates {
 	 */
 	public function override_checkout_template( $template, $template_name ) {
 		if ( is_checkout() ) {
-			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_STRING );
+			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 			// Don't display BCO template if we have a cart that doesn't needs payment.
 			if ( ! WC()->cart->needs_payment() ) {
 				return $template;
