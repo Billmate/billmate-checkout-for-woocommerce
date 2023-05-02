@@ -1,8 +1,8 @@
 <?php // phpcs:ignore
 /**
- * Plugin Name:     Billmate Checkout for WooCommerce
+ * Plugin Name:     Qvickly Checkout for WooCommerce
  * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
- * Description:     Provides an Billmate Checkout gateway for WooCommerce.
+ * Description:     Provides an Qvickly Checkout gateway for WooCommerce.
  * Version:         __STABLE_TAG__
  * Author:          Billmate, Krokedil
  * Author URI:      https://billmate.se/

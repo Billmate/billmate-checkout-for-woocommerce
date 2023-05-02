@@ -19,7 +19,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id                 = 'bco';
-		$this->method_title       = __( 'Billmate Checkout', 'billmate-checkout-for-woocommerce' );
+		$this->method_title       = __( 'Qvickly Checkout', 'billmate-checkout-for-woocommerce' );
 		$this->icon               = '';
 		$this->method_description = __( 'Allows payments through ' . $this->method_title . '.', 'billmate-checkout-for-woocommerce' ); // phpcs:ignore
 
@@ -142,7 +142,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Saves Billmate specific data stored in WC()->session to Woo order when created.
+	 * Saves Qvickly specific data stored in WC()->session to Woo order when created.
 	 *
 	 * @param string $order_id The WooCommerce order ID.
 	 * @param array  $posted_data The WooCommerce checkout form posted data.
@@ -191,7 +191,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Process the payment with information from Billmate and return the result.
+	 * Process the payment with information from Qvickly and return the result.
 	 *
 	 * @param  int $order_id WooCommerce order ID.
 	 *
@@ -241,7 +241,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * This plugin doesn't handle order management, but it allows Billmate Order Management plugin to process refunds
+	 * This plugin doesn't handle order management, but it allows Qvickly Order Management plugin to process refunds
 	 * and then return true or false.
 	 *
 	 * @param string $order_id The WooCommerce order ID.
@@ -262,7 +262,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Shows the Billmate thankyou on the wc thankyou page.
+	 * Shows the Qvickly thankyou on the wc thankyou page.
 	 *
 	 * @param string $order_id The WooCommerce order id.
 	 * @return void

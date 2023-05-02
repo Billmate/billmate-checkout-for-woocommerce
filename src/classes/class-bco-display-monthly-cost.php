@@ -1,6 +1,6 @@
 <?php
 /**
- * Display payment plans class for Billmate checkout.
+ * Display payment plans class for Qvickly checkout.
  *
  * @package  Billmate_Checkout/Classes
  */
@@ -81,7 +81,7 @@ class BCO_Display_Monthly_Cost {
 	/**
 	 * Formats and prints the part payment widget html.
 	 *
-	 * @param array $payment_plans Payment plans fetched from Billmate.
+	 * @param array $payment_plans Payment plans fetched from Qvickly.
 	 *
 	 * @return void
 	 */
@@ -91,7 +91,7 @@ class BCO_Display_Monthly_Cost {
 			$monthly_cost     = wc_price( $min_monthly_cost / 100 );
 			$bco_image_src    = apply_filters( 'bco_monthly_cost_image_src', BILLMATE_CHECKOUT_URL . '/assets/images/bm_delbetalning_l.png' );
 			$bco_image_width  = '145';
-			$bco_image_html   = '<img src="' . $bco_image_src . '" alt="Billmate logo" style="max-width:' . $bco_image_width . 'px"/>';
+			$bco_image_html   = '<img src="' . $bco_image_src . '" alt="Qvickly logo" style="max-width:' . $bco_image_width . 'px"/>';
 			$bco_image_html   = apply_filters( 'bco_monthly_cost_image_html', $bco_image_html );
 
 			$replacements = array(
