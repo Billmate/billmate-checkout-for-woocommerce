@@ -4,14 +4,14 @@ jQuery(function($) {
 		update: function() {
 			/**
 			 * Refresh checkout in iframe
-			 * In this example the name of iframe that contain Billmate Checkout have the name checkout_iframe
+			 * In this example the name of iframe that contain Qvickly Checkout have the name checkout_iframe
 			 */
 			checkout_iframe.postMessage('update', '*');
 		},
 
 		lock: function() {
 			/**
-			 * Lock Billmate checkout from customer interactions
+			 * Lock Qvickly checkout from customer interactions
 			 * Will display loading animation and is used when the store is working on the order, for example when cart is updated
 			 */
 			checkout_iframe.postMessage('lock', '*');
@@ -19,8 +19,8 @@ jQuery(function($) {
 
 		unlock: function() {
 			/**
-			 * If checkout is locked, remove loading animation and customer can continue to interact with Billmate Checkout
-			 * Is used when store is done with work that affect the order and Billmate Checkout, for example when cart is updated
+			 * If checkout is locked, remove loading animation and customer can continue to interact with Qvickly Checkout
+			 * Is used when store is done with work that affect the order and Qvickly Checkout, for example when cart is updated
 			 */
 			checkout_iframe.postMessage('unlock', '*');
 		},
@@ -28,8 +28,8 @@ jQuery(function($) {
 		purchase_complete: function() {
 			/**
 			 * Post back a reply to the purchase_initialized JS callback. 
-			 * WooCommerce order was successfully created, now let Billmate complete the purchase.
-			 * The name of iframe that contain Billmate Checkout have the name checkout_iframe
+			 * WooCommerce order was successfully created, now let Qvickly complete the purchase.
+			 * The name of iframe that contain Qvickly Checkout have the name checkout_iframe
 			 */
 			console.log('purchase_complete');
 			checkout_iframe.postMessage('purchase_complete', '*');
@@ -56,7 +56,7 @@ jQuery(function($) {
 						 * When an end user clicks on the "Purchase button".
 						 */
 						console.log('billmate_purchase_initialized');
-						bco_wc.logToFile( 'purchase_initialized from Billmate triggered' );
+						bco_wc.logToFile( 'purchase_initialized from Qvickly triggered' );
 						bco_wc.getBillmateCheckout();
 
 						$( 'body' ).on( 'bco_order_validation', function( event, bool ) {							
@@ -197,7 +197,7 @@ jQuery(function($) {
 					case 'content_scroll_position':
 						/**
 						 * When checkout iframe page is scrolled 
-						 * If iframe have same height as Billmate Checkout the store can do the scrolling
+						 * If iframe have same height as Qvickly Checkout the store can do the scrolling
 						 * Only scroll to checkout if enabled in settings.
 						 */
 						if( 'no' === bco_wc_params.disable_scroll_to_checkout ) {
@@ -364,7 +364,7 @@ jQuery(function($) {
 				$( '#billing_email' ).val( ( ( 'email' in data.billing_address ) ? data.billing_address.email : '' ) );
 				$( '#billing_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
 			} else {
-				// We did not receive a billing address from Billmate, let's reload the checkout page an try again.
+				// We did not receive a billing address from Qvickly, let's reload the checkout page an try again.
 				window.location.reload();
 			}
 
@@ -531,7 +531,7 @@ jQuery(function($) {
 				success: function( data ) {
 					try {
 						if ( 'success' === data.result ) {
-							bco_wc.logToFile( 'Successfully placed order. Sending bco_order_validation true to Billmate' );
+							bco_wc.logToFile( 'Successfully placed order. Sending bco_order_validation true to Qvickly' );
 
 							$( 'body' ).trigger( 'bco_order_validation', true );
 							sessionStorage.setItem( 'billmateRedirectUrl', data.redirect_url );
@@ -593,7 +593,7 @@ jQuery(function($) {
 
 		init: function() {
 			window.addEventListener("message", bco_wc.handleEvent);
-			// Check if Billmate is the selected payment method before we do anything.
+			// Check if Qvickly is the selected payment method before we do anything.
 			if( bco_wc.checkIfSelected() ) {
 				$(document).ready( bco_wc.documentReady() );
 
@@ -601,9 +601,9 @@ jQuery(function($) {
 				bco_wc.bodyEl.on('click', bco_wc.selectAnotherSelector, bco_wc.changeFromBCO);
 
 				if ( 'checkout' === bco_wc_params.checkout_flow ) {
-					// Update Billmate payment.
+					// Update Qvickly payment.
 					bco_wc.bodyEl.on('updated_checkout', bco_wc.updateBillmateCheckout);
-					// Lock Billmate on update_checkout.
+					// Lock Qvickly on update_checkout.
 					// bco_wc.bodyEl.on('update_checkout', bco_wc.lock);
 				}
 			}

@@ -17,7 +17,7 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Makes the request.
 	 *
-	 * @param string $bco_wc_hash The Billmate checkout hash.
+	 * @param string $bco_wc_hash The Qvickly checkout hash.
 	 * @return array
 	 */
 	public function request( $bco_wc_hash = null ) {
@@ -38,7 +38,7 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Gets the request body.
 	 *
-	 * @param string $bco_wc_hash The Billmate checkout hash.
+	 * @param string $bco_wc_hash The Qvickly checkout hash.
 	 * @return array
 	 */
 	public function get_body( $bco_wc_hash ) {
@@ -60,7 +60,7 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Gets the request args for the API call.
 	 *
-	 * @param string $bco_wc_hash The Billmate checkout hash.
+	 * @param string $bco_wc_hash The Qvickly checkout hash.
 	 * @return array
 	 */
 	public function get_request_args( $bco_wc_hash ) {
@@ -75,7 +75,7 @@ class BCO_Request_Get_Checkout extends BCO_Request {
 	/**
 	 * Get needed data for the request.
 	 *
-	 * @param string $bco_wc_hash The Billmate checkout hash.
+	 * @param string $bco_wc_hash The Qvickly checkout hash.
 	 * @return array
 	 */
 	public function get_request_data( $bco_wc_hash ) {

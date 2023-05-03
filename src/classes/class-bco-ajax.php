@@ -100,7 +100,7 @@ class BCO_AJAX extends WC_AJAX {
 			// Set empty return array for errors.
 			$return = array();
 
-			// Check if we have a Billmate checkout hash and that the currency is correct.
+			// Check if we have a Qvickly checkout hash and that the currency is correct.
 			if ( empty( $bco_wc_hash ) || get_woocommerce_currency() !== WC()->session->get( 'bco_currency' ) ) {
 				bco_wc_unset_sessions();
 				$return['redirect_url'] = wc_get_checkout_url();
@@ -180,9 +180,9 @@ class BCO_AJAX extends WC_AJAX {
 
 		$bco_payment_number = WC()->session->get( 'bco_wc_number' );
 
-		// Check if we have a Billmate payment number.
+		// Check if we have a Qvickly payment number.
 		if ( empty( $bco_payment_number ) ) {
-			wc_add_notice( 'Billmate payment number is missing.', 'error' );
+			wc_add_notice( 'Qvickly payment number is missing.', 'error' );
 			wp_send_json_error();
 			wp_die();
 		}

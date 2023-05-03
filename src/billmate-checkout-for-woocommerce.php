@@ -1,8 +1,8 @@
 <?php // phpcs:ignore
 /**
- * Plugin Name:     Billmate Checkout for WooCommerce
+ * Plugin Name:     Qvickly Checkout for WooCommerce
  * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
- * Description:     Provides an Billmate Checkout gateway for WooCommerce.
+ * Description:     Provides an Qvickly Checkout gateway for WooCommerce.
  * Version:         __STABLE_TAG__
  * Author:          Billmate, Krokedil
  * Author URI:      https://billmate.se/
@@ -158,7 +158,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			$setting_link = $this->get_setting_link();
 			$plugin_links = array(
 				'<a href="' . $setting_link . '">' . __( 'Settings', 'billmate-checkout-for-woocommerce' ) . '</a>',
-				'<a href="http://krokedil.se/">' . __( 'Support', 'billmate-checkout-for-woocommerce' ) . '</a>',
+				'<a href="https://qvickly.io/kundsupport/">' . __( 'Support', 'billmate-checkout-for-woocommerce' ) . '</a>',
 			);
 			return array_merge( $plugin_links, $links );
 		}

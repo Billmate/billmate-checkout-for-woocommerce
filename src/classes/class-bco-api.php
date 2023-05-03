@@ -12,12 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * BCO_API class.
  *
- * Class that has functions for the Billmate communication.
+ * Class that has functions for the Qvickly communication.
  */
 class BCO_API {
 
 	/**
-	 * Init Billmate Checkout.
+	 * Init Qvickly Checkout.
 	 *
 	 * @param string $order_id The WooCommerce order id.
 	 * @return mixed
@@ -30,9 +30,9 @@ class BCO_API {
 	}
 
 	/**
-	 * Get Billmate Checkout.
+	 * Get Qvickly Checkout.
 	 *
-	 * @param string $bco_wc_hash The Billmate checkout hash.
+	 * @param string $bco_wc_hash The Qvickly checkout hash.
 	 * @return mixed
 	 */
 	public function request_get_checkout( $bco_wc_hash = null ) {
@@ -43,9 +43,9 @@ class BCO_API {
 	}
 
 	/**
-	 * Update Billmate Checkout.
+	 * Update Qvickly Checkout.
 	 *
-	 * @param string $bco_payment_number The Billmate payment number.
+	 * @param string $bco_payment_number The Qvickly payment number.
 	 * @param string $order_id The WooCommerce order ID.
 	 * @return mixed
 	 */
@@ -57,9 +57,9 @@ class BCO_API {
 	}
 
 	/**
-	 * Get Billmate Payment.
+	 * Get Qvickly Payment.
 	 *
-	 * @param string $bco_transaction_id The Billmate transaction id.
+	 * @param string $bco_transaction_id The Qvickly transaction id.
 	 * @return mixed
 	 */
 	public function request_get_payment( $bco_transaction_id = null ) {
@@ -70,7 +70,7 @@ class BCO_API {
 	}
 
 	/**
-	 * Update Billmate Payment.
+	 * Update Qvickly Payment.
 	 *
 	 * @param string $order_id The WooCommerce order id.
 	 * @return mixed
@@ -83,7 +83,7 @@ class BCO_API {
 	}
 
 	/**
-	 * Get Billmate Payment Plans.
+	 * Get Qvickly Payment Plans.
 	 *
 	 * @param string $price The product price used for the payment plans calculation.
 	 * @return mixed

@@ -60,7 +60,7 @@ class BCO_API_Callbacks {
 		}
 
 		// Log the request.
-		BCO_Logger::log( 'Push callback hit for order_id: ' . $order_id . '. Temp order id: ' . $data['data']['orderid'] . '. Billmate transaction id: ' . $transaction_id . '. Billmate status: ' . $bco_status . '. Scheduling event to execute order status check in 2 minutes.' );
+		BCO_Logger::log( 'Push callback hit for order_id: ' . $order_id . '. Temp order id: ' . $data['data']['orderid'] . '. Qvickly transaction id: ' . $transaction_id . '. Qvickly status: ' . $bco_status . '. Scheduling event to execute order status check in 2 minutes.' );
 		$process_data = array(
 			'order_id'   => $order_id,
 			'bco_status' => $bco_status,
@@ -72,7 +72,7 @@ class BCO_API_Callbacks {
 	/**
 	 * Process the Push callback on a scheduled event.
 	 *
-	 * @param array $process_data Data returned from Billmate in the original callback.
+	 * @param array $process_data Data returned from Qvickly in the original callback.
 	 *
 	 * @return void.
 	 */
@@ -89,10 +89,10 @@ class BCO_API_Callbacks {
 
 		// Maybe abort the callback (if the order already has been processed in Woo).
 		if ( is_object( $order ) && ! empty( $order->get_date_paid() ) ) {
-			// If this ia a cancel order request from Billmate Online lets cancel the order in Woo.
+			// If this ia a cancel order request from Qvickly Online lets cancel the order in Woo.
 			if ( 'cancelled' === $process_data['bco_status'] ) {
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Order cancelled in Billmate Online. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Order cancelled in Qvickly Online. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 				$order->update_status( 'cancelled', $note );
 			} else {
 				BCO_Logger::log( 'Aborting Process Push callback for order_id: ' . $process_data['order_id'] . '. Order already have a paid date.' );
@@ -103,50 +103,50 @@ class BCO_API_Callbacks {
 		if ( is_object( $order ) && ! $order->has_status( array( 'processing', 'completed' ) ) ) {
 			switch ( $process_data['bco_status'] ) {
 				case 'pending':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Order is still PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Order is still PENDING APPROVAL by Qvickly. Please visit Qvickly Online for the latest status on this order. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->update_status( 'on-hold' );
 					break;
 				case 'created':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'paid':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'approved':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Payment reported Approved from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Payment reported Approved from Qvickly Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->add_order_note( $note );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					$order->payment_complete( $process_data['bco_number'] );
 					break;
 				case 'denied':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Order reported Denied from Billmate Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Order reported Denied from Qvickly Online. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					update_post_meta( $order_id, '_billmate_transaction_id', $process_data['bco_number'] );
 					update_post_meta( $order_id, '_billmate_payment_denied', 'yes' );
 					$order->update_status( 'failed', $note );
-					// Trigger bco_callback_denied_order action so we can cancel the order in BO from Billmate Order Management plugin.
+					// Trigger bco_callback_denied_order action so we can cancel the order in BO from Qvickly Order Management plugin.
 					do_action( 'bco_callback_denied_order', $order_id );
 					break;
 				case 'cancelled':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Order reported Cancelled from Billmate Online. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Order reported Cancelled from Qvickly Online. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->update_status( 'cancelled', $note );
 					break;
 				case 'failed':
-					// Translators: Billmate transaction id.
-					$note = sprintf( __( 'Order reported Failed from Billmate Online. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
+					// Translators: Qvickly transaction id.
+					$note = sprintf( __( 'Order reported Failed from Qvickly Online. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $process_data['bco_number'] ) );
 					$order->update_status( 'failed', $note );
 					break;
 			}

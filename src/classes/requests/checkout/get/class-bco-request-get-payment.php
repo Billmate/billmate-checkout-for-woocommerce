@@ -17,7 +17,7 @@ class BCO_Request_Get_Payment extends BCO_Request {
 	/**
 	 * Makes the request.
 	 *
-	 * @param string $bco_transaction_id Billmate transaction id.
+	 * @param string $bco_transaction_id Qvickly transaction id.
 	 * @return array
 	 */
 	public function request( $bco_transaction_id ) {
@@ -38,7 +38,7 @@ class BCO_Request_Get_Payment extends BCO_Request {
 	/**
 	 * Gets the request body.
 	 *
-	 * @param string $bco_transaction_id Billmate transaction id.
+	 * @param string $bco_transaction_id Qvickly transaction id.
 	 * @return array
 	 */
 	public function get_body( $bco_transaction_id ) {
@@ -60,7 +60,7 @@ class BCO_Request_Get_Payment extends BCO_Request {
 	/**
 	 * Gets the request args for the API call.
 	 *
-	 * @param string $bco_transaction_id Billmate transaction id.
+	 * @param string $bco_transaction_id Qvickly transaction id.
 	 * @return array
 	 */
 	public function get_request_args( $bco_transaction_id ) {
@@ -75,7 +75,7 @@ class BCO_Request_Get_Payment extends BCO_Request {
 	/**
 	 * Get needed data for the request.
 	 *
-	 * @param string $bco_transaction_id Billmate transaction id.
+	 * @param string $bco_transaction_id Qvickly transaction id.
 	 * @return array
 	 */
 	public function get_request_data( $bco_transaction_id ) {
