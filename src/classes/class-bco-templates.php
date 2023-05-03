@@ -1,6 +1,6 @@
 <?php
 /**
- * Templates class for Billmate checkout.
+ * Templates class for Qvickly checkout.
  *
  * @package  Billmate_Checkout/Classes
  */
@@ -43,10 +43,10 @@ class BCO_Templates {
 		$this->checkout_layout  = ( isset( $bco_settings['checkout_layout'] ) ) ? $bco_settings['checkout_layout'] : 'two_column_checkout';
 
 		if ( 'checkout' === $checkout_flow ) {
-			// Override template if Billmate Checkout page.
+			// Override template if Qvickly Checkout page.
 			add_filter( 'wc_get_template', array( $this, 'override_checkout_template' ), 999, 2 );
 		} else {
-			// Override template if Billmate pay for order page.
+			// Override template if Qvickly pay for order page.
 			add_filter( 'wc_get_template', array( $this, 'override_pay_template' ), 999, 2 );
 		}
 
@@ -75,7 +75,7 @@ class BCO_Templates {
 	public function override_pay_template( $template, $template_name ) {
 		if ( is_checkout() ) {
 			$confirm = filter_input( INPUT_GET, 'confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-			// Billmate Pay for Order.
+			// Qvickly Pay for Order.
 			if ( 'checkout/form-pay.php' === $template_name ) {
 				$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
 
@@ -85,7 +85,7 @@ class BCO_Templates {
 					$billmate_pay_template = BILLMATE_CHECKOUT_PATH . '/templates/billmate-pay.php';
 				}
 
-				// Billmate pay for order page.
+				// Qvickly pay for order page.
 				if ( array_key_exists( 'bco', $available_gateways ) ) {
 					// If chosen payment method exists.
 					if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
@@ -125,7 +125,7 @@ class BCO_Templates {
 	}
 
 	/**
-	 * Override checkout form template if Billmate Checkout is the selected payment method.
+	 * Override checkout form template if Qvickly Checkout is the selected payment method.
 	 *
 	 * @param string $template      Template.
 	 * @param string $template_name Template name.
@@ -140,7 +140,7 @@ class BCO_Templates {
 				return $template;
 			}
 
-			// Billmate Checkout.
+			// Qvickly Checkout.
 			if ( 'checkout/form-checkout.php' === $template_name ) {
 				$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
 
@@ -150,7 +150,7 @@ class BCO_Templates {
 					$billmate_checkout_template = BILLMATE_CHECKOUT_PATH . '/templates/billmate-checkout.php';
 				}
 
-				// Billmate checkout page.
+				// Qvickly checkout page.
 				if ( array_key_exists( 'bco', $available_gateways ) ) {
 					// If chosen payment method exists.
 					if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
@@ -231,10 +231,10 @@ class BCO_Templates {
 			$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
 
 			if ( 'bco' === WC()->session->get( 'chosen_payment_method' ) ) {
-				// If Billmate Checkout is the selected payment gateway.
+				// If Qvickly Checkout is the selected payment gateway.
 				add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
 			} elseif ( null === WC()->session->get( 'chosen_payment_method' ) || '' === WC()->session->get( 'chosen_payment_method' ) ) {
-				// If no payment gatewy have been selected but Billmate Checkout is the default one.
+				// If no payment gatewy have been selected but Qvickly Checkout is the default one.
 				reset( $available_gateways );
 				if ( 'bco' === key( $available_gateways ) ) {
 					add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
@@ -252,7 +252,7 @@ class BCO_Templates {
 	 */
 	public function add_body_class( $class ) {
 		if ( is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
-			// Don't display Billmate body classes if we have a cart that doesn't needs payment.
+			// Don't display Qvickly body classes if we have a cart that doesn't needs payment.
 			if ( method_exists( WC()->cart, 'needs_payment' ) && ! WC()->cart->needs_payment() ) {
 				return $class;
 			}

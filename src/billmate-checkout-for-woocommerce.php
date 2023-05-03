@@ -1,8 +1,8 @@
 <?php // phpcs:ignore
 /**
- * Plugin Name:     Billmate Checkout for WooCommerce
+ * Plugin Name:     Qvickly Checkout for WooCommerce
  * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
- * Description:     Provides an Billmate Checkout gateway for WooCommerce.
+ * Description:     Provides an Qvickly Checkout gateway for WooCommerce.
  * Version:         __STABLE_TAG__
  * Author:          Billmate, Krokedil
  * Author URI:      https://billmate.se/
@@ -12,9 +12,9 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.0.0
- * WC tested up to: 7.1.0
+ * WC tested up to: 7.6.1
  *
- * Copyright:       © 2020-2022 Billmate in collaboration with Krokedil.
+ * Copyright:       © 2020-2023 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
  * License URI:     http://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.5.2' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.6.0' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
@@ -158,7 +158,7 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			$setting_link = $this->get_setting_link();
 			$plugin_links = array(
 				'<a href="' . $setting_link . '">' . __( 'Settings', 'billmate-checkout-for-woocommerce' ) . '</a>',
-				'<a href="http://krokedil.se/">' . __( 'Support', 'billmate-checkout-for-woocommerce' ) . '</a>',
+				'<a href="https://qvickly.io/kundsupport/">' . __( 'Support', 'billmate-checkout-for-woocommerce' ) . '</a>',
 			);
 			return array_merge( $plugin_links, $links );
 		}

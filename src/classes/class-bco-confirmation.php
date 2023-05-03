@@ -39,7 +39,7 @@ class BCO_Confirmation {
 	}
 
 	/**
-	 * Confirm Billmate order.
+	 * Confirm Qvickly order.
 	 *
 	 * @return void
 	 */
@@ -73,7 +73,7 @@ class BCO_Confirmation {
 
 			// If we don't find the order, log it and return.
 			if ( ! is_object( $order ) ) {
-				BCO_Logger::log( 'Confirm order step failed. Could not find order. Returned data from Billmate: ' . wp_json_encode( $data ) );
+				BCO_Logger::log( 'Confirm order step failed. Could not find order. Returned data from Qvickly: ' . wp_json_encode( $data ) );
 				return;
 			}
 
@@ -82,7 +82,7 @@ class BCO_Confirmation {
 				return;
 			}
 
-			// Get the Billmate checkout object.
+			// Get the Qvickly checkout object.
 			$bco_checkout = BCO_WC()->api->request_get_checkout( get_post_meta( $order_id, '_billmate_hash', true ) );
 
 			if ( 'pay_for_order_redirect' === $bco_flow ) {
@@ -93,7 +93,7 @@ class BCO_Confirmation {
 				bco_set_payment_method_title( $order_id, $bco_checkout );
 
 				bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
-				bco_wc_unset_sessions(); // Unset Billmate session data.
+				bco_wc_unset_sessions(); // Unset Qvickly session data.
 				return;
 
 			} elseif ( 'checkout_redirect' === $bco_flow ) {
@@ -106,7 +106,7 @@ class BCO_Confirmation {
 				bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 
 				bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
-				bco_wc_unset_sessions(); // Unset Billmate session data.
+				bco_wc_unset_sessions(); // Unset Qvickly session data.
                 wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
 				exit;
 
@@ -121,7 +121,7 @@ class BCO_Confirmation {
 					bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
 
 					bco_confirm_billmate_order( $order_id, $bco_checkout ); // Confirm order.
-					bco_wc_unset_sessions(); // Unset Billmate session data.
+					bco_wc_unset_sessions(); // Unset Qvickly session data.
 				}
 
 				return;

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Billmate Checkout iframe.
+ * Qvickly Checkout iframe.
  *
  * @return void
  */
@@ -97,7 +97,7 @@ function bco_init_checkout() {
  * @return void
  */
 function set_checkout_hash( $url ) {
-	// Extract the hash from the Billmate checkout url.
+	// Extract the hash from the Qvickly checkout url.
 	$parts = explode( '/', $url );
 	$sum   = count( $parts );
 	$hash  = ( 'test' === $parts[ $sum - 1 ] ) ? str_replace( '\\', '', $parts[ $sum - 2 ] ) : str_replace( '\\', '', $parts[ $sum - 1 ] );
@@ -106,7 +106,7 @@ function set_checkout_hash( $url ) {
 }
 
 /**
- * Shows select another payment method button in Billmate Checkout page.
+ * Shows select another payment method button in Qvickly Checkout page.
  */
 function bco_wc_show_another_gateway_button() {
 	$available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
@@ -126,10 +126,10 @@ function bco_wc_show_another_gateway_button() {
 }
 
 /**
- * Set Billmate Checkout payment method tile.
+ * Set Qvickly Checkout payment method tile.
  *
  * @param string $order_id The WooCommerce order id.
- * @param array  $bco_order The Billmate order.
+ * @param array  $bco_order The Qvickly order.
  * @return void
  */
 function bco_set_payment_method_title( $order_id, $bco_order = array() ) {
@@ -181,10 +181,10 @@ function bco_extract_error_message( $wp_error ) {
 
 
 /**
- * Confirm Billmate order.
+ * Confirm Qvickly order.
  *
  * @param string $order_id The WooCommerce order id.
- * @param array  $bco_checkout The Billmate checkout data.
+ * @param array  $bco_checkout The Qvickly checkout data.
  */
 function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 
@@ -193,7 +193,7 @@ function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 		$bco_order_number = $bco_checkout['data']['PaymentData']['order']['number'];
 		update_post_meta( $order_id, '_transaction_id', $bco_order_number );
 
-		// Make get_payment request if we have Billmate order number.
+		// Make get_payment request if we have Qvickly order number.
 		if ( '' !== $bco_order_number ) {
 			$bco_order = BCO_WC()->api->request_get_payment( $bco_order_number );
 		}
@@ -201,23 +201,23 @@ function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 		// Confirm order.
 		switch ( strtolower( $bco_checkout['data']['PaymentData']['order']['status'] ) ) {
 			case 'pending':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Order is PENDING APPROVAL by Qvickly. Please visit Qvickly Online for the latest status on this order. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
 				$order->add_order_note( $note );
 				$order->update_status( 'on-hold' );
 
 				break;
 			case 'created':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
 				$order->add_order_note( $note );
 				$order->payment_complete( $bco_order_number );
 
 				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
 				break;
 			case 'paid':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
 				$order->add_order_note( $note );
 				$order->payment_complete( $bco_order_number );
 
@@ -234,11 +234,11 @@ function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 
 
 /**
- * Confirm Billmate redirect order.
+ * Confirm Qvickly redirect order.
  *
  * @param string   $order_id The WooCommerce order id.
  * @param WC_Order $order The WooCommerce order.
- * @param array    $data The content data from Billmate redirect.
+ * @param array    $data The content data from Qvickly redirect.
  * @return void
  */
 function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
@@ -249,23 +249,23 @@ function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
 
 		switch ( strtolower( $data['status'] ) ) {
 			case 'pending':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Order is PENDING APPROVAL by Billmate. Please visit Billmate Online for the latest status on this order. Billmate Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Order is PENDING APPROVAL by Qvickly. Please visit Qvickly Online for the latest status on this order. Qvickly Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
 				$order->add_order_note( $note );
 				$order->update_status( 'on-hold' );
 
 				break;
 			case 'created':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
 				$order->add_order_note( $note );
 				$order->payment_complete( $bco_transaction_id );
 
 				do_action( 'bco_wc_payment_complete', $order_id, $data );
 				break;
 			case 'paid':
-				// Translators: Billmate transaction id.
-				$note = sprintf( __( 'Payment via Billmate Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+				// Translators: Qvickly transaction id.
+				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
 				$order->add_order_note( $note );
 				$order->payment_complete( $bco_transaction_id );
 
@@ -280,9 +280,9 @@ function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
 }
 
 /**
- * Finds an Order ID based on a temp order id set in Billmate create request.
+ * Finds an Order ID based on a temp order id set in Qvickly create request.
  *
- * @param string $billmate_temp_order_id A temporary order id set in create request sent to Billmate.
+ * @param string $billmate_temp_order_id A temporary order id set in create request sent to Qvickly.
  * @return int The ID of an order, or 0 if the order could not be found.
  */
 function bco_get_order_id_by_temp_order_id( $billmate_temp_order_id ) {
@@ -311,9 +311,9 @@ function bco_get_order_id_by_temp_order_id( $billmate_temp_order_id ) {
 }
 
 /**
- * Finds an Order ID based on a transaction ID (the Billmate invoice number).
+ * Finds an Order ID based on a transaction ID (the Qvickly invoice number).
  *
- * @param string $transaction_id Billmate invoice number saved as Transaction ID in WC order.
+ * @param string $transaction_id Qvickly invoice number saved as Transaction ID in WC order.
  * @return int The ID of an order, or 0 if the order could not be found.
  */
 function bco_get_order_id_by_transaction_id( $transaction_id ) {
@@ -342,9 +342,9 @@ function bco_get_order_id_by_transaction_id( $transaction_id ) {
 }
 
 /**
- * Finds an Order ID based on a transaction ID (the Billmate invoice number).
+ * Finds an Order ID based on a transaction ID (the Qvickly invoice number).
  *
- * @param string $billmate_orderid Billmate orderid _billmate_saved_woo_order_no in WC order ($order->get_order_number).
+ * @param string $billmate_orderid Qvickly orderid _billmate_saved_woo_order_no in WC order ($order->get_order_number).
  * @return int The ID of an order, or 0 if the order could not be found.
  */
 function bco_get_order_id_by_billmate_saved_woo_order_no( $billmate_orderid ) {

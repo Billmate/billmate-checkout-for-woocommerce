@@ -22,21 +22,21 @@ $settings = array(
 	'description'                        => array(
 		'title'       => __( 'Description', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'textarea',
-		'default'     => __( 'Pay with Billmate via invoice, card and direct bank payments.', 'billmate-checkout-for-woocommerce' ),
+		'default'     => __( 'Pay with Qvickly via invoice, card and direct bank payments.', 'billmate-checkout-for-woocommerce' ),
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'billmate-checkout-for-woocommerce' ),
 	),
 	'select_another_method_text'         => array(
 		'title'       => __( 'Other payment method button text', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Customize the <em>Select another payment method</em> button text that is displayed in checkout if using other payment methods than Billmate Checkout. Leave blank to use the default (and translatable) text.', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Customize the <em>Select another payment method</em> button text that is displayed in checkout if using other payment methods than Qvickly Checkout. Leave blank to use the default (and translatable) text.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 	'testmode'                           => array(
 		'title'   => __( 'Testmode', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Enable Billmate Checkout testmode', 'billmate-checkout-for-woocommerce' ),
+		'label'   => __( 'Enable Qvickly Checkout testmode', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'no',
 	),
 	'debug'                              => array(
@@ -53,7 +53,7 @@ $settings = array(
 			'one_column_checkout' => __( 'One column checkout', 'billmate-checkout-for-woocommerce' ),
 			'two_column_checkout' => __( 'Two column checkout', 'billmate-checkout-for-woocommerce' ),
 		),
-		'description' => __( 'Select the Billmate Checkout layout.', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Select the Qvickly Checkout layout.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'two_column_checkout',
 		'desc_tip'    => false,
 	),
@@ -77,7 +77,7 @@ $settings = array(
 	'disable_scroll_to_checkout'         => array(
 		'title'   => __( 'Disable scroll to checkout', 'billmate-checkout-for-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Disable automatic scroll to Billmate checkout iframe when checkout page is rendered.', 'billmate-checkout-for-woocommerce' ),
+		'label'   => __( 'Disable automatic scroll to Qvickly checkout iframe when checkout page is rendered.', 'billmate-checkout-for-woocommerce' ),
 		'default' => 'no',
 	),
 	'hide_shipping_address'              => array(
@@ -89,7 +89,7 @@ $settings = array(
 	'logo'                               => array(
 		'title'       => __( 'Logo', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Change logotype for the payment. Enter the file name of the logo uploaded in your Billmate online account. Leave blank to use the standard logo.', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Change logotype for the payment. Enter the file name of the logo uploaded in your Qvickly online account. Leave blank to use the standard logo.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
@@ -138,9 +138,9 @@ $settings = array(
 	'monthly_cost_text'                  => array(
 		'title'       => __( 'Text for monthly cost', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'textarea',
-		'default'     => __( '{billmate_img}<br/>Part pay from {billmate_price}/month', 'billmate-checkout-for-woocommerce' ),
+		'default'     => __( '{qvickly_img}<br/>Part pay from {qvickly_price}/month', 'billmate-checkout-for-woocommerce' ),
 		'desc_tip'    => false,
-		'description' => __( 'Use {billmate_img} to display the Billmate logo and {billmate_price} to display the monthly fee as a formatted WooCommerce price (with currency).', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Use {qvickly_img} to display the Qvickly logo and {qvickly_price} to display the monthly fee as a formatted WooCommerce price (with currency).', 'billmate-checkout-for-woocommerce' ),
 	),
 	// SE.
 	'credentials_se'                     => array(
