@@ -89,14 +89,16 @@ class BCO_Display_Monthly_Cost {
 		if ( isset( $payment_plans['data'] ) ) {
 			$min_monthly_cost = min( array_column( $payment_plans['data'], 'monthlycost' ) );
 			$monthly_cost     = wc_price( $min_monthly_cost / 100 );
-			$bco_image_src    = apply_filters( 'bco_monthly_cost_image_src', BILLMATE_CHECKOUT_URL . '/assets/images/bm_delbetalning_l.png' );
+			$bco_image_src    = apply_filters( 'bco_monthly_cost_image_src', BILLMATE_CHECKOUT_URL . '/assets/images/qvickly-logo.png' );
 			$bco_image_width  = '145';
 			$bco_image_html   = '<img src="' . $bco_image_src . '" alt="Qvickly logo" style="max-width:' . $bco_image_width . 'px"/>';
 			$bco_image_html   = apply_filters( 'bco_monthly_cost_image_html', $bco_image_html );
 
 			$replacements = array(
-				'{billmate_img}'   => apply_filters( 'bco_monthly_cost_image_html', $bco_image_html ),
+				'{billmate_img}'   => $bco_image_html,
 				'{billmate_price}' => $monthly_cost,
+				'{qvickly_img}'    => $bco_image_html,
+				'{qvickly_price}'  => $monthly_cost,
 			);
 			$content      = str_replace( array_keys( $replacements ), $replacements, $this->monthly_cost_text );
 

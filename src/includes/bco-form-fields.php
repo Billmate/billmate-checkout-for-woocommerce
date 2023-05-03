@@ -138,9 +138,9 @@ $settings = array(
 	'monthly_cost_text'                  => array(
 		'title'       => __( 'Text for monthly cost', 'billmate-checkout-for-woocommerce' ),
 		'type'        => 'textarea',
-		'default'     => __( '{billmate_img}<br/>Part pay from {billmate_price}/month', 'billmate-checkout-for-woocommerce' ),
+		'default'     => __( '{qvickly_img}<br/>Part pay from {qvickly_price}/month', 'billmate-checkout-for-woocommerce' ),
 		'desc_tip'    => false,
-		'description' => __( 'Use {billmate_img} to display the Qvickly logo and {billmate_price} to display the monthly fee as a formatted WooCommerce price (with currency).', 'billmate-checkout-for-woocommerce' ),
+		'description' => __( 'Use {qvickly_img} to display the Qvickly logo and {qvickly_price} to display the monthly fee as a formatted WooCommerce price (with currency).', 'billmate-checkout-for-woocommerce' ),
 	),
 	// SE.
 	'credentials_se'                     => array(
