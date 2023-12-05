@@ -2,10 +2,10 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
-Tested up to: 6.2
-Requires PHP: 7.0
+Tested up to: 6.4.1
+Requires PHP: 7.4
 WC requires at least: 5.0.0
-WC tested up to: 7.6.1
+WC tested up to: 8.3.1
 Stable tag: __STABLE_TAG__
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2023.12.05    - version 1.6.2 =
+* Fix           - Send abort_waiting to Qvickly checkout if failOrder occurred, to reenable the checkout again.
+
 = 2023.05.04    - version 1.6.1 =
 * Tweak         - Adds Qvickly icon.svg to WordPress.org assets.
 
