@@ -12,7 +12,7 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.0.0
- * WC tested up to: 7.6.1
+ * WC tested up to: 8.3.1
  *
  * Copyright:       © 2020-2023 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.6.1' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.6.2' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
