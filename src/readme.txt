@@ -2,7 +2,7 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
-Tested up to: 6.4.1
+Tested up to: 6.4.2
 Requires PHP: 7.4
 WC requires at least: 5.0.0
 WC tested up to: 8.3.1
@@ -51,6 +51,10 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2023.12.12    - version 1.6.3 =
+* Tweak         - Improved logging around confirm payment step for easier troubleshooting.
+* Tweak         - Improved credentials check in callback handler.
+
 = 2023.12.05    - version 1.6.2 =
 * Fix           - Send abort_waiting to Qvickly checkout if failOrder occurred, to reenable the checkout again.
 
