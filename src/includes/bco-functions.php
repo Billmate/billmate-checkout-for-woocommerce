@@ -190,6 +190,9 @@ function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 
 	$order = wc_get_order( $order_id );
 	if ( is_object( $order ) && ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+
+		BCO_Logger::log( 'Trigger bco_confirm_billmate_order for order_id: ' . $order_id );
+
 		$bco_order_number = $bco_checkout['data']['PaymentData']['order']['number'];
 		update_post_meta( $order_id, '_transaction_id', $bco_order_number );
 
@@ -246,6 +249,8 @@ function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
 	update_post_meta( $order_id, '_transaction_id', $bco_transaction_id );
 
 	if ( is_object( $order ) && ! $order->has_status( array( 'on-hold', 'processing', 'completed' ) ) ) {
+
+		BCO_Logger::log( 'Trigger bco_confirm_billmate_redirect_order for order_id: ' . $order_id );
 
 		switch ( strtolower( $data['status'] ) ) {
 			case 'pending':
