@@ -55,7 +55,7 @@ class BCO_API_Callbacks {
 		if ( ! isset( $data['credentials'] ) || ! isset( $data['credentials']['hash'] ) ) {
 			BCO_Logger::log( 'Push callback hit but no credentials found in callback data.' );
 			status_header( 401, 'Missing credentials' );
-			return;
+			wp_die();
 		}
 
 		$credentials  = $data['credentials']['hash'];
@@ -66,7 +66,7 @@ class BCO_API_Callbacks {
 		if ( $hash !== $credentials ) {
 			BCO_Logger::log( 'Push callback hit but credentials did not match.' );
 			status_header( 401, 'Bad credentials' );
-			return;
+			wp_die();
 		}
 		// Get the WC order ID from the post meta field _billmate_saved_woo_order_no.
 		// If that doesn't exist, try getting it from the WC order transaction ID.
