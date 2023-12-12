@@ -52,6 +52,22 @@ class BCO_API_Callbacks {
 		$transaction_id = sanitize_key( $data['data']['number'] );
 		$bco_status     = strtolower( sanitize_key( $data['data']['status'] ) );
 
+		if ( ! isset( $data['credentials'] ) || ! isset( $data['credentials']['hash'] ) ) {
+			BCO_Logger::log( 'Push callback hit but no credentials found in callback data.' );
+			status_header( 401, 'Missing credentials' );
+			wp_die();
+		}
+
+		$credentials  = $data['credentials']['hash'];
+		$datastr      = json_encode( $data['data'] );
+		$bco_settings = get_option( 'woocommerce_bco_settings' );
+
+		$hash = hash_hmac( 'sha512', $datastr, $bco_settings['api_key_se'] );
+		if ( $hash !== $credentials ) {
+			BCO_Logger::log( 'Push callback hit but credentials did not match.' );
+			status_header( 401, 'Bad credentials' );
+			wp_die();
+		}
 		// Get the WC order ID from the post meta field _billmate_saved_woo_order_no.
 		// If that doesn't exist, try getting it from the WC order transaction ID.
 		$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['data']['orderid'] );
