@@ -44,9 +44,9 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 */
 		protected static $instance;
 
-        protected $api;
-        protected $logger;
-        protected $api_callbacks;
+        public $api;
+        public $logger;
+        public $api_callbacks;
 
         /**
 		 * Class constructor.
