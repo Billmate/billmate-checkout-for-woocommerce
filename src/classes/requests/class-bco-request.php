@@ -20,7 +20,19 @@ class BCO_Request {
 	 */
 	public $enviroment;
 
-	/**
+    public $billmate_settings;
+    public $testmode;
+    public $test;
+    public $base_url;
+    public $id;
+    public $secret;
+    public $checkout_flow;
+    public $company_view;
+    public $hide_shipping_address;
+    public $version;
+    public $client;
+
+    /**
 	 * Class constructor.
 	 */
 	public function __construct() {
