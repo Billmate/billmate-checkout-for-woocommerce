@@ -26,6 +26,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
     public $testmode;
     public $checkout_flow;
     public $supports;
+    public $form_fields;
 
 	/**
 	 * Class constructor.
