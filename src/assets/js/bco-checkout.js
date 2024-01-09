@@ -523,6 +523,14 @@ jQuery(function($) {
 					opacity: 0.6
 				}
 			});
+			if($('form.checkout.billing_country').length == 0) {
+				var country = $('<input></input>');
+				country.attr('type', 'hidden');
+				country.attr('name', 'billing_country');
+				country.attr('id', 'billing_country');
+				country.attr('value', 'SE');
+				$('form.checkout').append(country);
+			}
 			$.ajax({
 				type: 'POST',
 				url: bco_wc_params.submit_order,
