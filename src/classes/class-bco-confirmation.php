@@ -79,8 +79,19 @@ class BCO_Confirmation {
 
 			// If the order is already completed, return.
 			if ( ! empty( $order->get_date_paid() ) ) {
+				BCO_Logger::log( 'Confirm order step aborted. Paid date exist. WC order ID: ' . wp_json_encode( $order_id ) );
 				return;
 			}
+
+			// If the confirm step already has started by customer once (can happen when payment_complete takes long time to finish), return.
+			if ( ! empty( $order->get_meta( '_billmate_confirm_started', true ) ) ) {
+				BCO_Logger::log( 'Confirm order step aborted. Confirm step already started. WC order ID: ' . wp_json_encode( $order_id ) );
+				return;
+			}
+
+			// Save meta data field to keep track of that confirm step has been initialized.
+			$order->update_meta_data( '_billmate_confirm_started', 'yes' );
+			$order->save();
 
 			// Get the Qvickly checkout object.
 			$bco_checkout = BCO_WC()->api->request_get_checkout( get_post_meta( $order_id, '_billmate_hash', true ) );
