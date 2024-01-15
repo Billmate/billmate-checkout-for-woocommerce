@@ -211,19 +211,11 @@ function bco_confirm_billmate_order( $order_id, $bco_checkout ) {
 
 				break;
 			case 'created':
-				// Translators: Qvickly transaction id.
-				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_order_number );
-
+				bco_payment_complete( $order, $bco_order_number );
 				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
 				break;
 			case 'paid':
-				// Translators: Qvickly transaction id.
-				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_order_number ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_order_number );
-
+				bco_payment_complete( $order, $bco_order_number );
 				do_action( 'bco_wc_payment_complete', $order_id, $bco_checkout );
 				break;
 			case 'cancelled':
@@ -261,19 +253,11 @@ function bco_confirm_billmate_redirect_order( $order_id, $order, $data ) {
 
 				break;
 			case 'created':
-				// Translators: Qvickly transaction id.
-				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_transaction_id );
-
+				bco_payment_complete( $order, $bco_transaction_id );
 				do_action( 'bco_wc_payment_complete', $order_id, $data );
 				break;
 			case 'paid':
-				// Translators: Qvickly transaction id.
-				$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
-				$order->add_order_note( $note );
-				$order->payment_complete( $bco_transaction_id );
-
+				bco_payment_complete( $order, $bco_transaction_id );
 				do_action( 'bco_wc_payment_complete', $order_id, $data );
 				break;
 			case 'cancelled':
@@ -407,4 +391,20 @@ function bco_maybe_add_invoice_fee( $order ) {
 			$order->save();
 		}
 	}
+}
+
+/**
+ * Adds order note to order, trigger payment complete and removes _billmate_confirm_started metadata.
+ *
+ * @param object $order WooCommerce order.
+ * @param string $bco_transaction_id Qvickly transaction id.
+ * @return void.
+ */
+function bco_payment_complete( $order, $bco_transaction_id ) {
+	// Translators: Qvickly transaction id.
+	$note = sprintf( __( 'Payment via Qvickly Checkout. Transaction id: %s', 'billmate-checkout-for-woocommerce' ), sanitize_key( $bco_transaction_id ) );
+	$order->add_order_note( $note );
+	$order->payment_complete( $bco_transaction_id );
+	$order->delete_meta_data( '_billmate_confirm_started' );
+	$order->save();
 }
