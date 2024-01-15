@@ -20,7 +20,12 @@ class BCO_Display_Monthly_Cost {
 	 */
 	protected static $instance;
 
-	/**
+    public $enabled;
+    public $display_monthly_cost_product_page;
+    public $monthly_cost_text;
+    public $monthly_cost_product_page_location;
+
+    /**
 	 * Returns the *Singleton* instance of this class.
 	 *
 	 * @return self::$instance The *Singleton* instance.
