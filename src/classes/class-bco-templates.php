@@ -20,6 +20,10 @@ class BCO_Templates {
 	 */
 	protected static $instance;
 
+    public $enabled;
+    public $show_order_notes;
+    public $checkout_layout;
+
 	/**
 	 * Returns the *Singleton* instance of this class.
 	 *

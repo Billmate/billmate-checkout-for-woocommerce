@@ -14,6 +14,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class BCO_Gateway extends WC_Payment_Gateway {
 
+    public $id;
+    public $method_title;
+    public $icon;
+    public $method_description;
+    public $settings;
+    public $enabled;
+    public $title;
+    public $description;
+    public $debug;
+    public $testmode;
+    public $checkout_flow;
+    public $supports;
+    public $form_fields;
+
 	/**
 	 * Class constructor.
 	 */
