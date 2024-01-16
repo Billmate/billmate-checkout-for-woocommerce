@@ -44,11 +44,28 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 */
 		protected static $instance;
 
-        public $api;
-        public $logger;
-        public $api_callbacks;
+		/**
+		 * BCO Api class. Handles communication with Qvickly.
+		 *
+		 * @var BCO_API|null
+		 */
+		public $api;
 
-        /**
+		/**
+		 * BCO Logger class. Handles logging in plugin.
+		 *
+		 * @var BCO_Logger|null
+		 */
+		public $logger;
+
+		/**
+		 * BCO API callback class. Handles callbacks from Qvickly in plugin.
+		 *
+		 * @var BCO_API_Callbacks|null
+		 */
+		public $api_callbacks;
+
+		/**
 		 * Class constructor.
 		 */
 		public function __construct() {
