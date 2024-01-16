@@ -12,9 +12,9 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.0.0
- * WC tested up to: 8.3.1
+ * WC tested up to: 8.5.1
  *
- * Copyright:       © 2020-2023 Billmate in collaboration with Krokedil.
+ * Copyright:       © 2020-2024 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
  * License URI:     http://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.6.3' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.6.4' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
@@ -43,6 +43,27 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 * @var $instance
 		 */
 		protected static $instance;
+
+		/**
+		 * BCO Api class. Handles communication with Qvickly.
+		 *
+		 * @var BCO_API|null
+		 */
+		public $api;
+
+		/**
+		 * BCO Logger class. Handles logging in plugin.
+		 *
+		 * @var BCO_Logger|null
+		 */
+		public $logger;
+
+		/**
+		 * BCO API callback class. Handles callbacks from Qvickly in plugin.
+		 *
+		 * @var BCO_API_Callbacks|null
+		 */
+		public $api_callbacks;
 
 		/**
 		 * Class constructor.
