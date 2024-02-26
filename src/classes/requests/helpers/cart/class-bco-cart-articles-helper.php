@@ -96,12 +96,20 @@ class BCO_Cart_Articles_Helper {
 	 * @return array
 	 */
 	public static function get_smart_coupon_line( $coupon ) {
+		$apply_before_tax = 'yes' === get_option( 'woocommerce_smart_coupon_apply_before_tax', 'no' );
+		if ( wc_tax_enabled() && $apply_before_tax ) {
+			// The discount is applied directly to the cart item. Send gift card amount as zero for bookkeeping.
+			$coupon_amount = 0;
+		} else {
+			$coupon_amount = $coupon->get_amount() * -1;
+		}
+
 		return array(
 			'artnr'      => $coupon->get_id(),
 			'title'      => __( 'Gift Card', 'billmate-checkout-for-woocommerce' ),
 			'quantity'   => 1,
-			'aprice'     => round( ( $coupon->get_amount() * -1 ) * 100 ),
-			'withouttax' => round( ( $coupon->get_amount() * -1 ) * 100 ),
+			'aprice'     => round( ( $coupon_amount ) * 100 ),
+			'withouttax' => round( ( $coupon_amount ) * 100 ),
 			'taxrate'    => 0,
 			'discount'   => 0,
 		);
