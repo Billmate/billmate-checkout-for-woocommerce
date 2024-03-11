@@ -60,7 +60,6 @@ class BCO_Templates {
 		add_action( 'bco_wc_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 		add_action( 'bco_wc_before_checkout_form', 'woocommerce_checkout_coupon_form', 20 );
 		add_action( 'bco_wc_after_order_review', 'bco_wc_show_another_gateway_button', 20 );
-		add_action( 'bco_wc_before_billmate_checkout_form', array( $this, 'add_smart_coupons_fields' ) );
 
 		// Hook to check if we should hide the Order notes field in checkout.
 		add_action( 'template_redirect', array( $this, 'maybe_hide_order_notes_field' ), 1000 );
@@ -276,16 +275,6 @@ class BCO_Templates {
 			}
 		}
 		return $class;
-	}
-
-	/**
-	 * Add action hooks required by Smart Coupons.
-	 *
-	 * @return void
-	 */
-	public function add_smart_coupons_fields() {
-		// Required by smart coupons to show the "Send Coupons to..." form.
-		do_action( 'woocommerce_checkout_after_customer_details' );
 	}
 }
 
