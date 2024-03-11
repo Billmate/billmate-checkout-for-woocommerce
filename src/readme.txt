@@ -51,6 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2024.03.11    - version 1.6.6 =
+* Tweak         - Remove redundant action hook to prevent hook from being triggered more than once.
+
 = 2024.03.11    - version 1.6.5 =
 * Fix           - The Smart Coupons' "Send Coupons to..." should now be displayed on the checkout page.
 * Fix           - Fixed tax issues related to Smart Coupons when certain settings in the coupons' plugin were enabled.
