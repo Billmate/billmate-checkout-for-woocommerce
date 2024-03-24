@@ -44,7 +44,7 @@ $settings = array(
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable logging', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'no',
-		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), wc_get_log_file_path( 'billmate_checkout' ) ), // phpcs:ignore
+		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), trailingslashit( realpath( Constants::get_constant( 'WC_LOG_DIR' ) ) ) ), // phpcs:ignore
 	),
 	'checkout_layout'                    => array(
 		'title'       => __( 'Checkout layout', 'billmate-checkout-for-woocommerce' ),
