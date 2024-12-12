@@ -1,0 +1,19 @@
+{
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^2.3",
+        "php-stubs/wordpress-stubs": "^6.1",
+        "php-stubs/woocommerce-stubs": "^8.4",
+        "10up/wp_mock": "^1.0"
+    },
+    "repositories": [],
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
