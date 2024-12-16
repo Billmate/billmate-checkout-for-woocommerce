@@ -20,7 +20,7 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "extras": {
+    "extra": {
         "wpify-scoper": {
             "prefix": "KrokedilQvicklyCheckoutDeps",
             "folder": "dependencies",
