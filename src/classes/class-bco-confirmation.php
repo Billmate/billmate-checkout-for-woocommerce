@@ -59,12 +59,10 @@ class BCO_Confirmation {
 
 			if ( isset( $wc_order_id ) && ! empty( $wc_order_id ) && 'null' !== $wc_order_id ) {
 				$order_id = $wc_order_id;
-			} else {
-				if ( substr( $data['orderid'], 0, 3 ) === 'tmp' ) {
+			} elseif ( substr( $data['orderid'], 0, 3 ) === 'tmp' ) {
 					$order_id = bco_get_order_id_by_temp_order_id( sanitize_text_field( $data['orderid'] ) );
-				} else {
-					$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
-				}
+			} else {
+				$order_id = bco_get_order_id_by_billmate_saved_woo_order_no( $data['orderid'] );
 			}
 
 			BCO_Logger::log( 'Confirm order triggered. WC order ID: ' . wp_json_encode( $order_id ) );
@@ -114,8 +112,6 @@ class BCO_Confirmation {
 				// Set payment method title.
 				bco_set_payment_method_title( $order_id, $bco_checkout );
 
-				bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
-
 				bco_confirm_billmate_redirect_order( $order_id, $order, $data ); // Confirm.
 				bco_wc_unset_sessions(); // Unset Qvickly session data.
                 wp_redirect( $order->get_checkout_order_received_url() ); // phpcs:ignore
@@ -129,8 +125,6 @@ class BCO_Confirmation {
 					// Set payment method title.
 					bco_set_payment_method_title( $order_id, $bco_checkout );
 
-					bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
-
 					bco_confirm_billmate_order( $order_id, $bco_checkout ); // Confirm order.
 					bco_wc_unset_sessions(); // Unset Qvickly session data.
 				}
@@ -139,7 +133,5 @@ class BCO_Confirmation {
 			}
 		}
 	}
-
-
 }
 BCO_Confirmation::get_instance();
