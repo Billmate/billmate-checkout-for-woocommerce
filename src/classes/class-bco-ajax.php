@@ -133,7 +133,6 @@ class BCO_AJAX extends WC_AJAX {
 		// Everything is okay if we get here. Send empty success and kill wp.
 		wp_send_json_success();
 		wp_die();
-
 	}
 
 	/**
@@ -260,7 +259,7 @@ class BCO_AJAX extends WC_AJAX {
 		// Set payment method title.
 		bco_set_payment_method_title( $order_id, $bco_checkout );
 
-		bco_maybe_add_invoice_fee( $order ); // Maybe set invoice fee in WC order.
+		// Confirm Billmate order.
 		bco_confirm_billmate_order( $order_id, $bco_checkout );
 
 		if ( false !== $bco_checkout ) {

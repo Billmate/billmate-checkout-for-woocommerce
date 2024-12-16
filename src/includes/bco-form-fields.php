@@ -44,7 +44,7 @@ $settings = array(
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable logging', 'billmate-checkout-for-woocommerce' ),
 		'default'     => 'no',
-		'description' => sprintf( __( 'Log ' . $this->method_title . ' events in <code>%s</code>', 'billmate-checkout-for-woocommerce' ), wc_get_log_file_path( 'billmate_checkout' ) ), // phpcs:ignore
+		'description' => __( 'Log Qvickly events to the plugin log file.', 'billmate-checkout-for-woocommerce' ),
 	),
 	'checkout_layout'                    => array(
 		'title'       => __( 'Checkout layout', 'billmate-checkout-for-woocommerce' ),
@@ -92,21 +92,6 @@ $settings = array(
 		'description' => __( 'Change logotype for the payment. Enter the file name of the logo uploaded in your Qvickly online account. Leave blank to use the standard logo.', 'billmate-checkout-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
-	),
-	'invoice_fee'                        => array(
-		'title'       => __( 'Invoice fee', 'billmate-checkout-for-woocommerce' ),
-		'type'        => 'text',
-		'description' => __( 'Add Invoice fee excluding tax. Leave blank to deactivate this feature.', 'billmate-checkout-for-woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'invoice_fee_tax'                    => array(
-		'title'       => __( 'Tax class for invoice fee', 'billmate-checkout-for-woocommerce' ),
-		'type'        => 'select',
-		'options'     => wc_get_product_tax_class_options(),
-		'description' => __( 'Select the tax class that should be used for the invoice fee.', 'billmate-checkout-for-woocommerce' ),
-		'default'     => 'false',
-		'desc_tip'    => false,
 	),
 	// Monthly cost display.
 	'montly_cost_display'                => array(

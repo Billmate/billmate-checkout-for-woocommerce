@@ -45,10 +45,10 @@ class BCO_Cart_Cart_Helper {
 	 */
 	public static function get_total() {
 		return array(
-			'withouttax' => self::get_total_without_tax() + self::get_handling_without_tax(),
-			'tax'        => self::get_total_tax() + self::get_handling_tax(),
+			'withouttax' => self::get_total_without_tax(),
+			'tax'        => self::get_total_tax(),
 			'rounding'   => 0,
-			'withtax'    => self::get_total_with_tax() + self::get_handling_without_tax() + self::get_handling_tax(),
+			'withtax'    => self::get_total_with_tax(),
 		);
 	}
 
@@ -188,5 +188,4 @@ class BCO_Cart_Cart_Helper {
 	public static function get_total_with_tax() {
 		return round( WC()->cart->total * 100 );
 	}
-
 }
