@@ -12,7 +12,7 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.0.0
- * WC tested up to: 8.5.1
+ * WC tested up to: 9.4.3
  *
  * Copyright:       © 2020-2024 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.6.6' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.7.0' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
@@ -165,7 +165,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 
 			// Includes.
 			include_once BILLMATE_CHECKOUT_PATH . '/includes/bco-functions.php';
-
 		}
 
 		/**
@@ -193,7 +192,6 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			$section_slug = 'bco';
 			return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=' . $section_slug );
 		}
-
 	}
 	Billmate_Checkout_For_WooCommerce::get_instance();
 
