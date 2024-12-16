@@ -97,7 +97,7 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 			'Articles'     => BCO_Order_Articles_Helper::get_articles( $order ),
 			'Cart'         =>
 			array(
-				'Handling' => BCO_Order_Cart_Helper::get_order_cart_handling( $order ),
+				// 'Handling' => BCO_Order_Cart_Helper::get_order_cart_handling( $order ),
 				'Shipping' => BCO_Order_Cart_Helper::get_order_cart_shipping( $order ),
 				'Total'    => BCO_Order_Cart_Helper::get_order_cart_total( $order ),
 			),
@@ -126,7 +126,7 @@ class BCO_Request_Init_Checkout extends BCO_Request {
 			'Articles'     => BCO_Cart_Articles_Helper::get_articles(),
 			'Cart'         =>
 			array(
-				'Handling' => BCO_Cart_Cart_Helper::get_handling(),
+				// 'Handling' => BCO_Cart_Cart_Helper::get_handling(),
 				'Shipping' => BCO_Cart_Cart_Helper::get_shipping(),
 				'Total'    => BCO_Cart_Cart_Helper::get_total(),
 			),
