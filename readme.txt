@@ -2,10 +2,10 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
-Tested up to: 6.4.2
+Tested up to: 6.7.1
 Requires PHP: 7.4
 WC requires at least: 5.0.0
-WC tested up to: 8.5.1
+WC tested up to: 9.4.3
 Stable tag: __STABLE_TAG__
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,10 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2024.12.16    - version 1.7.0 =
+* Tweak         - Remove setting and logic for adding invoice fee to invoice payments. Qvickly is moving away from this logic.
+* Fix           - Remove wc_get_log_file_path helper function to display path to plugin log file. Deprecated by Woo.
+
 = 2024.03.11    - version 1.6.6 =
 * Tweak         - Remove redundant action hook to prevent hook from being triggered more than once.
 
