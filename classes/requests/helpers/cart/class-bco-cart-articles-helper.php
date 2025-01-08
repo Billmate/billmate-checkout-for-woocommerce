@@ -234,5 +234,4 @@ class BCO_Cart_Articles_Helper {
 		}
 		return $fee_tax_rate;
 	}
-
 }
