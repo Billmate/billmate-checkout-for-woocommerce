@@ -140,6 +140,13 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			$this->logger        = new BCO_Logger();
 			$this->api_callbacks = new BCO_API_Callbacks();
 
+			$this->krokedil = new KrokedilWooCommerce(
+				array(
+					'slug'         => 'bco',
+					'price_format' => 'minor',
+				)
+			);
+
 			do_action( 'bco_initiated' );
 		}
 
