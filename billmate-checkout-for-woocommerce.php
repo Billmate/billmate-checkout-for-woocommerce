@@ -25,6 +25,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use KrokedilQvicklyCheckoutDeps\Krokedil\WooCommerce\KrokedilWooCommerce;
+
 // Define plugin constants.
 define( 'BILLMATE_CHECKOUT_VERSION', '1.7.0' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
@@ -64,6 +66,13 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 * @var BCO_API_Callbacks|null
 		 */
 		public $api_callbacks;
+
+		/**
+		 * The WooCommerce package from Krokedil.
+		 *
+		 * @var KrokedilWooCommerce
+		 */
+		public $krokedil = null;
 
 		/**
 		 * Class constructor.
@@ -111,6 +120,11 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		 */
 		public function init() {
 
+			// Include the autoloader from composer. If it fails, we'll just return and not load the plugin. But an admin notice will show to the merchant.
+			if ( ! $this->init_composer() ) {
+				return;
+			}
+
 			if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
 				return;
 			}
@@ -118,12 +132,20 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 			load_plugin_textdomain( 'billmate-checkout-for-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
+			// Include the files for the plugin.
 			$this->include_files();
 
 			// Set class variables.
 			$this->api           = new BCO_API();
 			$this->logger        = new BCO_Logger();
 			$this->api_callbacks = new BCO_API_Callbacks();
+
+			$this->krokedil = new KrokedilWooCommerce(
+				array(
+					'slug'         => 'bco',
+					'price_format' => 'minor',
+				)
+			);
 
 			do_action( 'bco_initiated' );
 		}
@@ -168,6 +190,24 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		}
 
 		/**
+		 * Try to load the autoloader from Composer.
+		 *
+		 * @return mixed
+		 */
+		public function init_composer() {
+			$autoloader = BILLMATE_CHECKOUT_PATH . '/dependencies/autoload.php';
+			if ( ! is_readable( $autoloader ) ) {
+				self::missing_autoloader();
+				return false;
+			}
+			$autoloader_result = require $autoloader;
+			if ( ! $autoloader_result ) {
+				return false;
+			}
+			return $autoloader_result;
+		}
+
+		/**
 		 * Adds plugin action links
 		 *
 		 * @param array $links Plugin action link before filtering.
@@ -191,6 +231,31 @@ if ( ! class_exists( 'Billmate_Checkout_For_WooCommerce' ) ) {
 		public function get_setting_link() {
 			$section_slug = 'bco';
 			return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=' . $section_slug );
+		}
+
+		/**
+		 * Print error message if the composer autoloader is missing.
+		 *
+		 * @return void
+		 */
+		protected static function missing_autoloader() {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( // phpcs:ignore
+					esc_html__( 'Your installation of Qvickly Checkout for WooCommerce is not complete. If you installed this plugin directly from Github please refer to the readme.dev.txt file in the plugin.', 'billmate-checkout-for-woocommerce' )
+				);
+			}
+			add_action(
+				'admin_notices',
+				function () {
+					?>
+					<div class="notice notice-error">
+						<p>
+							<?php echo esc_html__( 'Your installation of Qvickly Checkout for WooCommerce is not complete. If you installed this plugin directly from Github please refer to the readme.dev.txt file in the plugin.', 'billmate-checkout-for-woocommerce' ); ?>
+						</p>
+					</div>
+					<?php
+				}
+			);
 		}
 	}
 	Billmate_Checkout_For_WooCommerce::get_instance();

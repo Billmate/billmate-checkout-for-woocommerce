@@ -20,7 +20,7 @@ const cssNano              = require( 'cssnano' );
 function style( cb ) {
     return pump(
         [
-            src( 'src/assets/sass/**/*.scss', { sourcemaps: true } ),
+            src( 'assets/sass/**/*.scss', { sourcemaps: true } ),
             sass().on( 'error', sass.logError ),
             postcss(
                 [
@@ -40,7 +40,7 @@ function style( cb ) {
                     ),
                 ]
             ),
-            dest( './src/assets/css/', { sourcemaps: '.' } ),
+            dest( './assets/css/', { sourcemaps: '.' } ),
         ],
         cb
     );
@@ -56,12 +56,12 @@ const webpackStream = require( 'webpack-stream' );
 function script( cb ) {
     pump(
         [
-            src( 'src/assets/js/*.js' ),
+            src( 'assets/js/*.js' ),
             webpackStream(
                 { config: require( './webpack.config.babel.js' ) },
                 webpack
             ),
-            dest( './src/assets/js/' ),
+            dest( './assets/js/' ),
         ],
         cb
     );
@@ -73,8 +73,8 @@ function script( cb ) {
  */
 function watchfiles() {
     setDevEnv();
-    watch( 'src/assets/sass/**/*.scss', style );
-    watch( 'src/assets/js/bco-checkout.js', script );
+    watch( 'assets/sass/**/*.scss', style );
+    watch( 'assets/js/bco-checkout.js', script );
 }
 
 function setDevEnv() {
@@ -91,13 +91,13 @@ gulp.task('makePOT', function () {
     .pipe(sort())
     .pipe(wpPot({
         domain: 'billmate-checkout-for-woocommerce',
-        destFile: 'src/languages/billmate-checkout-for-woocommerce.pot',
+        destFile: 'languages/billmate-checkout-for-woocommerce.pot',
         package: 'billmate-checkout-for-woocommerce',
         bugReport: 'http://krokedil.se',
         lastTranslator: 'Krokedil <info@krokedil.se>',
         team: 'Krokedil <info@krokedil.se>'
     }))
-    .pipe(gulp.dest('src/languages/billmate-checkout-for-woocommerce.pot'));
+    .pipe(gulp.dest('languages/billmate-checkout-for-woocommerce.pot'));
 });
 
 exports.style   = style;

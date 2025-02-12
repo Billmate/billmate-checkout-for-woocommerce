@@ -1,12 +1,12 @@
 const path      = require( 'path' );
 const webpack   = require( 'webpack' );
-const DIST_PATH = path.resolve( './src/assets/js' );
+const DIST_PATH = path.resolve( './assets/js' );
 const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
     cache: true,
     entry: {
-        "bco-checkout": './src/assets/js/bco-checkout.js',
+        "bco-checkout": './assets/js/bco-checkout.js',
     },
     output: {
         path: DIST_PATH,
