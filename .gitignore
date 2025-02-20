@@ -6,3 +6,9 @@ node_modules
 .DS_Store
 /vendor/
 /.wp
+
+dependencies/*
+!dependencies/.gitkeep
+
+# tmp folders from scoping.
+tmp*

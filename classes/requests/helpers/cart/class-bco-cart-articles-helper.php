@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use KrokedilQvicklyCheckoutDeps\Krokedil\WooCommerce\Cart\Cart;
+
 /**
  * Cart Articles helper class.
  */
@@ -33,10 +35,15 @@ class BCO_Cart_Articles_Helper {
 			array_push( $articles, self::get_fee_lines( $fee ) );
 		}
 
-		// Smart coupons.
-		foreach ( $cart_coupons as $coupon ) {
-			if ( 'smart_coupon' === $coupon->get_discount_type() ) {
-				array_push( $articles, self::get_smart_coupon_line( $coupon ) );
+		// Giftcards.
+		foreach ( BCO_WC()->krokedil->compatibility()->giftcards() as $giftcards ) {
+			if ( false !== ( strpos( get_class( $giftcards ), 'WCGiftCards', true ) ) && ! function_exists( 'WC_GC' ) ) {
+				continue;
+			}
+
+			$retrieved_giftcards = $giftcards->get_cart_giftcards();
+			foreach ( $retrieved_giftcards as $retrieved_giftcard ) {
+				array_push( $articles, self::get_giftcard_line( $retrieved_giftcard ) );
 			}
 		}
 
@@ -111,6 +118,25 @@ class BCO_Cart_Articles_Helper {
 			'aprice'     => round( ( $coupon_amount ) * 100 ),
 			'withouttax' => round( ( $coupon_amount ) * 100 ),
 			'taxrate'    => 0,
+			'discount'   => 0,
+		);
+	}
+
+	/**
+	 * Gets the formatted cart lines for Smart coupon (gift card).
+	 *
+	 * @param array $coupon cart item fee.
+	 * @return array
+	 */
+	public static function get_giftcard_line( $order_line ) {
+
+		return array(
+			'artnr'      => $order_line->get_sku(),
+			'title'      => $order_line->get_name(),
+			'quantity'   => $order_line->get_quantity(),
+			'aprice'     => $order_line->get_total_amount(),
+			'withouttax' => $order_line->get_total_amount(),
+			'taxrate'    => $order_line->get_tax_rate(),
 			'discount'   => 0,
 		);
 	}
@@ -234,5 +260,4 @@ class BCO_Cart_Articles_Helper {
 		}
 		return $fee_tax_rate;
 	}
-
 }

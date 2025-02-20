@@ -1,0 +1,34 @@
+{
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^2.3",
+        "php-stubs/wordpress-stubs": "^6.1",
+        "php-stubs/woocommerce-stubs": "^8.4",
+        "10up/wp_mock": "^1.0",
+        "wpify/scoper": "3.1.3"
+    },
+    "repositories": [],
+    "config": {
+        "platform": {
+            "php": "7.4"
+        },
+        "allow-plugins": {
+            "wpify/scoper": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "wpify-scoper": {
+            "prefix": "KrokedilQvicklyCheckoutDeps",
+            "folder": "dependencies",
+            "autorun": true,
+            "globals": [
+                "wordpress",
+                "woocommerce"
+            ]
+        }
+    }
+}
