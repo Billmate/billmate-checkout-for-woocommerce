@@ -161,11 +161,10 @@ jQuery(function($) {
 						 * Store decideds what to do with order and if redirect customer
 						 */
 						$('#jsLog').append('checkout_success<br />');
-						if ( 'checkout' === bco_wc_params.checkout_flow ) {
-							var redirectUrl = sessionStorage.getItem( 'billmateRedirectUrl' );
-							console.log(redirectUrl);
-							if( redirectUrl ) {
-								window.location.href = redirectUrl;
+						if ('checkout' === bco_wc_params.checkout_flow) {
+							const relativeUrl = sessionStorage.getItem('billmateRedirectUrl');
+							if (relativeUrl) {
+								window.location.href = new URL(relativeUrl, window.location.origin).href;
 							}
 						} else {
 							$.ajax(
@@ -180,8 +179,8 @@ jQuery(function($) {
 									},
 									error: function() {
 									},
-									complete: function( data ) {
-										window.location.href = data.responseJSON.data.bco_wc_received_url;
+									complete: function (data) {
+										window.location.href = new URL(data.responseJSON.data.bco_wc_received_url, window.location.origin).href;
 									}
 								}
 							);
@@ -313,7 +312,7 @@ jQuery(function($) {
 						console.log('error');
 						if( '' !== data.responseJSON.data.redirect_url ) {
 							console.log('Cart do not need payment. Reloading checkout.');
-							window.location.href = data.responseJSON.data.redirect_url;
+							window.location.href = new URL(data.responseJSON.data.redirect_url, window.location.origin).href;
 						}
 					}
 				}
@@ -434,7 +433,7 @@ jQuery(function($) {
 				success: function (data) {},
 				error: function (data) {},
 				complete: function (data) {
-					window.location.href = data.responseJSON.data.redirect;
+					window.location.href = new URL(data.responseJSON.data.redirect, window.location.origin).href;
 				}
 			});
 		},
@@ -464,7 +463,7 @@ jQuery(function($) {
 					success: function (data) {},
 					error: function (data) {},
 					complete: function (data) {
-						window.location.href = data.responseJSON.data.redirect;
+						window.location.href = new URL(data.responseJSON.data.redirect, window.location.origin).href;
 					}
 				});
 			}
