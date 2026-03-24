@@ -161,11 +161,11 @@ jQuery(function($) {
 						 * Store decideds what to do with order and if redirect customer
 						 */
 						$('#jsLog').append('checkout_success<br />');
-						if ( 'checkout' === bco_wc_params.checkout_flow ) {
-							var redirectUrl = sessionStorage.getItem( 'billmateRedirectUrl' );
-							console.log(redirectUrl);
-							if( redirectUrl ) {
-								window.location.href = redirectUrl;
+						if ('checkout' === bco_wc_params.checkout_flow) {
+							const relativeUrl = sessionStorage.getItem('billmateRedirectUrl');
+							const redirectUrl = new URL(relativeUrl, window.location.origin);
+							if (redirectUrl.origin === window.location.origin) {
+								window.location.href = redirectUrl.href;
 							}
 						} else {
 							$.ajax(
@@ -180,8 +180,11 @@ jQuery(function($) {
 									},
 									error: function() {
 									},
-									complete: function( data ) {
-										window.location.href = data.responseJSON.data.bco_wc_received_url;
+									complete: function (data) {
+										const redirectUrl = new URL(data.responseJSON.data.redirect_url, window.location.origin)
+										if ( redirectUrl.origin === window.location.origin ) {
+											window.location.href = redirectUrl.href;
+										}
 									}
 								}
 							);
@@ -313,7 +316,10 @@ jQuery(function($) {
 						console.log('error');
 						if( '' !== data.responseJSON.data.redirect_url ) {
 							console.log('Cart do not need payment. Reloading checkout.');
-							window.location.href = data.responseJSON.data.redirect_url;
+							const redirectUrl = new URL(data.responseJSON.data.redirect_url, window.location.origin);
+							if (redirectUrl.origin === window.location.origin) {
+								window.location.href = redirectUrl.href;
+							}
 						}
 					}
 				}
@@ -434,7 +440,10 @@ jQuery(function($) {
 				success: function (data) {},
 				error: function (data) {},
 				complete: function (data) {
-					window.location.href = data.responseJSON.data.redirect;
+					const redirectUrl = new URL(data.responseJSON.data.redirect, window.location.origin);
+					if (redirectUrl.origin === window.location.origin) {
+						window.location.href = redirectUrl.href;
+					}
 				}
 			});
 		},
@@ -464,7 +473,10 @@ jQuery(function($) {
 					success: function (data) {},
 					error: function (data) {},
 					complete: function (data) {
-						window.location.href = data.responseJSON.data.redirect;
+						const redirectUrl = new URL(data.responseJSON.data.redirect, window.location.origin);
+						if (redirectUrl.origin === window.location.origin) {
+							window.location.href = redirectUrl.href;
+						}
 					}
 				});
 			}
