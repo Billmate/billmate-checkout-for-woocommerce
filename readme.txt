@@ -2,11 +2,11 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
-Tested up to: 6.7.2
+Tested up to: 6.9
 Requires PHP: 7.4
 WC requires at least: 5.6.0
-WC tested up to: 9.6.2
-Stable tag: 1.8.0
+WC tested up to: 10.7.0
+Stable tag: 1.8.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -51,6 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2026.04.15    - version 1.8.1 =
+* Fix           - Resolved issue where users could be redirected to an incorrect URL after completing checkout.
+
 = 2025.02.20    - version 1.8.0 =
 * Feature       - Improved support for gift cards (Smart coupons, Gift Cards for WooCommerce, YITH Giftcard & PW Giftcard) via Krokedil WooCommerce SDK.
 * Tweak         - Add scoping via WPify Scoper to avoid issues caused by other plugins having similar composer dependencies.
