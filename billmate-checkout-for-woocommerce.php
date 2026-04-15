@@ -12,7 +12,7 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.6.0
- * WC tested up to: 10.6.2
+ * WC tested up to: 10.7.0
  *
  * Copyright:       © 2020-2026 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
