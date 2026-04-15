@@ -11,7 +11,7 @@ const wpPot                        = require( 'gulp-wp-pot' );
  * SCSS
  */
 const postcss              = require( 'gulp-postcss' );
-const sass                 = require( 'gulp-sass' );
+const sass                 = require( 'gulp-sass' )( require( 'sass' ) );
 const autoprefixer         = require( 'autoprefixer' );
 const postcssFlexbugsFixes = require( 'postcss-flexbugs-fixes' );
 const postcssImport        = require( 'postcss-import' );
