@@ -2,7 +2,7 @@
 Contributors: Billmate, Krokedil, NiklasHogefjord
 Tags: woocommerce, billmate, ecommerce, e-commerce, checkout, swish, invoice, part-payment, installment, partpayment, card, mastercard, visa, trustly, swish
 Requires at least: 5.0
-Tested up to: 6.7.2
+Tested up to: 6.9
 Requires PHP: 7.4
 WC requires at least: 5.6.0
 WC tested up to: 10.7.0
