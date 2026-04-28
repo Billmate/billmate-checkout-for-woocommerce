@@ -177,6 +177,7 @@ class BCO_Gateway extends WC_Payment_Gateway {
 	 * @param string $order_id The WooCommerce order ID.
 	 *
 	 * @return array
+	 * @throws Exception If the payment processing fails.
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -198,9 +199,8 @@ class BCO_Gateway extends WC_Payment_Gateway {
 				'redirect_url' => $confirmation_url,
 			);
 		} else {
-			return array(
-				'result' => 'error',
-			);
+			$message = __( 'An error occurred while processing the payment. Please try again.', 'billmate-checkout-for-woocommerce' );
+			throw new Exception( $message );
 		}
 	}
 
