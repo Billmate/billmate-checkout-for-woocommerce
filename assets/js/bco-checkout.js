@@ -397,23 +397,21 @@ jQuery(function($) {
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.shipping_address ) ? data.shipping_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.shipping_address ) ? data.shipping_address.country.toUpperCase() : '' ) );
 
-				// Shipping phone. Default to the billing phone if the shipping address has none.
-				const shipping_phone = ( 'phone' in data.shipping_address )
-					? data.shipping_address.phone
-					: ( data.billing_address.phone || '' );
-				if ( shipping_phone ) {
-					$( '#shipping_phone' ).val( shipping_phone );
+				// Shipping phone. Can be returned empty, default to the billing phone.
+				let shipping_phone = ( 'phone' in data.shipping_address ) ? data.shipping_address.phone : '';
+				if ( 0 === shipping_phone.length ) {
+					shipping_phone = data.billing_address.phone;
 				}
+				$( '#shipping_phone' ).val( shipping_phone );
 
 				// Shipping email is not a standard field, so only set it if it exists.
-				// Default to the billing email if the shipping address has none.
+				// Can be returned empty, default to the billing email.
 				if ( $( '#shipping_email' ).length ) {
-					const shipping_email = ( 'email' in data.shipping_address )
-						? data.shipping_address.email
-						: ( data.billing_address.email || '' );
-					if ( shipping_email ) {
-						$( '#shipping_email' ).val( shipping_email );
+					let shipping_email = ( 'email' in data.shipping_address ) ? data.shipping_address.email : '';
+					if ( 0 === shipping_email.length ) {
+						shipping_email = data.billing_address.email;
 					}
+					$( '#shipping_email' ).val( shipping_email );
 				}
 			} else {
 
@@ -427,17 +425,11 @@ jQuery(function($) {
 				$( '#shipping_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
 
 				// No separate shipping address, so use the billing phone.
-				const shipping_phone = data.billing_address.phone || '';
-				if ( shipping_phone ) {
-					$( '#shipping_phone' ).val( shipping_phone );
-				}
+				$( '#shipping_phone' ).val( ( 'phone' in data.billing_address ) ? data.billing_address.phone : '' );
 
 				// Shipping email is not a standard field, so only set it if it exists. Use the billing email.
 				if ( $( '#shipping_email' ).length ) {
-					const shipping_email = data.billing_address.email || '';
-					if ( shipping_email ) {
-						$( '#shipping_email' ).val( shipping_email );
-					}
+					$( '#shipping_email' ).val( ( 'email' in data.billing_address ) ? data.billing_address.email : '' );
 				}
 			}
 		},
