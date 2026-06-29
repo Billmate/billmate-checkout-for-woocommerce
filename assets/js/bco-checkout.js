@@ -396,6 +396,23 @@ jQuery(function($) {
 				$( '#shipping_city' ).val( ( ( 'city' in data.shipping_address ) ? data.shipping_address.city : '' ) );
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.shipping_address ) ? data.shipping_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.shipping_address ) ? data.shipping_address.country.toUpperCase() : '' ) );
+
+				// Shipping phone. Can be returned empty, default to the billing phone.
+				let shipping_phone = ( 'phone' in data.shipping_address ) ? data.shipping_address.phone : '';
+				if ( 0 === shipping_phone.length ) {
+					shipping_phone = data.billing_address.phone;
+				}
+				$( '#shipping_phone' ).val( shipping_phone );
+
+				// Shipping email is not a standard field, so only set it if it exists.
+				// Can be returned empty, default to the billing email.
+				if ( $( '#shipping_email' ).length ) {
+					let shipping_email = ( 'email' in data.shipping_address ) ? data.shipping_address.email : '';
+					if ( 0 === shipping_email.length ) {
+						shipping_email = data.billing_address.email;
+					}
+					$( '#shipping_email' ).val( shipping_email );
+				}
 			} else {
 
 				$( '#shipping_first_name' ).val( ( ( 'firstname' in data.billing_address ) ? data.billing_address.firstname : '' ) );
@@ -406,6 +423,14 @@ jQuery(function($) {
 				$( '#shipping_city' ).val( ( ( 'city' in data.billing_address ) ? data.billing_address.city : '' ) );
 				$( '#shipping_postcode' ).val( ( ( 'zip' in data.billing_address ) ? data.billing_address.zip : '' ) );
 				$( '#shipping_country' ).val( ( ( 'country' in data.billing_address ) ? data.billing_address.country.toUpperCase() : '' ) );
+
+				// No separate shipping address, so use the billing phone.
+				$( '#shipping_phone' ).val( ( 'phone' in data.billing_address ) ? data.billing_address.phone : '' );
+
+				// Shipping email is not a standard field, so only set it if it exists. Use the billing email.
+				if ( $( '#shipping_email' ).length ) {
+					$( '#shipping_email' ).val( ( 'email' in data.billing_address ) ? data.billing_address.email : '' );
+				}
 			}
 		},
 
