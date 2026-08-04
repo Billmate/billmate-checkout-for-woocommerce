@@ -3,7 +3,7 @@
  * Plugin Name:     Qvickly Checkout for WooCommerce
  * Plugin URI:      https://github.com/Billmate/billmate-checkout-for-woocommerce
  * Description:     Provides an Qvickly Checkout gateway for WooCommerce.
- * Version:         1.8.2
+ * Version:         1.8.3
  * Author:          Billmate, Krokedil
  * Author URI:      https://billmate.se/
  * Developer:       Billmate, Krokedil
@@ -12,7 +12,7 @@
  * Domain Path:     /languages
  *
  * WC requires at least: 5.6.0
- * WC tested up to: 10.7.0
+ * WC tested up to: 10.9.4
  *
  * Copyright:       © 2020-2026 Billmate in collaboration with Krokedil.
  * License:         GNU General Public License v3.0
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use KrokedilQvicklyCheckoutDeps\Krokedil\WooCommerce\KrokedilWooCommerce;
 
 // Define plugin constants.
-define( 'BILLMATE_CHECKOUT_VERSION', '1.8.2' );
+define( 'BILLMATE_CHECKOUT_VERSION', '1.8.3' );
 define( 'BILLMATE_CHECKOUT_URL', untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'BILLMATE_CHECKOUT_ENV', 'https://api.billmate.se' );
