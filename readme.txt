@@ -5,8 +5,8 @@ Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
 WC requires at least: 5.6.0
-WC tested up to: 10.9.4
-Stable tag: 1.8.3
+WC tested up to: 11.0.1
+Stable tag: 1.8.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -51,6 +51,9 @@ We have a portal for users to provide feedback, [https://woocommerce.portal.bill
 The easiest way to report a bug is to email us at [support@billmate.se](mailto:support@billmate.se). If you however are a developer you can feel free to raise an issue on GitHub, [https://github.com/Billmate/billmate-checkout-for-woocommerce](https://github.com/Billmate/billmate-checkout-for-woocommerce).
 
 == Changelog ==
+= 2026.08.20    - version 1.8.4 =
+* Fix           - Links opened from the checkout, such as the invoice PDF, are no longer blocked by the browser.
+
 = 2026.07.09    - version 1.8.3 =
 * Enhancement   - Populate the shipping phone and email fields from the Qvickly checkout, falling back to the billing phone and email when they are not provided.
 
