@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bco_show_iframe() {
 	$billmate_order = bco_init_checkout();
 	do_action( 'bco_show_iframe', $billmate_order );
-	echo '<iframe name="checkout_iframe" id="checkout" src="' . WC()->session->get( 'bco_wc_checkout_url' ) . '" sandbox="allow-same-origin allow-scripts allow-modals allow-popups allow-forms allow-top-navigation" style="width:100%;min-height:800px;border:none;" scrolling="no"></iframe>'; // phpcs:ignore
+	echo '<iframe name="checkout_iframe" id="checkout" src="' . WC()->session->get( 'bco_wc_checkout_url' ) . '" sandbox="allow-same-origin allow-scripts allow-modals allow-popups allow-popups-to-escape-sandbox allow-forms allow-top-navigation" style="width:100%;min-height:800px;border:none;" scrolling="no"></iframe>'; // phpcs:ignore
 }
 
 
